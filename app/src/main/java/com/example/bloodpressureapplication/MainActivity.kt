@@ -2,12 +2,12 @@ package com.example.bloodpressureapplication
 
 import android.icu.text.IDNA.Info
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -213,10 +215,45 @@ fun InfoScreen() {
 
 @Composable
 fun ProfileScreen() {
-    Box (
+    Column (
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
     ) {
         Text(text = "Profile Screen")
+        ProfileDetailsBox(title = "First Name", userDetails = "Reece")
+        ProfileDetailsBox(title = "Last Name", userDetails = "Wareham")
+        ProfileDetailsBox(title = "Email", userDetails = "email@test.com")
+        ProfileDetailsBox(title = "Password", userDetails = "password")
+        ProfileDetailsBox(title = "D.O.B.", userDetails = "17/07/2002")
+        ProfileDetailsBox(title = "Weight", userDetails = "80KG")
+        ProfileDetailsBox(title = "Height", userDetails = "170cm")
     }
+}
+
+@Composable
+fun ProfileDetailsBox(
+    title: String,
+    userDetails: String,
+    modifier: Modifier = Modifier
+) {
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(5.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = 5.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = title)
+            Text(text = userDetails)
+            ClickableText(text = AnnotatedString("Edit"), onClick = { Log.d("ClickableText", "Edit text clicked.")}, style = TextStyle(color = Color.Blue))
+        }
+    }
+
 }
