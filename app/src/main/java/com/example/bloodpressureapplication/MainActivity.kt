@@ -5,20 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -205,11 +206,16 @@ fun TrackScreen() {
 
 @Composable
 fun InfoScreen() {
-    Box (
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Column (
+        modifier = Modifier.fillMaxSize()
     ) {
         Text(text = "Info Screen")
+        var title = "Understanding\nBlood Pressure"
+        InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
+        title = "Understanding\nHypotension"
+        InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
+        title = "Understanding\nHypertension"
+        InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
     }
 }
 
@@ -218,7 +224,7 @@ fun ProfileScreen() {
     Column (
         modifier = Modifier.fillMaxSize(),
     ) {
-        Text(text = "Profile Screen")
+        ProfilePictureBox(painter = painterResource(id = R.drawable.cat))
         ProfileDetailsBox(title = "First Name", userDetails = "Reece")
         ProfileDetailsBox(title = "Last Name", userDetails = "Wareham")
         ProfileDetailsBox(title = "Email", userDetails = "email@test.com")
@@ -252,8 +258,66 @@ fun ProfileDetailsBox(
         ) {
             Text(text = title)
             Text(text = userDetails)
-            ClickableText(text = AnnotatedString("Edit"), onClick = { Log.d("ClickableText", "Edit text clicked.")}, style = TextStyle(color = Color.Blue))
+            ClickableText(
+                text = AnnotatedString("Edit"),
+                onClick = { Log.d("ClickableText", "Edit text clicked.") },
+                style = TextStyle(color = Color.Blue)
+            )
         }
     }
+}
 
+@Composable
+fun ProfilePictureBox(
+    painter: Painter,
+    modifier: Modifier = Modifier
+) {
+        Card(
+            modifier = modifier
+                .fillMaxWidth(0.5f)
+                .fillMaxHeight(0.2f)
+                .padding(5.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 5.dp
+        ) {
+            Image(
+                painter = painter,
+                contentDescription = "Profile Picture",
+                contentScale = ContentScale.Fit
+            )
+        }
+}
+
+
+@Composable
+fun InfoBox(
+    title: String,
+    painter: Painter,
+    contentDescription: String,
+    modifier: Modifier = Modifier
+) {
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(5.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = 5.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .height(150.dp)
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = title, textAlign = TextAlign.Center)
+            Image(
+                painter = painter,
+                contentDescription = contentDescription,
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
 }
