@@ -1,5 +1,6 @@
 package com.example.bloodpressureapplication
 
+import android.graphics.Paint.Align
 import android.icu.text.IDNA.Info
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
@@ -14,11 +16,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -33,6 +38,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
+import com.example.bloodpressureapplication.ProfileScreen
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -218,76 +225,6 @@ fun InfoScreen() {
         InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
     }
 }
-
-@Composable
-fun ProfileScreen() {
-    Column (
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        ProfilePictureBox(painter = painterResource(id = R.drawable.cat))
-        ProfileDetailsBox(title = "First Name", userDetails = "Reece")
-        ProfileDetailsBox(title = "Last Name", userDetails = "Wareham")
-        ProfileDetailsBox(title = "Email", userDetails = "email@test.com")
-        ProfileDetailsBox(title = "Password", userDetails = "password")
-        ProfileDetailsBox(title = "D.O.B.", userDetails = "17/07/2002")
-        ProfileDetailsBox(title = "Weight", userDetails = "80KG")
-        ProfileDetailsBox(title = "Height", userDetails = "170cm")
-    }
-}
-
-@Composable
-fun ProfileDetailsBox(
-    title: String,
-    userDetails: String,
-    modifier: Modifier = Modifier
-) {
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(5.dp),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = title)
-            Text(text = userDetails)
-            ClickableText(
-                text = AnnotatedString("Edit"),
-                onClick = { Log.d("ClickableText", "Edit text clicked.") },
-                style = TextStyle(color = Color.Blue)
-            )
-        }
-    }
-}
-
-@Composable
-fun ProfilePictureBox(
-    painter: Painter,
-    modifier: Modifier = Modifier
-) {
-        Card(
-            modifier = modifier
-                .fillMaxWidth(0.5f)
-                .fillMaxHeight(0.2f)
-                .padding(5.dp),
-            shape = RoundedCornerShape(15.dp),
-            elevation = 5.dp
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = "Profile Picture",
-                contentScale = ContentScale.Fit
-            )
-        }
-}
-
 
 @Composable
 fun InfoBox(
