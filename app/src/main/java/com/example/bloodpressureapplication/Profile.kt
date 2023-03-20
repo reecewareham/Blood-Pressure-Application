@@ -36,8 +36,8 @@ fun ProfileScreen() {
         ProfileDetailsBox(title = "Email", userDetails = "email@test.com")
         ProfileDetailsBox(title = "Password", userDetails = "password")
         ProfileDetailsBox(title = "D.O.B.", userDetails = "17/07/2002")
-        ProfileDetailsBox(title = "Weight", userDetails = "80KG")
-        ProfileDetailsBox(title = "Height", userDetails = "170cm")
+        //ProfileDetailsBox(title = "Weight", userDetails = "80KG")
+        //ProfileDetailsBox(title = "Height", userDetails = "170cm")
         Spacer(modifier = Modifier.height(20.dp))
         Card(
             modifier = Modifier
