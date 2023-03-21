@@ -1,52 +1,51 @@
 package com.example.bloodpressureapplication
 
-import android.graphics.Paint.Align
-import android.icu.text.IDNA.Info
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.bloodpressureapplication.Home.HomeScreen
+import com.example.bloodpressureapplication.Info.InfoScreen
+import com.example.bloodpressureapplication.Measure.MeasureScreen
+import com.example.bloodpressureapplication.Profile.ProfileViewModel
+import com.example.bloodpressureapplication.Track.TrackScreen
 import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
-import com.example.bloodpressureapplication.ProfileScreen
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BloodPressureApplicationTheme {
                 val navController = rememberNavController()
+
                 Scaffold(
                     bottomBar = {
                         BottomNavigationBar(
@@ -123,7 +122,16 @@ fun Navigation(navController: NavHostController) {
             InfoScreen()
         }
         composable("profile") {
-            ProfileScreen()
+            val viewModel: ProfileViewModel = hiltViewModel()
+            val data by viewModel.data
+            ProfileScreen(
+                data = data,
+                firstName = viewModel.firstName.value,
+                lastName = viewModel.lastName.value,
+                email = viewModel.email.value,
+                password = viewModel.password.value,
+                DOB = viewModel.DOB.value
+            )
         }
     }
 }
@@ -176,84 +184,6 @@ fun BottomNavigationBar(
                         }
                     }
                 }
-            )
-        }
-    }
-}
-
-@Composable
-fun HomeScreen() {
-    Box (
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "Home Screen")
-    }
-}
-
-@Composable
-fun MeasureScreen() {
-    Box (
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "Measure Screen")
-    }
-}
-
-@Composable
-fun TrackScreen() {
-    Box (
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "Track Screen")
-    }
-}
-
-@Composable
-fun InfoScreen() {
-    Column (
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "Info Screen")
-        var title = "Understanding\nBlood Pressure"
-        InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
-        title = "Understanding\nHypotension"
-        InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
-        title = "Understanding\nHypertension"
-        InfoBox(title = title, painter = painterResource(id = R.drawable.cat), contentDescription = title)
-    }
-}
-
-@Composable
-fun InfoBox(
-    title: String,
-    painter: Painter,
-    contentDescription: String,
-    modifier: Modifier = Modifier
-) {
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(5.dp),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .height(150.dp)
-                .padding(10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = title, textAlign = TextAlign.Center)
-            Image(
-                painter = painter,
-                contentDescription = contentDescription,
-                contentScale = ContentScale.Crop
             )
         }
     }
