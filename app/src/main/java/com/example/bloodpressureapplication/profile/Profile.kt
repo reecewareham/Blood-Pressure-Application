@@ -1,11 +1,8 @@
-package com.example.bloodpressureapplication
+package com.example.bloodpressureapplication.profile
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -21,57 +18,25 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.bloodpressureapplication.model.User
+import com.example.bloodpressureapplication.R
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun ProfileScreen(
-    data: List<User>,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    DOB: String
-) {
-
-    Scaffold(
-        content = {
-            ProfileContent(
-                data = data,
-                firstName = firstName,
-                lastName = lastName,
-                email = email,
-                password = password,
-                DOB = DOB
-            )
-        }
-    )
-}
 
 @Composable
-fun ProfileContent(
-    data: List<User>,
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    DOB: String
-) {
+fun ProfileScreen() {
+
     Column (
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ProfilePictureBox(painter = painterResource(id = R.drawable.cat))
-        LazyColumn() {
-            items(items = data, key = { it._id.toHexString() }) {
-                ProfileDetailsBox(title = "First Name", userDetails = it.firstName)
-                ProfileDetailsBox(title = "Last Name", userDetails = it.lastName)
-                ProfileDetailsBox(title = "Email", userDetails = it.email)
-                ProfileDetailsBox(title = "Password", userDetails = it.password)
-                ProfileDetailsBox(title = "D.O.B.", userDetails = it.DOB)
-            }
-        }
+        ProfileDetailsBox(title = "First Name", userDetails = "Reece")
+        ProfileDetailsBox(title = "Last Name", userDetails = "Wareham")
+        ProfileDetailsBox(title = "Email", userDetails = "email@test.com")
+        ProfileDetailsBox(title = "Password", userDetails = "password")
+        ProfileDetailsBox(title = "D.O.B.", userDetails = "17/07/2002")
+        //ProfileDetailsBox(title = "Weight", userDetails = "80KG")
+        //ProfileDetailsBox(title = "Height", userDetails = "170cm")
         Spacer(modifier = Modifier.height(20.dp))
         Card(
             modifier = Modifier
