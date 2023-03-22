@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,6 +26,7 @@ import com.example.bloodpressureapplication.Home.HomeScreen
 import com.example.bloodpressureapplication.Info.InfoScreen
 import com.example.bloodpressureapplication.Measure.MeasureScreen
 import com.example.bloodpressureapplication.Track.TrackScreen
+import com.example.bloodpressureapplication.login.LoginViewModel
 import com.example.bloodpressureapplication.profile.ProfileScreen
 import com.example.bloodpressureapplication.registerlogin.ScreenMain
 import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
@@ -36,8 +38,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val loginViewModel = viewModel(modelClass = LoginViewModel::class.java)
             BloodPressureApplicationTheme {
-                ScreenMain()
+                Navigation(loginViewModel = loginViewModel)
             }
         }
     }
