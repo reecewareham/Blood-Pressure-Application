@@ -39,9 +39,6 @@ fun HomeScreen(
         is Response.Success -> {
             if (response.data != null) {
                 val obj = response.data
-                var selectedTabIndex by remember {
-                    mutableStateOf(0)
-                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
