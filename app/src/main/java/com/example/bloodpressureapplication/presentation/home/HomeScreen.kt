@@ -1,28 +1,87 @@
 package com.example.bloodpressureapplication.presentation.home
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
+import com.example.bloodpressureapplication.presentation.Toast
+import com.example.bloodpressureapplication.presentation.profile.ProfileExportFile
+import com.example.bloodpressureapplication.presentation.profile.UserViewModel
+import com.example.bloodpressureapplication.presentation.profile.components.MyProfile
+import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
+import com.example.bloodpressureapplication.util.Response
+import com.example.bloodpressureapplication.util.Screens
 
 @Composable
 fun HomeScreen(
     navController : NavController
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Column(
-            modifier = Modifier
-                .weight(1f)
-        ) {
-            Text(text = "Home Screen")
+    val userViewModel: UserViewModel = hiltViewModel()
+    userViewModel.getUserInfo()
+
+    when (val response = userViewModel.getUserData.value) {
+        is Response.Loading -> {
+            CircularProgressIndicator()
         }
-        BottomNavigationMenu(selectedItem = BottomNavigationItem.HOME, navController = navController)
+        is Response.Success -> {
+            if (response.data != null) {
+                val obj = response.data
+                var selectedTabIndex by remember {
+                    mutableStateOf(0)
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TopAppBar(
+                            title = {
+                                Text(
+                                    text = "Home",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 24.sp,
+                                )
+                            },
+                            actions = {
+
+                            },
+                            backgroundColor = Color.White,
+                            elevation = 10.dp
+                        )
+
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(15.dp),
+                            shape = RoundedCornerShape(15.dp),
+                            elevation = 5.dp,
+                        ) {
+                            Text(text = "Hi, " + obj.firstName, fontWeight = FontWeight.Bold, lineHeight = 20.sp, fontSize = 40.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
+                        }
+                    }
+                    BottomNavigationMenu(selectedItem = BottomNavigationItem.PROFILE, navController = navController)
+                }
+            }
+        }
+        is Response.Error -> {
+            Toast(message = response.message)
+        }
     }
 }

@@ -1,13 +1,17 @@
 package com.example.bloodpressureapplication.presentation.profile
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,7 +51,8 @@ fun ProfileScreen(
                 ) {
                     Column(
                         modifier = Modifier
-                            .weight(1f)
+                            .weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         TopAppBar(
                             title = {
@@ -117,32 +122,25 @@ fun ProfileScreen(
                         MyProfile(
                             firstName = obj.firstName,
                             lastName = obj.lastName,
-                            age = obj.age
+                            age = obj.age,
+                            email = obj.email,
+                            password = obj.password
                         )
                         Spacer(
                             modifier = Modifier
                                 .height(20.dp)
                         )
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        Card(
                             modifier = Modifier
-                                .padding(horizontal = 20.dp)
+                                .fillMaxWidth(0.5f)
+                                .padding(5.dp),
+                            shape = RoundedCornerShape(15.dp),
+                            elevation = 5.dp
                         ) {
-                            ActionButton(
-                                text = "Edit Profile",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(0.45f)
-                                    .height(35.dp)
-                                    .clickable {
-
-                                    }
-                            )
+                            Text(text = AnnotatedString("Export as CSV"), textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp))
+                            Spacer(modifier = Modifier.height(10.dp))
+                            ProfileExportFile()
                         }
-                        Spacer(
-                            modifier = Modifier
-                                .height(15.dp)
-                        )
                     }
                     BottomNavigationMenu(selectedItem = BottomNavigationItem.PROFILE, navController = navController)
                 }
@@ -151,5 +149,24 @@ fun ProfileScreen(
         is Response.Error -> {
             Toast(message = response.message)
         }
+    }
+}
+
+@Composable
+fun ProfileExportFile() {
+
+    Button(
+        modifier = Modifier
+            .fillMaxWidth(0.4f)
+            .padding(5.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = ButtonDefaults.elevation(
+            defaultElevation = 5.dp,
+            pressedElevation = 7.dp,
+            disabledElevation = 0.dp
+        ),
+        onClick = { Log.d("ClickableButton", "Export button pressed")}
+    ) {
+        Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center)
     }
 }
