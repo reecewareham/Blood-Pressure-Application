@@ -1,11 +1,16 @@
 package com.example.bloodpressureapplication.di
 
 import com.example.bloodpressureapplication.data.AuthenticationRepositoryImpl
+import com.example.bloodpressureapplication.data.BloodPressureReadingRepositoryImpl
 import com.example.bloodpressureapplication.data.UserRepositoryImpl
+import com.example.bloodpressureapplication.domain.model.BloodPressureReading
 import com.example.bloodpressureapplication.domain.repository.AuthenticationRepository
+import com.example.bloodpressureapplication.domain.repository.BloodPressureReadingRepository
 import com.example.bloodpressureapplication.domain.repository.UserRepository
 import com.example.bloodpressureapplication.domain.use_cases.*
 import com.example.bloodpressureapplication.domain.use_cases.authentication_use_cases.*
+import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.BloodPressureReadingUseCases
+import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.GetUserBloodPressureReadings
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.GetUserDetails
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.SetUserDetails
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.UserUseCases
@@ -68,5 +73,17 @@ object BloodPressureAppModule {
     fun provideUserUseCases(repository: UserRepository) = UserUseCases(
         getUserDetails = GetUserDetails(repository = repository),
         setUserDetails = SetUserDetails(repository = repository)
+    )
+
+    @Singleton
+    @Provides
+    fun provideBloodPressureReadingRepository(firebaseFirestore: FirebaseFirestore) : BloodPressureReadingRepository {
+        return BloodPressureReadingRepositoryImpl(firebaseFirestore = firebaseFirestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBloodPressureReadingUseCases(repository: BloodPressureReadingRepository) = BloodPressureReadingUseCases(
+        getUserBloodPressureReadings = GetUserBloodPressureReadings(repository = repository)
     )
 }
