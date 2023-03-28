@@ -1,5 +1,6 @@
 package com.example.bloodpressureapplication.presentation.profile
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,6 +28,7 @@ import com.example.bloodpressureapplication.presentation.profile.components.MyPr
 import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
 import com.example.bloodpressureapplication.util.Screens
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(
     navController : NavController
@@ -35,118 +37,128 @@ fun ProfileScreen(
     val authViewModel: AuthenticationViewModel = hiltViewModel()
     userViewModel.getUserInfo()
 
-    when (val response = userViewModel.getUserData.value) {
-        is Response.Loading -> {
-            CircularProgressIndicator()
-        }
-        is Response.Success -> {
-            if (response.data != null) {
-                val obj = response.data
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f),
-                        horizontalAlignment = Alignment.CenterHorizontally
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Profile", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                },
+                actions = {
+                    Button(
+                        onClick = {
+                            authViewModel.signOut()
+                        }
                     ) {
-                        TopAppBar(
-                            title = {
-                                Text(
-                                    text = "Profile",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 24.sp,
+                        Text(text = "Sign Out")
+                        when (val response = authViewModel.signOutState.value) {
+                            is Response.Loading -> {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .fillMaxSize()
                                 )
-                            },
-                            actions = {
-                                Button(
-                                    onClick = {
-                                        authViewModel.signOut()
-                                    }
-                                ) {
-                                    Text(text = "Sign Out")
-                                    when (val response = authViewModel.signOutState.value) {
-                                        is Response.Loading -> {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                            )
-                                        }
-                                        is Response.Success -> {
-                                            if (response.data) {
-                                                LaunchedEffect(key1 = true) {
-                                                    navController.navigate(route = Screens.LoginScreen.route) {
-                                                        popUpTo(Screens.ProfileScreen.route) {
-                                                            inclusive = true
-                                                        }
-                                                    }
-                                                }
+                            }
+                            is Response.Success -> {
+                                if (response.data) {
+                                    LaunchedEffect(key1 = true) {
+                                        navController.navigate(route = Screens.LoginScreen.route) {
+                                            popUpTo(Screens.ProfileScreen.route) {
+                                                inclusive = true
                                             }
-                                        }
-                                        is Response.Error -> {
-                                            Toast(message = response.message)
                                         }
                                     }
                                 }
-                            },
-                            backgroundColor = Color.White,
-                            elevation = 10.dp
-                        )
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        top = 10.dp,
-                                        start = 10.dp,
-                                        bottom = 10.dp,
-                                        end = 20.dp
-                                    )
-                            ) {
-                                RoundedImage(
-                                    image = rememberImagePainter(data = obj.imageUrl),
-                                    modifier = Modifier
-                                        .size(100.dp)
-                                        .weight(3.5f)
-                                )
+                            }
+                            is Response.Error -> {
+                                Toast(message = response.message)
                             }
                         }
-                        MyProfile(
-                            firstName = obj.firstName,
-                            lastName = obj.lastName,
-                            age = obj.age,
-                            email = obj.email,
-                            password = obj.password
-                        )
-                        Spacer(
+                    }
+                },
+                backgroundColor = Color.White,
+                elevation = 10.dp
+            )
+        },
+        content = {
+
+            when (val response = userViewModel.getUserData.value) {
+                is Response.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is Response.Success -> {
+                    if (response.data != null) {
+                        val obj = response.data
+                        Column(
                             modifier = Modifier
-                                .height(20.dp)
-                        )
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .padding(5.dp),
-                            shape = RoundedCornerShape(15.dp),
-                            elevation = 5.dp
+                                .fillMaxSize()
                         ) {
-                            Text(text = AnnotatedString("Export as CSV"), textAlign = TextAlign.Center, fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp))
-                            Spacer(modifier = Modifier.height(10.dp))
-                            ProfileExportFile()
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(
+                                                top = 10.dp,
+                                                start = 10.dp,
+                                                bottom = 10.dp,
+                                                end = 20.dp
+                                            )
+                                    ) {
+                                        RoundedImage(
+                                            image = rememberImagePainter(data = obj.imageUrl),
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .weight(3.5f)
+                                        )
+                                    }
+                                }
+                                MyProfile(
+                                    firstName = obj.firstName,
+                                    lastName = obj.lastName,
+                                    age = obj.age,
+                                    email = obj.email,
+                                    password = obj.password
+                                )
+                                Spacer(
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                )
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.5f)
+                                        .padding(5.dp),
+                                    shape = RoundedCornerShape(15.dp),
+                                    elevation = 5.dp
+                                ) {
+                                    Text(
+                                        text = AnnotatedString("Export as CSV"),
+                                        textAlign = TextAlign.Center,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier.padding(10.dp)
+                                    )
+                                    Spacer(modifier = Modifier.height(10.dp))
+                                    ProfileExportFile()
+                                }
+                            }
                         }
                     }
-                    BottomNavigationMenu(selectedItem = BottomNavigationItem.PROFILE, navController = navController)
+                }
+                is Response.Error -> {
+                    Toast(message = response.message)
                 }
             }
+        },
+        bottomBar = {
+            BottomNavigationMenu(selectedItem = BottomNavigationItem.PROFILE, navController = navController)
         }
-        is Response.Error -> {
-            Toast(message = response.message)
-        }
-    }
+    )
 }
 
 @Composable
