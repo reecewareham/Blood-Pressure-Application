@@ -2,15 +2,20 @@ package com.example.bloodpressureapplication.di
 
 import com.example.bloodpressureapplication.data.AuthenticationRepositoryImpl
 import com.example.bloodpressureapplication.data.BloodPressureReadingsRepositoryImpl
+import com.example.bloodpressureapplication.data.HeartRateReadingsRepositoryImpl
 import com.example.bloodpressureapplication.data.UserRepositoryImpl
 import com.example.bloodpressureapplication.domain.repository.AuthenticationRepository
 import com.example.bloodpressureapplication.domain.repository.BloodPressureReadingsRepository
+import com.example.bloodpressureapplication.domain.repository.HeartRateReadingsRepository
 import com.example.bloodpressureapplication.domain.repository.UserRepository
 import com.example.bloodpressureapplication.domain.use_cases.*
 import com.example.bloodpressureapplication.domain.use_cases.authentication_use_cases.*
 import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.BloodPressureReadingsUseCases
 import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.GetAllReadings
 import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.UploadReading
+import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.GetAllHeartReadings
+import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.HeartRateReadingsUseCases
+import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.UploadHeartReading
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.GetUserDetails
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.SetUserDetails
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.UserUseCases
@@ -85,5 +90,18 @@ object BloodPressureAppModule {
     fun provideBloodPressureReadingsUseCases(repository: BloodPressureReadingsRepository) = BloodPressureReadingsUseCases(
         getAllReadings = GetAllReadings(repository = repository),
         uploadReading = UploadReading(repository = repository)
+    )
+
+    @Singleton
+    @Provides
+    fun provideHeartRateReadingsRepository(firebaseFirestore: FirebaseFirestore) : HeartRateReadingsRepository {
+        return HeartRateReadingsRepositoryImpl(firebaseFirestore = firebaseFirestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHeartRateReadingsUseCases(repository: HeartRateReadingsRepository) = HeartRateReadingsUseCases(
+        getAllHeartReadings = GetAllHeartReadings(repository = repository),
+        uploadHeartReading = UploadHeartReading(repository = repository)
     )
 }
