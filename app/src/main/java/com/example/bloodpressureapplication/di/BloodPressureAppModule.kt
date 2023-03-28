@@ -1,22 +1,21 @@
 package com.example.bloodpressureapplication.di
 
 import com.example.bloodpressureapplication.data.AuthenticationRepositoryImpl
-import com.example.bloodpressureapplication.data.BloodPressureReadingRepositoryImpl
+import com.example.bloodpressureapplication.data.BloodPressureReadingsRepositoryImpl
 import com.example.bloodpressureapplication.data.UserRepositoryImpl
-import com.example.bloodpressureapplication.domain.model.BloodPressureReading
 import com.example.bloodpressureapplication.domain.repository.AuthenticationRepository
-import com.example.bloodpressureapplication.domain.repository.BloodPressureReadingRepository
+import com.example.bloodpressureapplication.domain.repository.BloodPressureReadingsRepository
 import com.example.bloodpressureapplication.domain.repository.UserRepository
 import com.example.bloodpressureapplication.domain.use_cases.*
 import com.example.bloodpressureapplication.domain.use_cases.authentication_use_cases.*
-import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.BloodPressureReadingUseCases
-import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.GetUserBloodPressureReadings
+import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.BloodPressureReadingsUseCases
+import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.GetAllReadings
+import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.UploadReading
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.GetUserDetails
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.SetUserDetails
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.UserUseCases
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
@@ -77,13 +76,14 @@ object BloodPressureAppModule {
 
     @Singleton
     @Provides
-    fun provideBloodPressureReadingRepository(firebaseFirestore: FirebaseFirestore) : BloodPressureReadingRepository {
-        return BloodPressureReadingRepositoryImpl(firebaseFirestore = firebaseFirestore)
+    fun provideBloodPressureReadingsRepository(firebaseFirestore: FirebaseFirestore) : BloodPressureReadingsRepository {
+        return BloodPressureReadingsRepositoryImpl(firebaseFirestore = firebaseFirestore)
     }
 
     @Singleton
     @Provides
-    fun provideBloodPressureReadingUseCases(repository: BloodPressureReadingRepository) = BloodPressureReadingUseCases(
-        getUserBloodPressureReadings = GetUserBloodPressureReadings(repository = repository)
+    fun provideBloodPressureReadingsUseCases(repository: BloodPressureReadingsRepository) = BloodPressureReadingsUseCases(
+        getAllReadings = GetAllReadings(repository = repository),
+        uploadReading = UploadReading(repository = repository)
     )
 }

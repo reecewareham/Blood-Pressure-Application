@@ -1,32 +1,23 @@
 package com.example.bloodpressureapplication.presentation.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
-import com.example.bloodpressureapplication.BloodPressureReadingsViewModel
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.presentation.Toast
-import com.example.bloodpressureapplication.presentation.profile.ProfileExportFile
 import com.example.bloodpressureapplication.presentation.profile.UserViewModel
-import com.example.bloodpressureapplication.presentation.profile.components.MyProfile
-import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
 import com.example.bloodpressureapplication.util.Response
-import com.example.bloodpressureapplication.util.Screens
 
 
 @Composable
@@ -35,8 +26,6 @@ fun HomeScreen(
 ) {
     val userViewModel: UserViewModel = hiltViewModel()
     userViewModel.getUserInfo()
-    val bloodPressureReadingsViewModel: BloodPressureReadingsViewModel = hiltViewModel()
-    bloodPressureReadingsViewModel.getUserBloodPressureReadings()
 
     when (val response = userViewModel.getUserData.value) {
         is Response.Loading -> {
@@ -94,12 +83,11 @@ fun HomeScreen(
                             startAxis = startAxis(),        VICO GRAPH
                             bottomAxis = bottomAxis()
                         )*/
-
+                    }
                         BottomNavigationMenu(
-                            selectedItem = BottomNavigationItem.PROFILE,
+                            selectedItem = BottomNavigationItem.HOME,
                             navController = navController
                         )
-                    }
                 }
             }
         }
