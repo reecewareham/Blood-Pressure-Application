@@ -21,6 +21,7 @@ import com.example.bloodpressureapplication.presentation.Toast
 import com.example.bloodpressureapplication.presentation.track.TrackContent
 import com.example.bloodpressureapplication.presentation.track.TrackContentHeart
 import com.example.bloodpressureapplication.util.Response
+import com.example.bloodpressureapplication.util.Screens
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -75,7 +76,7 @@ fun MeasureScreen(
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
                             ),
-                            onClick = { Log.d("ClickableButton", "Manual Blood Pressure Pressed") }
+                            onClick = { navController.navigate(Screens.MeasureBloodPressureScreen.route) }
                         ) {
                             Text(text = AnnotatedString("Manual"), textAlign = TextAlign.Center)
                         }
@@ -131,7 +132,7 @@ fun MeasureScreen(
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
                             ),
-                            onClick = { Log.d("ClickableButton", "Manual Heart Rate Pressed") }
+                            onClick = { navController.navigate(Screens.MeasureHeartRateScreen.route) }
                         ) {
                             Text(text = AnnotatedString("Manual"), textAlign = TextAlign.Center)
                         }
