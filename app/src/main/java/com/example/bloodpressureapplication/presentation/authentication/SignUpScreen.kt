@@ -79,6 +79,7 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
             },
                 modifier = Modifier
                     .padding(10.dp),
+                singleLine = true,
                 label = {
                     Text(text = "Enter your email: ")
                 }
@@ -89,6 +90,7 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
             },
                 modifier = Modifier
                     .padding(10.dp),
+                singleLine = true,
                 label = {
                     Text(text = "Enter your password: ")
                 },
@@ -100,6 +102,7 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
             },
                 modifier = Modifier
                     .padding(10.dp),
+                singleLine = true,
                 label = {
                     Text(text = "Enter your first name: ")
                 }
@@ -110,6 +113,7 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
             },
                 modifier = Modifier
                     .padding(10.dp),
+                singleLine = true,
                 label = {
                     Text(text = "Enter your last name: ")
                 }
@@ -120,6 +124,7 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
             },
                 modifier = Modifier
                     .padding(10.dp),
+                singleLine = true,
                 label = {
                     Text(text = "Enter your age: ")
                 }

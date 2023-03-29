@@ -114,7 +114,7 @@ fun ProfileScreen(
                                         RoundedImage(
                                             image = rememberImagePainter(data = obj.imageUrl),
                                             modifier = Modifier
-                                                .size(100.dp)
+                                                .size(150.dp)
                                                 .weight(3.5f)
                                         )
                                     }
@@ -133,18 +133,22 @@ fun ProfileScreen(
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth(0.5f)
-                                        .padding(5.dp),
+                                        .padding(10.dp),
                                     shape = RoundedCornerShape(15.dp),
                                     elevation = 5.dp
                                 ) {
-                                    Text(
-                                        text = AnnotatedString("Export as CSV"),
-                                        textAlign = TextAlign.Center,
-                                        fontWeight = FontWeight.Bold,
-                                        modifier = Modifier.padding(10.dp)
-                                    )
-                                    Spacer(modifier = Modifier.height(10.dp))
-                                    ProfileExportFile()
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.SpaceEvenly
+                                    ) {
+                                        Text(
+                                            text = AnnotatedString("Export as CSV"),
+                                            textAlign = TextAlign.Center,
+                                            fontWeight = FontWeight.Bold,
+                                        )
+                                        Spacer(modifier = Modifier.height(5.dp))
+                                        ProfileExportFile()
+                                    }
                                 }
                             }
                         }
@@ -166,8 +170,7 @@ fun ProfileExportFile() {
 
     Button(
         modifier = Modifier
-            .fillMaxWidth(0.4f)
-            .padding(5.dp),
+            .fillMaxWidth(0.7f),
         shape = RoundedCornerShape(15.dp),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 5.dp,

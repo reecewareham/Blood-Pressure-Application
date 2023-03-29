@@ -57,7 +57,11 @@ fun MyProfile(
                 modifier = Modifier
                     .height(10.dp)
             )
-            Text(text = "Password: " + password, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
+            var hiddenPassword = ""
+            for(letter in password) {
+                hiddenPassword += "*"
+            }
+            Text(text = "Password: " + hiddenPassword, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
             Spacer(
                 modifier = Modifier
                     .height(20.dp)

@@ -75,6 +75,27 @@ fun HomeScreen(
                             )
                         }
 
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth(0.8f)
+                                .padding(10.dp),
+                        shape = RoundedCornerShape(15.dp),
+                            elevation = 5.dp
+                        ) {
+                            Text(
+                                text = "Latest Reading",
+                                fontWeight = FontWeight.Bold,
+                                lineHeight = 20.sp,
+                                fontSize = 25.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(10.dp)
+                            )
+                        }
+
+                        HomeReadings()
+
+                        HomeCheck()
+
                         /*val chartEntryModel = entryModelOf(entriesOf(4f, 12f, 8f, 16f), entriesOf(12f,16f,4f,12f))
 
                         Chart(
@@ -93,6 +114,154 @@ fun HomeScreen(
         }
         is Response.Error -> {
             Toast(message = response.message)
+        }
+    }
+}
+
+@Composable
+fun HomeReadings() {
+    Row(
+
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .padding(10.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 5.dp
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Systolic:",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 35.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+                Text(
+                    text = "100",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+                Text(
+                    text = "Diastolic:",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 35.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+                Text(
+                    text = "70",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+        }
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 5.dp
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "BPM:",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 35.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+                Text(
+                    text = "110",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+                Text(
+                    text = "Status:",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 35.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+                Text(
+                    text = "Resting",
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun HomeCheck() {
+    Column(
+
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 5.dp,
+            backgroundColor = Color.Green
+        ) {
+            Text(
+                text = "Your blood pressure is healthy. Keep it up.",
+                fontWeight = FontWeight.Bold,
+                lineHeight = 20.sp,
+                fontSize = 25.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp)
+            )
+
+        }
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 5.dp,
+            backgroundColor = Color(0xFFFFB52E)
+        ) {
+            Text(
+                text = "Your heart rate is too fast. Check ways to reduce it in the info section.",
+                fontWeight = FontWeight.Bold,
+                lineHeight = 20.sp,
+                fontSize = 25.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp)
+            )
+
         }
     }
 }

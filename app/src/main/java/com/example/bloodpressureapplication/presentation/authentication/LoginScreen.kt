@@ -67,6 +67,7 @@ fun LoginScreen(navController: NavHostController, viewModel : AuthenticationView
                 },
                     modifier = Modifier
                         .padding(10.dp),
+                    singleLine = true,
                     label = {
                         Text(text = "Enter your email: ")
                     }
@@ -78,6 +79,7 @@ fun LoginScreen(navController: NavHostController, viewModel : AuthenticationView
                     },
                     modifier = Modifier
                         .padding(10.dp),
+                    singleLine = true,
                     label = {
                         Text(text = "Enter your password: ")
                     },
