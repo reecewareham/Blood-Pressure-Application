@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.util.Response
@@ -112,7 +115,9 @@ fun ProfileScreen(
                                             )
                                     ) {
                                         RoundedImage(
-                                            image = rememberImagePainter(data = obj.imageUrl),
+                                            image = rememberAsyncImagePainter(model = ImageRequest.Builder(LocalContext.current)
+                                                .data(obj.imageUrl)
+                                                .build()),
                                             modifier = Modifier
                                                 .size(150.dp)
                                                 .weight(3.5f)

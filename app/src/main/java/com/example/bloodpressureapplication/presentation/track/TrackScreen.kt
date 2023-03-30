@@ -2,6 +2,8 @@ package com.example.bloodpressureapplication.presentation.track
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -18,6 +20,7 @@ import com.example.bloodpressureapplication.presentation.*
 import com.example.bloodpressureapplication.presentation.authentication.AuthenticationViewModel
 import com.example.bloodpressureapplication.presentation.profile.UserViewModel
 import com.example.bloodpressureapplication.util.Response
+import java.lang.reflect.Modifier
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -91,9 +94,12 @@ fun TrackScreen(
 
 @Composable
 fun TrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
-    LazyColumn {
+    LazyColumn(
+
+    ) {
         items(items = bloodPressureReadings, itemContent =  {
             ListContent(it)
+            Divider(color = Color.Black)
         })
     }
 }
@@ -111,6 +117,7 @@ fun TrackContentHeart(heartRateReadings: List<HeartRateReadings>) {
     LazyColumn {
         items(items = heartRateReadings, itemContent =  {
             ListContentHeart(it)
+            Divider(color = Color.Black)
         })
     }
 }
