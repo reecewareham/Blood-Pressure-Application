@@ -80,6 +80,8 @@ fun TrackScreen(
                     }
                 }
             }
+
+
         },
         bottomBar = {
             BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
@@ -118,5 +120,5 @@ fun ListContentHeart(it: HeartRateReadings) {
     Text(text = it.userId)
     Text(text = it.bpm.toString())
     Text(text = it.readingStatus)
-    Text(text = it.timestamp.toString())
+    Text(text = it.timestamp?.toDate().toString())
 }
