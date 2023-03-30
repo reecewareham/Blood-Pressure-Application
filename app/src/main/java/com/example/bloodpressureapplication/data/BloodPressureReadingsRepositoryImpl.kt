@@ -6,6 +6,7 @@ import com.example.bloodpressureapplication.util.Constants.COLLECTION_NAME_BLOOD
 import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -24,6 +25,28 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
         Response.Loading
         val snapshotListener = firebaseFirestore.collection(COLLECTION_NAME_BLOOD_PRESSURE_READINGS)
             .whereEqualTo("userId", userid)
+            .addSnapshotListener {snapshot, e->
+                val response = if (snapshot != null) {
+                    val bloodPressureReadingsList = snapshot.toObjects(BloodPressureReadings::class.java)
+                    Response.Success<List<BloodPressureReadings>>(bloodPressureReadingsList)
+                } else {
+                    Response.Error(e?.message?:e.toString())
+                }
+                trySend(response).isSuccess
+            }
+        awaitClose {
+            snapshotListener.remove()
+        }
+
+    }
+
+    override fun getLast5Readings(userid: String): Flow<Response<List<BloodPressureReadings>>> = callbackFlow{
+
+        Response.Loading
+        val snapshotListener = firebaseFirestore.collection(COLLECTION_NAME_BLOOD_PRESSURE_READINGS)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereEqualTo("userId", userid)
+            .limit(5)
             .addSnapshotListener {snapshot, e->
                 val response = if (snapshot != null) {
                     val bloodPressureReadingsList = snapshot.toObjects(BloodPressureReadings::class.java)

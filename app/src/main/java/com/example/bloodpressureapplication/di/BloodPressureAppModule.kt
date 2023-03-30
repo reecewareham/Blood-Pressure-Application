@@ -12,8 +12,10 @@ import com.example.bloodpressureapplication.domain.use_cases.*
 import com.example.bloodpressureapplication.domain.use_cases.authentication_use_cases.*
 import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.BloodPressureReadingsUseCases
 import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.GetAllReadings
+import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.GetLast5Readings
 import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_reading_use_cases.UploadReading
 import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.GetAllHeartReadings
+import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.GetLast5HeartReadings
 import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.HeartRateReadingsUseCases
 import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.UploadHeartReading
 import com.example.bloodpressureapplication.domain.use_cases.user_use_cases.GetUserDetails
@@ -89,6 +91,7 @@ object BloodPressureAppModule {
     @Provides
     fun provideBloodPressureReadingsUseCases(repository: BloodPressureReadingsRepository) = BloodPressureReadingsUseCases(
         getAllReadings = GetAllReadings(repository = repository),
+        getLast5Readings = GetLast5Readings(repository = repository),
         uploadReading = UploadReading(repository = repository)
     )
 
@@ -102,6 +105,7 @@ object BloodPressureAppModule {
     @Provides
     fun provideHeartRateReadingsUseCases(repository: HeartRateReadingsRepository) = HeartRateReadingsUseCases(
         getAllHeartReadings = GetAllHeartReadings(repository = repository),
+        getLast5HeartReadings = GetLast5HeartReadings(repository = repository),
         uploadHeartReading = UploadHeartReading(repository = repository)
     )
 }

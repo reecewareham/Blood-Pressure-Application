@@ -1,11 +1,14 @@
 package com.example.bloodpressureapplication.data
 
+import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.domain.repository.HeartRateReadingsRepository
+import com.example.bloodpressureapplication.util.Constants
 import com.example.bloodpressureapplication.util.Constants.COLLECTION_NAME_HEART_RATE_READINGS
 import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -24,6 +27,27 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
         Response.Loading
         val snapshotListener = firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS)
             .whereEqualTo("userId", userid)
+            .addSnapshotListener {snapshot, e->
+                val response = if (snapshot != null) {
+                    val heartRateReadingsList = snapshot.toObjects(HeartRateReadings::class.java)
+                    Response.Success<List<HeartRateReadings>>(heartRateReadingsList)
+                } else {
+                    Response.Error(e?.message?:e.toString())
+                }
+                trySend(response).isSuccess
+            }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
+    override fun getLast5HeartReadings(userid: String): Flow<Response<List<HeartRateReadings>>> = callbackFlow{
+
+        Response.Loading
+        val snapshotListener = firebaseFirestore.collection(Constants.COLLECTION_NAME_HEART_RATE_READINGS)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereEqualTo("userId", userid)
+            .limit(5)
             .addSnapshotListener {snapshot, e->
                 val response = if (snapshot != null) {
                     val heartRateReadingsList = snapshot.toObjects(HeartRateReadings::class.java)

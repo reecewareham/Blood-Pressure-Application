@@ -9,6 +9,8 @@ interface BloodPressureReadingsRepository {
 
     fun getAllReadings(userid: String) : Flow<Response<List<BloodPressureReadings>>>
 
+    fun getLast5Readings(userid: String) : Flow<Response<List<BloodPressureReadings>>>
+
     fun uploadReading(
         userId: String,
         systolicPressure: Int,

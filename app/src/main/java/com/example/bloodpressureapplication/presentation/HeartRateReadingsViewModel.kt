@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.domain.use_cases.heart_rate_reading_use_cases.HeartRateReadingsUseCases
 import com.example.bloodpressureapplication.util.Response
@@ -23,6 +24,9 @@ class HeartRateReadingsViewModel @Inject constructor(
     private val _heartRateReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
     val heartRateReadingData : State<Response<List<HeartRateReadings>>> = _heartRateReadingData
 
+    private val _heartRate5ReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
+    val heartRate5ReadingData : State<Response<List<HeartRateReadings>>> = _heartRate5ReadingData
+
     private val _uploadHeartRateReadingData = mutableStateOf<Response<Boolean>> (Response.Success(false))
     val uploadHeartRateReadingData : State<Response<Boolean>> = _uploadHeartRateReadingData
 
@@ -31,6 +35,16 @@ class HeartRateReadingsViewModel @Inject constructor(
             viewModelScope.launch {
                 heartRateReadingsUseCases.getAllHeartReadings(userid = userid).collect {
                     _heartRateReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun getLast5HeartReadings() {
+        if(userid != null) {
+            viewModelScope.launch {
+                heartRateReadingsUseCases.getLast5HeartReadings(userid = userid).collect {
+                    _heartRate5ReadingData.value = it
                 }
             }
         }

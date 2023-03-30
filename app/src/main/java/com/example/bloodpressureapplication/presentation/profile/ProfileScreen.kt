@@ -139,6 +139,8 @@ fun ProfileScreen(
                                     elevation = 5.dp
                                 ) {
                                     Column(
+                                        modifier = Modifier
+                                            .padding(10.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         verticalArrangement = Arrangement.SpaceEvenly
                                     ) {

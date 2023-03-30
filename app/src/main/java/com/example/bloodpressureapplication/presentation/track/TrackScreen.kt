@@ -25,10 +25,10 @@ fun TrackScreen(
     navController : NavController
 ) {
     val bloodPressureViewModel : BloodPressureReadingsViewModel = hiltViewModel()
-    bloodPressureViewModel.getAllReadings()
+    bloodPressureViewModel.getLast5Readings()
 
     val heartRateViewModel : HeartRateReadingsViewModel = hiltViewModel()
-    heartRateViewModel.getAllHeartReadings()
+    heartRateViewModel.getLast5HeartReadings()
 
 
     Scaffold(
@@ -46,7 +46,7 @@ fun TrackScreen(
         },
         content = {
             Column () {
-                when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+                when (val response = bloodPressureViewModel.bloodPressure5ReadingData.value) {
                     is Response.Loading -> {
                         CircularProgressIndicator()
                     }
@@ -63,7 +63,7 @@ fun TrackScreen(
                     }
                 }
 
-                when (val response = heartRateViewModel.heartRateReadingData.value) {
+                when (val response = heartRateViewModel.heartRate5ReadingData.value) {
                     is Response.Loading -> {
                         CircularProgressIndicator()
                     }
@@ -101,7 +101,7 @@ fun ListContent(it: BloodPressureReadings) {
     Text(text = it.userId)
     Text(text = it.systolicPressure.toString())
     Text(text = it.diastolicPressure.toString())
-    Text(text = it.timestamp.toString())
+    Text(text = it.timestamp?.toDate().toString())
 }
 
 @Composable

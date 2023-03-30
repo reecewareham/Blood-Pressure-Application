@@ -23,6 +23,9 @@ class BloodPressureReadingsViewModel @Inject constructor(
     private val _bloodPressureReadingData = mutableStateOf<Response<List<BloodPressureReadings>>> (Response.Loading)
     val bloodPressureReadingData : State<Response<List<BloodPressureReadings>>> = _bloodPressureReadingData
 
+    private val _bloodPressure5ReadingData = mutableStateOf<Response<List<BloodPressureReadings>>> (Response.Loading)
+    val bloodPressure5ReadingData : State<Response<List<BloodPressureReadings>>> = _bloodPressure5ReadingData
+
     private val _uploadBloodPressureReadingData = mutableStateOf<Response<Boolean>> (Response.Success(false))
     val uploadBloodPressureReadingData : State<Response<Boolean>> = _uploadBloodPressureReadingData
 
@@ -31,6 +34,16 @@ class BloodPressureReadingsViewModel @Inject constructor(
             viewModelScope.launch {
                 bloodPressureReadingsUseCases.getAllReadings(userid = userid).collect {
                     _bloodPressureReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun getLast5Readings() {
+        if(userid != null) {
+            viewModelScope.launch {
+                bloodPressureReadingsUseCases.getLast5Readings(userid = userid).collect {
+                    _bloodPressure5ReadingData.value = it
                 }
             }
         }

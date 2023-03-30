@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +37,13 @@ fun MeasureHeartRateScreen(
             TopAppBar(
                 title = {
                     Text(text = "Measure Manually", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate(Screens.MeasureScreen.route)
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                    }
                 },
                 actions = {
 

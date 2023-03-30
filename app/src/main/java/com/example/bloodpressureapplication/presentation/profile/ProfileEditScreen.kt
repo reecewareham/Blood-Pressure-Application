@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +49,14 @@ fun ProfileEditScreen(
             TopAppBar(
                 title = {
                     Text(text = "Edit Profile", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate(Screens.ProfileScreen.route)
+
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                    }
                 },
                 actions = {
 
