@@ -96,7 +96,7 @@ fun MeasureBloodPressureScreen(
 
                     Button(
                         onClick = {
-                            var timestamp = Timestamp.now()
+                                var timestamp = Timestamp.now()
                                 bloodPressureViewModel.uploadReading(
                                     systolicPressure = systolicState,
                                     diastolicPressure = diastolicState,
@@ -124,7 +124,7 @@ fun MeasureBloodPressureScreen(
                                         }
                                     }
                                 } else {
-                                    Toast(message = "Sign up failed")
+                                    Toast(message = "Upload Failed")
                                 }
                             }
                             is Response.Error -> {

@@ -8,6 +8,6 @@ interface UserRepository {
 
     fun getUserDetails(userid: String) : Flow<Response<User>>
 
-    fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String) : Flow<Response<Boolean>>
+    fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String) : Flow<Response<Boolean>>
 
 }

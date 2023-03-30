@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,7 +84,8 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                 singleLine = true,
                 label = {
                     Text(text = "Enter your email: ")
-                }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
             OutlinedTextField(value = passwordState.value, onValueChange = {
@@ -94,7 +97,8 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                 label = {
                     Text(text = "Enter your password: ")
                 },
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
             OutlinedTextField(value = firstNameState.value, onValueChange = {
@@ -105,7 +109,8 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                 singleLine = true,
                 label = {
                     Text(text = "Enter your first name: ")
-                }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
             )
 
             OutlinedTextField(value = lastNameState.value, onValueChange = {
@@ -116,7 +121,8 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                 singleLine = true,
                 label = {
                     Text(text = "Enter your last name: ")
-                }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
             )
 
             OutlinedTextField(value = ageState.value, onValueChange = {
@@ -127,7 +133,8 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                 singleLine = true,
                 label = {
                     Text(text = "Enter your age: ")
-                }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
             Button(

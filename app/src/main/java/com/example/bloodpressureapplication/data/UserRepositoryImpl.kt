@@ -36,12 +36,14 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String) : Flow<Response<Boolean>> = flow  {
+    override fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String) : Flow<Response<Boolean>> = flow  {
 
         operationSuccessful = false
 
         try {
             val userObj = mutableMapOf<String,String>()
+            userObj["email"] = email
+            userObj["password"] = password
             userObj["firstName"] = firstName
             userObj["lastName"] = lastName
             userObj["age"] = age
@@ -49,7 +51,7 @@ class UserRepositoryImpl @Inject constructor(
 
             firebaseFirestore.collection(COLLECTION_NAME_USERS).document(userid).update(userObj as Map<String,Any>)
                 .addOnSuccessListener {
-
+                    operationSuccessful = true
                 }.await()
             if (operationSuccessful) {
                 emit(Response.Success(operationSuccessful))

@@ -3,14 +3,21 @@ package com.example.bloodpressureapplication.presentation.profile.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.bloodpressureapplication.presentation.Toast
+import com.example.bloodpressureapplication.util.Response
+import com.example.bloodpressureapplication.util.Screens
 
 @Composable
 fun MyProfile(
@@ -18,7 +25,8 @@ fun MyProfile(
     lastName: String,
     age: String,
     email: String,
-    password: String
+    password: String,
+    navController: NavController
 ) {
     Card(
         modifier = Modifier
@@ -66,16 +74,20 @@ fun MyProfile(
                 modifier = Modifier
                     .height(20.dp)
             )
-            ActionButton(
-                text = "Edit Profile",
+            Button(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.45f)
-                    .height(35.dp)
-                    .clickable {
+                    .fillMaxWidth(0.5f),
+                shape = RoundedCornerShape(15.dp),
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 5.dp,
+                    pressedElevation = 7.dp,
+                    disabledElevation = 0.dp
+                ),
+                onClick = { navController.navigate(Screens.ProfileEditScreen.route) }
+            ) {
+                Text(text = AnnotatedString("Edit Profile"), textAlign = TextAlign.Center)
+            }
 
-                    }
-                )
             Spacer(
                 modifier = Modifier
                     .height(10.dp)

@@ -118,7 +118,7 @@ fun MeasureHeartRateScreen(
                                         }
                                     }
                                 } else {
-                                    Toast(message = "Sign up failed")
+                                    Toast(message = "Upload Failed")
                                 }
                             }
                             is Response.Error -> {

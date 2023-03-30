@@ -6,6 +6,6 @@ import javax.inject.Inject
 class SetUserDetails @Inject constructor(
     private val repository: UserRepository
 ){
-    operator fun invoke(userid: String, firstName: String, lastName: String, age: String, imageUrl: String) =
-        repository.setUserDetails(userid = userid, firstName = firstName, lastName = lastName, age = age, imageUrl = imageUrl)
+    operator fun invoke(userid: String, firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String) =
+        repository.setUserDetails(userid = userid, firstName = firstName, lastName = lastName, age = age, imageUrl = imageUrl, email = email, password = password)
 }

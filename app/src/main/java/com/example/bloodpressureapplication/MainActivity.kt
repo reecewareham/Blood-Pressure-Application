@@ -20,6 +20,7 @@ import com.example.bloodpressureapplication.presentation.info.InfoScreen
 import com.example.bloodpressureapplication.presentation.measure.MeasureBloodPressureScreen
 import com.example.bloodpressureapplication.presentation.measure.MeasureHeartRateScreen
 import com.example.bloodpressureapplication.presentation.measure.MeasureScreen
+import com.example.bloodpressureapplication.presentation.profile.ProfileEditScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileScreen
 import com.example.bloodpressureapplication.presentation.track.TrackScreen
 import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
@@ -75,6 +76,9 @@ fun BloodPressureAppScreen(navController: NavHostController, authenticationViewM
         }
         composable(route = Screens.MeasureHeartRateScreen.route) {
             MeasureHeartRateScreen(navController = navController)
+        }
+        composable(route = Screens.ProfileEditScreen.route) {
+            ProfileEditScreen(navController = navController)
         }
     }
 }

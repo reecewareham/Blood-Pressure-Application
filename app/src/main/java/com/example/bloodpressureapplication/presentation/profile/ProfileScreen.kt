@@ -124,7 +124,8 @@ fun ProfileScreen(
                                     lastName = obj.lastName,
                                     age = obj.age,
                                     email = obj.email,
-                                    password = obj.password
+                                    password = obj.password,
+                                    navController = navController
                                 )
                                 Spacer(
                                     modifier = Modifier
