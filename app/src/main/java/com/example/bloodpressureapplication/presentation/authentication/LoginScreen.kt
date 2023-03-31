@@ -48,7 +48,7 @@ fun LoginScreen(navController: NavHostController, viewModel : AuthenticationView
                 }
 
                 Image(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "Login Screen Logo",
                     modifier = Modifier
                         .width(250.dp)

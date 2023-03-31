@@ -77,7 +77,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "What is Blood Pressure?",
                     title = "What is Blood Pressure?"
                 )
@@ -89,7 +89,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "Understanding Blood Pressure Numbers",
                     title = "Understanding Blood Pressure Numbers"
                 )
@@ -109,7 +109,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "How to Measure Blood Pressure?",
                     title = "How to Measure Blood Pressure?"
                 )
@@ -121,7 +121,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "Blood Pressure Myths and Mistakes",
                     title = "Blood Pressure Myths and Mistakes"
                 )
@@ -141,7 +141,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "What is Hypertension?",
                     title = "What is Hypertension?"
                 )
@@ -153,7 +153,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "What is Hypotension?",
                     title = "What is Hypotension?"
                 )
@@ -173,7 +173,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "How to Prevent Hypertension?",
                     title = "How to Prevent Hypertension?"
                 )
@@ -185,7 +185,7 @@ fun InfoGrid() {
                     .padding(5.dp)
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.cat),
+                    painter = painterResource(id = R.drawable.placeholder_image),
                     contentDescription = "How to Prevent Hypotension?",
                     title = "How to Prevent Hypotension?"
                 )

@@ -60,7 +60,7 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
             }
 
             Image(
-                painter = painterResource(id = R.drawable.cat),
+                painter = painterResource(id = R.drawable.placeholder_image),
                 contentDescription = "Sign Up Screen Logo",
                 modifier = Modifier
                     .width(250.dp)
