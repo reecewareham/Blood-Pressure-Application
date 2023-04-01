@@ -10,6 +10,7 @@ interface HeartRateReadingsRepository {
 
     fun getAllHeartReadings(userid: String) : Flow<Response<List<HeartRateReadings>>>
 
+    fun getLastHeartReading(userid: String) : Flow<Response<List<HeartRateReadings>>>
     fun getLast5HeartReadings(userid: String) : Flow<Response<List<HeartRateReadings>>>
 
     fun uploadHeartReading(

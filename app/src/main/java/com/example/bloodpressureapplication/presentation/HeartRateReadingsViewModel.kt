@@ -24,6 +24,9 @@ class HeartRateReadingsViewModel @Inject constructor(
     private val _heartRateReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
     val heartRateReadingData : State<Response<List<HeartRateReadings>>> = _heartRateReadingData
 
+    private val _heartRateLastReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
+    val heartRateLastReadingData : State<Response<List<HeartRateReadings>>> = _heartRateLastReadingData
+
     private val _heartRate5ReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
     val heartRate5ReadingData : State<Response<List<HeartRateReadings>>> = _heartRate5ReadingData
 
@@ -35,6 +38,16 @@ class HeartRateReadingsViewModel @Inject constructor(
             viewModelScope.launch {
                 heartRateReadingsUseCases.getAllHeartReadings(userid = userid).collect {
                     _heartRateReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun getLastHeartReading() {
+        if(userid != null) {
+            viewModelScope.launch {
+                heartRateReadingsUseCases.getLastHeartReading(userid = userid).collect {
+                    _heartRateLastReadingData.value = it
                 }
             }
         }

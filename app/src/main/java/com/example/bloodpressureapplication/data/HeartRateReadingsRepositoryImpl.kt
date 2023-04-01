@@ -41,6 +41,27 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getLastHeartReading(userid: String): Flow<Response<List<HeartRateReadings>>> = callbackFlow{
+
+        Response.Loading
+        val snapshotListener = firebaseFirestore.collection(Constants.COLLECTION_NAME_HEART_RATE_READINGS)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .whereEqualTo("userId", userid)
+            .limit(1)
+            .addSnapshotListener {snapshot, e->
+                val response = if (snapshot != null) {
+                    val heartRateReadingsList = snapshot.toObjects(HeartRateReadings::class.java)
+                    Response.Success<List<HeartRateReadings>>(heartRateReadingsList)
+                } else {
+                    Response.Error(e?.message?:e.toString())
+                }
+                trySend(response).isSuccess
+            }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
     override fun getLast5HeartReadings(userid: String): Flow<Response<List<HeartRateReadings>>> = callbackFlow{
 
         Response.Loading

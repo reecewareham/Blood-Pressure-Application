@@ -6,5 +6,6 @@ import com.example.bloodpressureapplication.domain.use_cases.blood_pressure_read
 data class HeartRateReadingsUseCases(
     var getAllHeartReadings: GetAllHeartReadings,
     var uploadHeartReading: UploadHeartReading,
-    var getLast5HeartReadings: GetLast5HeartReadings
+    var getLast5HeartReadings: GetLast5HeartReadings,
+    var getLastHeartReading: GetLastHeartReading
 )
