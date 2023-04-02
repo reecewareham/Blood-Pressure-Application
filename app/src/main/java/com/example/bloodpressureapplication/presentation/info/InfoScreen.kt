@@ -2,25 +2,23 @@ package com.example.bloodpressureapplication.presentation.info
 
 import com.example.bloodpressureapplication.R
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,26 +27,82 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
+import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun InfoScreen(
     navController : NavController
 ) {
+
+
     Scaffold(
         topBar = {
-            TopAppBar(
+            TopAppBar (
                 title = {
-                    Text(text = "Info", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Information", fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 },
                 actions = {
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                )
             )
         },
         content = {
-            InfoGrid()
+
+            val pagerState = rememberPagerState()
+            val coroutineScope = rememberCoroutineScope()
+            val tabRowItems = listOf(
+                TabRowItem(
+                    title = "Blood Pressure",
+                    icon = Icons.Default.Home,
+                    screen = {BloodPressureInfoGrid()}
+                ),
+                TabRowItem(
+                    title = "Heart Rate",
+                    icon = Icons.Default.Home,
+                    screen = { HeartRateInfoGrid() }
+                )
+            )
+
+            Column(modifier = Modifier.fillMaxSize()
+                .padding(top = it.calculateTopPadding())) {
+                TabRow(
+                    selectedTabIndex = pagerState.currentPage,
+                    indicator = {tabPosition ->
+                        TabRowDefaults.Indicator(
+                            height = 5.dp,
+                            modifier = Modifier.tabIndicatorOffset(tabPosition[pagerState.currentPage])
+                        )
+                    }
+                ) {
+                    tabRowItems.forEachIndexed {index, item ->
+                        Tab(
+                            selected = pagerState.currentPage == index,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
+                                }
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = ""
+                                )
+                            },
+                            text = {
+                                Text(text = item.title)
+                            }
+                        )
+                    }
+                }
+                
+                HorizontalPager(pageCount = tabRowItems.size, state = pagerState) {
+                    tabRowItems[pagerState.currentPage].screen()
+                }
+            }
         },
         bottomBar = {
             BottomNavigationMenu(selectedItem = BottomNavigationItem.INFO, navController = navController)
@@ -57,7 +111,7 @@ fun InfoScreen(
 }
 
 @Composable
-fun InfoGrid() {
+fun BloodPressureInfoGrid() {
     Column(
         modifier = Modifier
             .padding(10.dp)
@@ -210,6 +264,162 @@ fun InfoGrid() {
         }
     }
 }
+
+@Composable
+fun HeartRateInfoGrid() {
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+
+        ) {
+        Row(
+            modifier = Modifier
+            ,
+            horizontalArrangement = Arrangement.SpaceEvenly
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "What is Blood Pressure?",
+                    title = "test"
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "Understanding Blood Pressure Numbers",
+                    title = "Understanding Blood Pressure Numbers"
+                )
+            }
+
+        }
+
+        Row(
+            modifier = Modifier
+            ,
+            horizontalArrangement = Arrangement.SpaceEvenly
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "How to Measure Blood Pressure?",
+                    title = "How to Measure Blood Pressure?"
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "Blood Pressure Myths and Mistakes",
+                    title = "Blood Pressure Myths and Mistakes"
+                )
+            }
+
+        }
+
+        Row(
+            modifier = Modifier
+            ,
+            horizontalArrangement = Arrangement.SpaceEvenly
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "What is Hypertension?",
+                    title = "What is Hypertension?"
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "What is Hypotension?",
+                    title = "What is Hypotension?"
+                )
+            }
+
+        }
+
+        Row(
+            modifier = Modifier
+            ,
+            horizontalArrangement = Arrangement.SpaceEvenly
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "How to Prevent Hypertension?",
+                    title = "How to Prevent Hypertension?"
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+            ) {
+                InfoCard(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "How to Prevent Hypotension?",
+                    title = "How to Prevent Hypotension?"
+                )
+            }
+
+        }
+
+        Row(
+            modifier = Modifier
+            ,
+            horizontalArrangement = Arrangement.SpaceEvenly
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .height(25.dp)
+            ) {
+            }
+
+        }
+    }
+}
+
 @Composable
 fun InfoCard(
     painter: Painter,
@@ -220,7 +430,7 @@ fun InfoCard(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
+        elevation = CardDefaults.cardElevation()
     ) {
         Box(
             modifier = Modifier
@@ -255,29 +465,10 @@ fun InfoCard(
             )
         }
     }
-
 }
-/*
 
-
-InfoCard(
-painter = painterResource(id = R.drawable.cat),
-contentDescription = "What is Hypertension?",
-title = "What is Hypertension?"
+data class TabRowItem(
+    val title : String,
+    val icon : ImageVector,
+    val screen : @Composable () -> Unit
 )
-InfoCard(
-painter = painterResource(id = R.drawable.cat),
-contentDescription = "What is Hypotension?",
-title = "What is Hypotension?"
-)
-
-InfoCard(
-painter = painterResource(id = R.drawable.cat),
-contentDescription = "How to Prevent Hypertension?",
-title = "How to Prevent Hypertension?"
-)
-InfoCard(
-painter = painterResource(id = R.drawable.cat),
-contentDescription = "How to Prevent Hypotension?",
-title = "How to Prevent Hypotension?"
-)*/

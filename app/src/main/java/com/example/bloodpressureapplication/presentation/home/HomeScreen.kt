@@ -19,13 +19,9 @@ import androidx.navigation.NavController
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
-import com.example.bloodpressureapplication.presentation.info.InfoGrid
 import com.example.bloodpressureapplication.presentation.profile.UserViewModel
 import com.example.bloodpressureapplication.presentation.track.*
-import com.example.bloodpressureapplication.presentation.track.ComposeChart6
 import com.example.bloodpressureapplication.util.Response
-import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
-import com.patrykandpatrick.vico.core.entry.FloatEntry
 import java.util.*
 
 var systolicValue = arrayListOf<String>()
@@ -303,8 +299,8 @@ fun AddToHeartList(it: HeartRateReadings) {
 
 @Composable
 fun HomeCheck() {
-        var colour = checkReading(systolicValue[0].toInt(), diastolicValue[0].toInt())
-        var text = checkReadingText(systolicValue[0].toInt(), diastolicValue[0].toInt())
+        val colour = checkReading(systolicValue[0].toInt(), diastolicValue[0].toInt())
+        val text = checkReadingText(systolicValue[0].toInt(), diastolicValue[0].toInt())
         Column(
 
         ) {
