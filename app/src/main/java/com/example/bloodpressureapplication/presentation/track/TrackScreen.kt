@@ -2,11 +2,9 @@ package com.example.bloodpressureapplication.presentation.track
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +12,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
@@ -25,28 +24,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.bloodpressureapplication.R
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
-import com.example.bloodpressureapplication.presentation.info.BloodPressureInfoGrid
-import com.example.bloodpressureapplication.presentation.info.HeartRateInfoGrid
 import com.example.bloodpressureapplication.presentation.info.TabRowItem
 import com.example.bloodpressureapplication.util.Response
+import com.example.bloodpressureapplication.util.Screens
 import com.example.bloodpressureapplication.util.rememberChartStyle
 import com.example.bloodpressureapplication.util.rememberMarker
 import com.patrykandpatrick.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.startAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.column.columnChart
-import com.patrykandpatrick.vico.compose.chart.line.lineChart
 import com.patrykandpatrick.vico.compose.component.shapeComponent
 import com.patrykandpatrick.vico.compose.component.textComponent
 import com.patrykandpatrick.vico.compose.dimensions.dimensionsOf
@@ -57,12 +52,10 @@ import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.axis.AxisPosition
 import com.patrykandpatrick.vico.core.axis.formatter.AxisValueFormatter
 import com.patrykandpatrick.vico.core.chart.column.ColumnChart
-import com.patrykandpatrick.vico.core.chart.decoration.ThresholdLine
 import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.entry.*
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.util.Calendar
 
 var systolic5Values = arrayListOf<Float>()
@@ -200,6 +193,13 @@ fun TrackScreen(
     },
         bottomBar = {
             BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navController.navigate(Screens.MeasureScreen.route) },
+            ) {
+                Icon(Icons.Filled.Add, "Add Reading")
+            }
         }
     )
 }
@@ -302,9 +302,9 @@ fun ListContent(it: BloodPressureReadings) {
     systolic5Values.add(0,sys)
     diastolic5Values.add(0,dia)
 
-    var test = Calendar.getInstance()
+    val test = Calendar.getInstance()
     test.time = it.timestamp?.toDate()
-    var date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+    val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
     date5Values.add(0,date)
 
@@ -313,9 +313,9 @@ fun ListContent(it: BloodPressureReadings) {
 @Composable
 fun ListOfReadingsBar(it: BloodPressureReadings) {
 
-    var test = Calendar.getInstance()
+    val test = Calendar.getInstance()
     test.time = it.timestamp?.toDate()
-    var date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+    val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
     Row(
         modifier = Modifier,
@@ -390,15 +390,15 @@ fun ListContentHeart(it: HeartRateReadings) {
     Text(text = it.bpm.toString())
     Text(text = it.readingStatus)
 
-    var cal = Calendar.getInstance()
+    val cal = Calendar.getInstance()
     cal.time = it.timestamp?.toDate()
-    var date = (cal.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((cal.get(Calendar.MONTH) + 1).toString())
+    val date = (cal.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((cal.get(Calendar.MONTH) + 1).toString())
 
     dateHeartValues.add(0,date)
 }
 
 fun checkReading(systolic: Int, diastolic: Int): Color {
-    var colour : Color
+    val colour : Color
     if (systolic < 90 || diastolic < 60) {
         //Hypotension
         colour = Color(0xFF3aeaf0)
@@ -422,7 +422,7 @@ fun checkReading(systolic: Int, diastolic: Int): Color {
 }
 
 fun checkReadingText(systolic: Int, diastolic: Int): String {
-    var text : String
+    val text : String
     if (systolic < 90 || diastolic < 60) {
         //Hypotension
         text = "Your last blood pressure reading is too low and shows Hypotension. Consult the info page on ways to raise it."

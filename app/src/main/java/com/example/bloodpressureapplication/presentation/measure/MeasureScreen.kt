@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,10 +18,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
-import com.example.bloodpressureapplication.presentation.Toast
-import com.example.bloodpressureapplication.presentation.track.TrackContent
-import com.example.bloodpressureapplication.presentation.track.TrackContentHeart
-import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +31,13 @@ fun MeasureScreen(
             TopAppBar(
                 title = {
                     Text(text = "Measure", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate(Screens.TrackScreen.route)
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                    }
                 },
                 actions = {
 
@@ -163,7 +167,7 @@ fun MeasureScreen(
             }
         },
         bottomBar = {
-            BottomNavigationMenu(selectedItem = BottomNavigationItem.MEASURE, navController = navController)
+            BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
         }
     )
 }

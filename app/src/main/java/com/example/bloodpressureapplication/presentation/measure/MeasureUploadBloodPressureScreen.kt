@@ -14,23 +14,17 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chargemap.compose.numberpicker.NumberPicker
-import com.example.bloodpressureapplication.R
 import com.example.bloodpressureapplication.presentation.BloodPressureReadingsViewModel
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.presentation.Toast
-import com.example.bloodpressureapplication.presentation.profile.UserViewModel
-import com.example.bloodpressureapplication.presentation.track.TrackContent
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.google.firebase.Timestamp
@@ -110,7 +104,7 @@ fun MeasureBloodPressureScreen(
 
                     Button(
                         onClick = {
-                                var timestamp = Timestamp.now()
+                                val timestamp = Timestamp.now()
                                 bloodPressureViewModel.uploadReading(
                                     systolicPressure = systolicState,
                                     diastolicPressure = diastolicState,
@@ -150,7 +144,7 @@ fun MeasureBloodPressureScreen(
             }
         },
         bottomBar = {
-            BottomNavigationMenu(selectedItem = BottomNavigationItem.MEASURE, navController = navController)
+            BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
         }
     )
 }

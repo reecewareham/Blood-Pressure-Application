@@ -13,7 +13,6 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -104,7 +103,7 @@ fun MeasureHeartRateScreen(
 
                     Button(
                         onClick = {
-                            var timestamp = Timestamp.now()
+                            val timestamp = Timestamp.now()
                             heartRateViewModel.uploadHeartReading(
                                 bpm = bpmState,
                                 readingStatus = statusState,
@@ -144,7 +143,7 @@ fun MeasureHeartRateScreen(
             }
         },
         bottomBar = {
-            BottomNavigationMenu(selectedItem = BottomNavigationItem.MEASURE, navController = navController)
+            BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
         }
     )
 }
