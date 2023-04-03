@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +27,8 @@ import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.google.firebase.Timestamp
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MeasureHeartRateScreen(
     navController : NavController
@@ -48,8 +52,9 @@ fun MeasureHeartRateScreen(
                 actions = {
 
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                )
             )
         },
         content = {

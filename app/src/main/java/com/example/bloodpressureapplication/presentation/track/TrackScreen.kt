@@ -4,15 +4,25 @@ import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -26,6 +36,9 @@ import com.example.bloodpressureapplication.R
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
+import com.example.bloodpressureapplication.presentation.info.BloodPressureInfoGrid
+import com.example.bloodpressureapplication.presentation.info.HeartRateInfoGrid
+import com.example.bloodpressureapplication.presentation.info.TabRowItem
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.rememberChartStyle
 import com.example.bloodpressureapplication.util.rememberMarker
@@ -48,6 +61,7 @@ import com.patrykandpatrick.vico.core.chart.decoration.ThresholdLine
 import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.entry.*
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.util.Calendar
 
@@ -56,12 +70,20 @@ var diastolic5Values = arrayListOf<Float>()
 var date5Values = arrayListOf<String>()
 var bloodPressureGraph = false
 
+var chartEntryModel = ChartEntryModelProducer()
+
+var bloodPressure5Readings = listOf<BloodPressureReadings>()
+var bloodPressureReadings = listOf<BloodPressureReadings>()
+var hasBlood5Readings = false
+var hasBloodReadings = false
+
 var bpmValues = arrayListOf<Float>()
 var statusValues = arrayListOf<String>()
 var dateHeartValues = arrayListOf<String>()
 var heartRateGraph = false
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TrackScreen(
     navController : NavController
@@ -83,119 +105,169 @@ fun TrackScreen(
                 actions = {
 
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                )
             )
         },
         content = {
-            Column (
-                modifier = Modifier
-                    .padding(10.dp)
-                    ) {
-                Card (
 
-                        ) {
-                    when (val response = bloodPressureViewModel.bloodPressure5ReadingData.value) {
-                        is Response.Loading -> {
-                            CircularProgressIndicator()
-                        }
-                        is Response.Success -> {
-                            val obj = response.data
-                            Column(
-
-                            ) {
-                                TrackContent(obj)
-                            }
-                        }
-                        is Response.Error -> {
-                            Toast(message = response.message)
-                        }
-                    }
+            when (val response = bloodPressureViewModel.bloodPressure5ReadingData.value) {
+                is Response.Loading -> {
+                    CircularProgressIndicator()
                 }
-
-                Spacer(
-                    modifier = Modifier
-                        .padding(5.dp)
-                )
-
-                Card (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-
-                    when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
-                        is Response.Loading -> {
-                            CircularProgressIndicator()
-                        }
-                        is Response.Success -> {
-                            val obj = response.data
-                            Column(
-
-                            ) {
-                                ListOfReadings(obj)
-                            }
-                        }
-                        is Response.Error -> {
-                            Toast(message = response.message)
-                        }
-                    }
+                is Response.Success -> {
+                    val obj = response.data
+                        bloodPressure5Readings = obj
+                        hasBlood5Readings = true
                 }
-
-                Spacer(
-                    modifier = Modifier
-                        .padding(5.dp)
-                )
-
-                if(bloodPressureGraph) {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        shape = RoundedCornerShape(15.dp),
-                        elevation = 5.dp,
-                        backgroundColor = checkReading(
-                            systolic5Values[4].toInt(),
-                            diastolic5Values[4].toInt()
-                        )
-                    ) {
-                        Text(
-                            text = checkReadingText(
-                                systolic5Values[4].toInt(),
-                                diastolic5Values[4].toInt()
-                            ),
-                            fontWeight = FontWeight.Bold,
-                            lineHeight = 20.sp,
-                            fontSize = 25.sp,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp)
-                        )
-
-                    }
+                is Response.Error -> {
+                    Toast(message = response.message)
                 }
-
-               /* when (val response = heartRateViewModel.heartRate5ReadingData.value) {
-                    is Response.Loading -> {
-                        CircularProgressIndicator()
-                    }
-                    is Response.Success -> {
-                        val obj = response.data
-                        Column(
-
-                        ) {
-                            TrackContentHeart(obj)
-                        }
-                    }
-                    is Response.Error -> {
-                        Toast(message = response.message)
-                    }
-                }*/
             }
 
-        },
+            when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+                is Response.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is Response.Success -> {
+                    val obj = response.data
+                        bloodPressureReadings = obj
+                        hasBloodReadings = true
+                }
+                is Response.Error -> {
+                    Toast(message = response.message)
+                }
+            }
+
+            if (hasBlood5Readings && hasBloodReadings) {
+                TrackContent(bloodPressure5Readings)
+
+                val pagerState = rememberPagerState()
+                val coroutineScope = rememberCoroutineScope()
+                val tabRowItems = listOf(
+                    TabRowItem(
+                        title = "Blood Pressure",
+                        icon = Icons.Default.Home,
+                        screen = { BloodPressureTrack() }
+                    ),
+                    TabRowItem(
+                        title = "Heart Rate",
+                        icon = Icons.Default.Home,
+                        screen = { HeartRateTrack() }
+                    )
+                )
+
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                        .padding(top = it.calculateTopPadding())
+                ) {
+                    TabRow(
+                        selectedTabIndex = pagerState.currentPage,
+                        indicator = { tabPosition ->
+                            TabRowDefaults.Indicator(
+                                height = 5.dp,
+                                modifier = Modifier.tabIndicatorOffset(tabPosition[pagerState.currentPage])
+                            )
+                        }
+                    ) {
+                        tabRowItems.forEachIndexed { index, item ->
+                            Tab(
+                                selected = pagerState.currentPage == index,
+                                onClick = {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(index)
+                                    }
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = item.icon,
+                                        contentDescription = ""
+                                    )
+                                },
+                                text = {
+                                    Text(text = item.title)
+                                }
+                            )
+                        }
+                    }
+
+                    HorizontalPager(pageCount = tabRowItems.size, state = pagerState) {
+                        tabRowItems[pagerState.currentPage].screen()
+                    }
+                }
+            }
+    },
         bottomBar = {
             BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
         }
     )
+}
+
+@Composable
+fun BloodPressureTrack() {
+
+    Column (
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
+        if (bloodPressureGraph) {
+            Card(
+
+            ) {
+                ComposeChart6(chartEntryModelProducer = chartEntryModel)
+            }
+        }
+        Spacer(
+            modifier = Modifier
+                .padding(5.dp)
+        )
+
+        Card (
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            ListOfReadings(bloodPressureReadings)
+        }
+
+        Spacer(
+            modifier = Modifier
+                .padding(5.dp)
+        )
+
+        if(bloodPressureGraph) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                shape = RoundedCornerShape(15.dp),
+                elevation = CardDefaults.cardElevation(),
+                colors = CardDefaults.cardColors(
+                    checkReading(
+                        systolic5Values[4].toInt(),
+                        diastolic5Values[4].toInt()
+                    ))
+            ) {
+                Text(
+                    text = checkReadingText(
+                        systolic5Values[4].toInt(),
+                        diastolic5Values[4].toInt()
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+
+            }
+        }
+    }
+}
+
+@Composable
+fun HeartRateTrack() {
+
 }
 
 @Composable
@@ -216,9 +288,8 @@ fun TrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
         ) {
             fun getSys() = List(5) { FloatEntry(it.toFloat(), systolic5Values.elementAt(it)) }
             fun getDia() = List(5) { FloatEntry(it.toFloat(), diastolic5Values.elementAt(it)) }
-            val chartEntryModel = ChartEntryModelProducer(getSys(), getDia())
+            chartEntryModel = ChartEntryModelProducer(getSys(), getDia())
 
-            ComposeChart6(chartEntryModelProducer = chartEntryModel)
         }
     }
 }
@@ -428,8 +499,6 @@ private fun rememberLegend() =
 
 private val color1 = Color.Blue //1st bar
 private val color2 = Color.Green //2nd bar
-private val color3 = Color.Yellow//unknown
-private val color4 = Color.Red//Threshold
 private val chartColors = listOf(color1, color2)
 private val bottomAxisValueFormatter =
     AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> date5Values[x.toInt() % date5Values.size] }

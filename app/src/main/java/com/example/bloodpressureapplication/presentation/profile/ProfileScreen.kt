@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +31,8 @@ import com.example.bloodpressureapplication.presentation.profile.components.MyPr
 import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
 import com.example.bloodpressureapplication.util.Screens
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(
     navController : NavController
@@ -77,8 +78,9 @@ fun ProfileScreen(
                         }
                     }
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                )
             )
         },
         content = {
@@ -93,6 +95,7 @@ fun ProfileScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .padding(top = it.calculateTopPadding())
                         ) {
                             Column(
                                 modifier = Modifier
@@ -141,11 +144,12 @@ fun ProfileScreen(
                                         .fillMaxWidth(0.5f)
                                         .padding(10.dp),
                                     shape = RoundedCornerShape(15.dp),
-                                    elevation = 5.dp
+                                    elevation = CardDefaults.cardElevation()
                                 ) {
                                     Column(
                                         modifier = Modifier
-                                            .padding(10.dp),
+                                            .padding(10.dp)
+                                            .align(Alignment.CenterHorizontally),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         verticalArrangement = Arrangement.SpaceEvenly
                                     ) {
@@ -180,7 +184,7 @@ fun ProfileExportFile() {
         modifier = Modifier
             .fillMaxWidth(0.7f),
         shape = RoundedCornerShape(15.dp),
-        elevation = ButtonDefaults.elevation(
+        elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 5.dp,
             pressedElevation = 7.dp,
             disabledElevation = 0.dp

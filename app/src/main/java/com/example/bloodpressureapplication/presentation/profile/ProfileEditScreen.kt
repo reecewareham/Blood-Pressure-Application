@@ -6,9 +6,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -35,7 +38,8 @@ import com.example.bloodpressureapplication.presentation.profile.components.Roun
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileEditScreen(
     navController: NavHostController
@@ -61,8 +65,9 @@ fun ProfileEditScreen(
                 actions = {
 
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                )
             )
         },
         content = {

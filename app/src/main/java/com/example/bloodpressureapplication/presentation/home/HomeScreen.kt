@@ -4,8 +4,14 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +37,8 @@ var bpmValue = arrayListOf<String>()
 var statusValue = arrayListOf<String>()
 var gotHeartReading = false
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navController : NavController
@@ -53,19 +60,21 @@ fun HomeScreen(
                 },
                 actions = {
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
             )
         },
         content = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(top = it.calculateTopPadding()),
             ) {
                 Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .align(Alignment.CenterHorizontally)
+                        .weight(1f)
                 ) {
                     when (val response = userViewModel.getUserData.value) {
                         is Response.Loading -> {
@@ -73,15 +82,13 @@ fun HomeScreen(
                         }
                         is Response.Success -> {
                             val obj = response.data
-                            Column(
 
-                            ) {
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(15.dp),
                                     shape = RoundedCornerShape(15.dp),
-                                    elevation = 5.dp,
+                                    elevation = CardDefaults.cardElevation(),
                                 ) {
                                     if (obj != null) {
                                         Text(
@@ -90,10 +97,11 @@ fun HomeScreen(
                                             lineHeight = 20.sp,
                                             fontSize = 40.sp,
                                             textAlign = TextAlign.Center,
-                                            modifier = Modifier.padding(10.dp)
+                                            modifier = Modifier
+                                                .padding(10.dp)
+                                                .align(Alignment.CenterHorizontally)
                                         )
                                     }
-                                }
                             }
                         }
                         is Response.Error -> {
@@ -106,7 +114,7 @@ fun HomeScreen(
                             .fillMaxWidth(0.8f)
                             .padding(10.dp),
                         shape = RoundedCornerShape(15.dp),
-                        elevation = 5.dp
+                        elevation = CardDefaults.cardElevation()
                     ) {
                         Text(
                             text = "Latest Reading",
@@ -114,7 +122,9 @@ fun HomeScreen(
                             lineHeight = 20.sp,
                             fontSize = 25.sp,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp)
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .align(Alignment.CenterHorizontally)
                         )
                     }
 
@@ -133,45 +143,55 @@ fun HomeScreen(
                                             .fillMaxWidth(0.5f)
                                             .padding(10.dp),
                                         shape = RoundedCornerShape(15.dp),
-                                        elevation = 5.dp
+                                        elevation = CardDefaults.cardElevation()
                                     ) {
                                         Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterHorizontally)
                                         ) {
                                             Text(
                                                 text = "Systolic:",
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 35.sp,
+                                                fontSize = 25.sp,
                                                 textAlign = TextAlign.Center,
-                                                modifier = Modifier.padding(10.dp)
+                                                modifier = Modifier
+                                                    .padding(10.dp)
+                                                    .align(Alignment.CenterHorizontally)
                                             )
 
                                             Text(
                                                 text = systolicValue[0],
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 30.sp,
+                                                fontSize = 40.sp,
                                                 textAlign = TextAlign.Center,
-                                                modifier = Modifier.padding(10.dp)
+                                                modifier = Modifier
+                                                    .padding(10.dp)
+                                                    .align(Alignment.CenterHorizontally)
                                             )
 
                                             Text(
                                                 text = "Diastolic:",
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 35.sp,
+                                                fontSize = 25.sp,
                                                 textAlign = TextAlign.Center,
-                                                modifier = Modifier.padding(10.dp)
+                                                modifier = Modifier
+                                                    .padding(10.dp)
+                                                    .align(Alignment.CenterHorizontally)
                                             )
 
                                             Text(
                                                 text = diastolicValue[0],
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 30.sp,
+                                                fontSize = 40.sp,
                                                 textAlign = TextAlign.Center,
-                                                modifier = Modifier.padding(10.dp)
+                                                modifier = Modifier
+                                                    .padding(10.dp)
+                                                    .align(Alignment.CenterHorizontally)
                                             )
                                         }
                                     }
@@ -195,16 +215,18 @@ fun HomeScreen(
                                             .fillMaxWidth()
                                             .padding(10.dp),
                                         shape = RoundedCornerShape(15.dp),
-                                        elevation = 5.dp
+                                        elevation = CardDefaults.cardElevation()
                                     ) {
                                         Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .align(Alignment.CenterHorizontally)
                                         ) {
                                             Text(
                                                 text = "BPM:",
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 35.sp,
+                                                fontSize = 25.sp,
                                                 textAlign = TextAlign.Center,
                                                 modifier = Modifier.padding(10.dp)
                                             )
@@ -213,7 +235,7 @@ fun HomeScreen(
                                                 text = bpmValue[0],
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 30.sp,
+                                                fontSize = 40.sp,
                                                 textAlign = TextAlign.Center,
                                                 modifier = Modifier.padding(10.dp)
                                             )
@@ -222,7 +244,7 @@ fun HomeScreen(
                                                 text = "Status:",
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 35.sp,
+                                                fontSize = 25.sp,
                                                 textAlign = TextAlign.Center,
                                                 modifier = Modifier.padding(10.dp)
                                             )
@@ -231,7 +253,7 @@ fun HomeScreen(
                                                 text = statusValue[0],
                                                 fontWeight = FontWeight.Bold,
                                                 lineHeight = 20.sp,
-                                                fontSize = 30.sp,
+                                                fontSize = 40.sp,
                                                 textAlign = TextAlign.Center,
                                                 modifier = Modifier.padding(10.dp)
                                             )
@@ -309,14 +331,14 @@ fun HomeCheck() {
                     .fillMaxWidth()
                     .padding(10.dp),
                 shape = RoundedCornerShape(15.dp),
-                elevation = 5.dp,
-                backgroundColor = colour
+                elevation = CardDefaults.cardElevation(),
+                colors = CardDefaults.cardColors(containerColor = colour)
             ) {
                 Text(
                     text = text,
                     fontWeight = FontWeight.Bold,
                     lineHeight = 20.sp,
-                    fontSize = 25.sp,
+                    fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(10.dp)
                 )
@@ -328,14 +350,14 @@ fun HomeCheck() {
                     .fillMaxWidth()
                     .padding(10.dp),
                 shape = RoundedCornerShape(15.dp),
-                elevation = 5.dp,
-                backgroundColor = Color(0xFFFFB52E)
+                elevation = CardDefaults.cardElevation(),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFB52E))
             ) {
                 Text(
                     text = "Your heart rate is too fast. Check ways to reduce it in the info section.",
                     fontWeight = FontWeight.Bold,
                     lineHeight = 20.sp,
-                    fontSize = 25.sp,
+                    fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(10.dp)
                 )

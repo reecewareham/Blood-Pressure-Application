@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +23,8 @@ import com.example.bloodpressureapplication.presentation.track.TrackContentHeart
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MeasureScreen(
     navController : NavController
@@ -37,8 +38,9 @@ fun MeasureScreen(
                 actions = {
 
                 },
-                backgroundColor = Color.White,
-                elevation = 10.dp
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                )
             )
         },
         content = {
@@ -46,17 +48,20 @@ fun MeasureScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(top = it.calculateTopPadding())
             ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .padding(10.dp),
                     shape = RoundedCornerShape(15.dp),
-                    elevation = 5.dp,
+                    elevation = CardDefaults.cardElevation(),
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceEvenly
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                     ) {
                         Text(
                             text = "Measure Blood Pressure",
@@ -71,7 +76,7 @@ fun MeasureScreen(
                             modifier = Modifier
                                 .fillMaxWidth(0.5f),
                             shape = RoundedCornerShape(15.dp),
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 5.dp,
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
@@ -85,7 +90,7 @@ fun MeasureScreen(
                             modifier = Modifier
                                 .fillMaxWidth(0.5f),
                             shape = RoundedCornerShape(15.dp),
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 5.dp,
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
@@ -108,11 +113,13 @@ fun MeasureScreen(
                         .fillMaxWidth(0.8f)
                         .padding(10.dp),
                     shape = RoundedCornerShape(15.dp),
-                    elevation = 5.dp
+                    elevation = CardDefaults.cardElevation()
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceEvenly
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                     ) {
                         Text(
                             text = "Measure Heart Rate",
@@ -127,7 +134,7 @@ fun MeasureScreen(
                             modifier = Modifier
                                 .fillMaxWidth(0.5f),
                             shape = RoundedCornerShape(15.dp),
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 5.dp,
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
@@ -141,7 +148,7 @@ fun MeasureScreen(
                             modifier = Modifier
                                 .fillMaxWidth(0.5f),
                             shape = RoundedCornerShape(15.dp),
-                            elevation = ButtonDefaults.elevation(
+                            elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 5.dp,
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
