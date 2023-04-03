@@ -22,7 +22,10 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -152,7 +155,8 @@ fun TrackScreen(
                 )
 
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         .padding(top = it.calculateTopPadding())
                 ) {
                     TabRow(
@@ -317,22 +321,64 @@ fun ListOfReadingsBar(it: BloodPressureReadings) {
     test.time = it.timestamp?.toDate()
     val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
-    Row(
-        modifier = Modifier,
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        Canvas(
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .size(size = 50.dp)
+                .padding(5.dp)
         ) {
-            drawCircle(
-                color = checkReading(it.systolicPressure, it.diastolicPressure)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.15f),
+                contentAlignment = Alignment.Center
+
+            ) {
+                Text(
+                    text = "$date",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .padding(3.dp)
             )
+            Canvas(
+                modifier = Modifier
+                    .size(width = 20.dp, height = 50.dp)
+            ) {
+                drawRoundRect(
+                    color = checkReading(it.systolicPressure, it.diastolicPressure),
+                    size = Size(width = 20.dp.toPx(), height = 50.dp.toPx()),
+                    cornerRadius = CornerRadius(x = 20.dp.toPx(), y = 20.dp.toPx())
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .padding(5.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.4f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Sys: " + it.systolicPressure.toString(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Dia: " + it.diastolicPressure.toString(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
         }
-        Text(text = "Systolic: " + it.systolicPressure.toString())
-        Text(text = "Diastolic: " + it.diastolicPressure.toString())
-        Text(text = "Date: $date")
-    }
 }
 
 @Composable
