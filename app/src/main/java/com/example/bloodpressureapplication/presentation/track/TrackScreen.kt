@@ -227,11 +227,30 @@ fun BloodPressureTrack() {
                 .padding(5.dp)
         )
 
-        Card (
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(10.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = CardDefaults.cardElevation(),
+            colors = CardDefaults.cardColors(
+                checkReading(
+                    systolic5Values[4].toInt(),
+                    diastolic5Values[4].toInt()
+                ))
         ) {
-            ListOfReadings(bloodPressureReadings)
+            Text(
+                text = checkReadingText(
+                    systolic5Values[4].toInt(),
+                    diastolic5Values[4].toInt()
+                ),
+                fontWeight = FontWeight.Bold,
+                lineHeight = 20.sp,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp)
+            )
+
         }
 
         Spacer(
@@ -240,30 +259,12 @@ fun BloodPressureTrack() {
         )
 
         if(bloodPressureGraph) {
-            Card(
+
+            Card (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
-                shape = RoundedCornerShape(15.dp),
-                elevation = CardDefaults.cardElevation(),
-                colors = CardDefaults.cardColors(
-                    checkReading(
-                        systolic5Values[4].toInt(),
-                        diastolic5Values[4].toInt()
-                    ))
             ) {
-                Text(
-                    text = checkReadingText(
-                        systolic5Values[4].toInt(),
-                        diastolic5Values[4].toInt()
-                    ),
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 20.sp,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp)
-                )
-
+                ListOfReadings(bloodPressureReadings)
             }
         }
     }
@@ -385,7 +386,7 @@ fun ListOfReadingsBar(it: BloodPressureReadings) {
 fun ListOfReadings(bloodPressureReadings: List<BloodPressureReadings>) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxHeight(0.6f)
+            .fillMaxHeight(0.85f)
     ) {
         items(items = bloodPressureReadings, itemContent =  {
             Card(
