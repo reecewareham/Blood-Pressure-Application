@@ -26,6 +26,7 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
 
         Response.Loading
         val snapshotListener = firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .whereEqualTo("userId", userid)
             .addSnapshotListener {snapshot, e->
                 val response = if (snapshot != null) {

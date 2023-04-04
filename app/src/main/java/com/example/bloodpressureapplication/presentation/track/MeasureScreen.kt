@@ -1,4 +1,4 @@
-package com.example.bloodpressureapplication.presentation.measure
+package com.example.bloodpressureapplication.presentation.reminders
 
 import android.annotation.SuppressLint
 import android.util.Log

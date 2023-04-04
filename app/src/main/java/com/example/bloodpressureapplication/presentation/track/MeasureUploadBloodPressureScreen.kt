@@ -1,4 +1,4 @@
-package com.example.bloodpressureapplication.presentation.measure
+package com.example.bloodpressureapplication.presentation.reminders
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -19,9 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.chargemap.compose.numberpicker.ListItemPicker
 import com.chargemap.compose.numberpicker.NumberPicker
-import com.example.bloodpressureapplication.presentation.*
+import com.example.bloodpressureapplication.presentation.BloodPressureReadingsViewModel
+import com.example.bloodpressureapplication.presentation.BottomNavigationItem
+import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
+import com.example.bloodpressureapplication.presentation.Toast
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.google.firebase.Timestamp
@@ -29,11 +31,11 @@ import com.google.firebase.Timestamp
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MeasureHeartRateScreen(
+fun MeasureBloodPressureScreen(
     navController : NavController
 ) {
 
-    val heartRateViewModel: HeartRateReadingsViewModel = hiltViewModel()
+    val bloodPressureViewModel: BloodPressureReadingsViewModel = hiltViewModel()
 
     Scaffold(
         topBar = {
@@ -68,16 +70,15 @@ fun MeasureHeartRateScreen(
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    var bpmState by remember {
+                    var systolicState by remember {
                         mutableStateOf(0)
                     }
-                    val possibleStatuses = listOf("Resting", "Exercise", "Active")
-                    var statusState by remember {
-                        mutableStateOf(possibleStatuses[0])
+                    var diastolicState by remember {
+                        mutableStateOf(0)
                     }
 
                     Text(
-                        text = "Input Heart Rate Reading",
+                        text = "Input Blood Pressure Reading",
                         modifier = Modifier
                             .padding(10.dp),
                         fontSize = 30.sp,
@@ -85,36 +86,35 @@ fun MeasureHeartRateScreen(
                     )
 
                     NumberPicker(
-                        value = bpmState,
-                        range = 0..200,
+                        value = systolicState,
+                        range = 0..300,
                         onValueChange = {
-                            bpmState = it
+                            systolicState = it
                         }
                     )
 
-                    ListItemPicker(
-                        label = { it },
-                        value = statusState,
+                    NumberPicker(
+                        value = diastolicState,
+                        range = 0..300,
                         onValueChange = {
-                            statusState = it
-                        },
-                        list = possibleStatuses
+                            diastolicState = it
+                        }
                     )
 
                     Button(
                         onClick = {
-                            val timestamp = Timestamp.now()
-                            heartRateViewModel.uploadHeartReading(
-                                bpm = bpmState,
-                                readingStatus = statusState,
-                                timestamp = timestamp
-                            )
+                                val timestamp = Timestamp.now()
+                                bloodPressureViewModel.uploadReading(
+                                    systolicPressure = systolicState,
+                                    diastolicPressure = diastolicState,
+                                    timestamp = timestamp
+                                )
                         },
                         modifier = Modifier
                             .padding(8.dp)
                     ) {
                         Text(text = "Submit")
-                        when (val response = heartRateViewModel.uploadHeartRateReadingData.value) {
+                        when (val response = bloodPressureViewModel.uploadBloodPressureReadingData.value) {
                             is Response.Loading -> {
                                 CircularProgressIndicator(
                                     modifier = Modifier
