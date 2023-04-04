@@ -9,8 +9,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,17 +54,18 @@ fun InfoScreen(
             val tabRowItems = listOf(
                 TabRowItem(
                     title = "Blood Pressure",
-                    icon = Icons.Default.Home,
-                    screen = {BloodPressureInfoGrid()}
+                    icon = R.drawable.bloodpressure,
+                    screen = { BloodPressureInfoGrid()}
                 ),
                 TabRowItem(
                     title = "Heart Rate",
-                    icon = Icons.Default.Home,
+                    icon = R.drawable.heartrate,
                     screen = { HeartRateInfoGrid() }
                 )
             )
 
-            Column(modifier = Modifier.fillMaxSize()
+            Column(modifier = Modifier
+                .fillMaxSize()
                 .padding(top = it.calculateTopPadding())) {
                 TabRow(
                     selectedTabIndex = pagerState.currentPage,
@@ -87,10 +85,11 @@ fun InfoScreen(
                                 }
                             },
                             icon = {
-                                Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = ""
+                                Image(
+                                    painterResource(id = item.icon),
+                                    contentDescription = null
                                 )
+
                             },
                             text = {
                                 Text(text = item.title)
@@ -468,7 +467,7 @@ fun InfoCard(
 }
 
 data class TabRowItem(
-    val title : String,
-    val icon : ImageVector,
-    val screen : @Composable () -> Unit
+    val title: String,
+    val icon: Int,
+    val screen: @Composable () -> Unit
 )

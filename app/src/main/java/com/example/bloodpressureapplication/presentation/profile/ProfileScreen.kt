@@ -1,19 +1,13 @@
 package com.example.bloodpressureapplication.presentation.profile
 
 import android.annotation.SuppressLint
-import android.graphics.Paint.Align
 import android.util.Log
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -23,17 +17,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.presentation.Toast
 import com.example.bloodpressureapplication.presentation.authentication.AuthenticationViewModel
-import com.example.bloodpressureapplication.presentation.profile.components.ActionButton
 import com.example.bloodpressureapplication.presentation.profile.components.MyProfile
 import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
-import com.example.bloodpressureapplication.presentation.track.checkReading
 import com.example.bloodpressureapplication.util.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)

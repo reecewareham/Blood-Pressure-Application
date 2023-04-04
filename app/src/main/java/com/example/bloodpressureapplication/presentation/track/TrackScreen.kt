@@ -1,11 +1,10 @@
 package com.example.bloodpressureapplication.presentation.track
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,21 +20,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.bloodpressureapplication.R
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
+import com.example.bloodpressureapplication.presentation.info.BloodPressureInfoGrid
+import com.example.bloodpressureapplication.presentation.info.HeartRateInfoGrid
 import com.example.bloodpressureapplication.presentation.info.TabRowItem
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.patrykandpatrick.vico.core.entry.*
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 var systolic5Values = arrayListOf<Float>()
 var diastolic5Values = arrayListOf<Float>()
@@ -153,12 +155,12 @@ fun TrackScreen(
                 val tabRowItems = listOf(
                     TabRowItem(
                         title = "Blood Pressure",
-                        icon = Icons.Default.Home,
+                        icon = R.drawable.bloodpressure,
                         screen = { BloodPressureTrack() }
                     ),
                     TabRowItem(
                         title = "Heart Rate",
-                        icon = Icons.Default.Home,
+                        icon = R.drawable.heartrate,
                         screen = { HeartRateTrack() }
                     )
                 )
@@ -186,10 +188,11 @@ fun TrackScreen(
                                     }
                                 },
                                 icon = {
-                                    Icon(
-                                        imageVector = item.icon,
-                                        contentDescription = ""
+                                    Image(
+                                        painterResource(id = item.icon),
+                                        contentDescription = null
                                     )
+
                                 },
                                 text = {
                                     Text(text = item.title)

@@ -87,8 +87,8 @@ fun BloodTrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            fun getSys() = List(5) { FloatEntry(it.toFloat(), systolic5Values.elementAt(it)) }
-            fun getDia() = List(5) { FloatEntry(it.toFloat(), diastolic5Values.elementAt(it)) }
+            fun getSys() = List(systolic5Values.size) { FloatEntry(it.toFloat(), systolic5Values.elementAt(it)) }
+            fun getDia() = List(diastolic5Values.size) { FloatEntry(it.toFloat(), diastolic5Values.elementAt(it)) }
             bloodChartEntryModel = ChartEntryModelProducer(getSys(), getDia())
 
         }
@@ -212,7 +212,7 @@ fun HeartTrackContent(heartRateReadings: List<HeartRateReadings>) {
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            fun getBpm() = List(5) { FloatEntry(it.toFloat(), bpm5Values.elementAt(it)) }
+            fun getBpm() = List(bpm5Values.size) { FloatEntry(it.toFloat(), bpm5Values.elementAt(it)) }
             heartChartEntryModel = ChartEntryModelProducer(getBpm())
 
         }
