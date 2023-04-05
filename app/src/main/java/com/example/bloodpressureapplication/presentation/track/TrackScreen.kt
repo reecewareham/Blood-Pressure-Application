@@ -34,6 +34,7 @@ import com.example.bloodpressureapplication.presentation.*
 import com.example.bloodpressureapplication.presentation.info.BloodPressureInfoGrid
 import com.example.bloodpressureapplication.presentation.info.HeartRateInfoGrid
 import com.example.bloodpressureapplication.presentation.info.TabRowItem
+import com.example.bloodpressureapplication.presentation.profile.UserViewModel
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.patrykandpatrick.vico.core.entry.*
@@ -58,6 +59,7 @@ var heartRate5Readings = listOf<HeartRateReadings>()
 var heartRateReadings = listOf<HeartRateReadings>()
 var hasHeart5Readings = false
 var hasHeartReadings = false
+var userAge = 0
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -72,6 +74,9 @@ fun TrackScreen(
     val heartRateViewModel : HeartRateReadingsViewModel = hiltViewModel()
     heartRateViewModel.getLast5HeartReadings()
     heartRateViewModel.getAllHeartReadings()
+
+    val userViewModel : UserViewModel = hiltViewModel()
+    userViewModel.getUserInfo()
 
 
     Scaffold(
@@ -89,6 +94,20 @@ fun TrackScreen(
             )
         },
         content = {
+            when (val response = userViewModel.getUserData.value) {
+                is Response.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is Response.Success -> {
+                    val obj = response.data
+                    if (obj != null) {
+                        userAge = obj.age.toInt()
+                    }
+                }
+                is Response.Error -> {
+                    Toast(message = response.message)
+                }
+            }
 
             when (val response = bloodPressureViewModel.bloodPressure5ReadingData.value) {
                 is Response.Loading -> {
@@ -307,10 +326,16 @@ fun HeartRateTrack() {
             shape = RoundedCornerShape(15.dp),
             elevation = CardDefaults.cardElevation(),
             colors = CardDefaults.cardColors(
-                Color.Red)
+                checkHeartReading(
+                    bpm5Values[4].toInt(),
+                    status5Values[4]
+                ))
         ) {
             Text(
-                text = "test",
+                text = checkHeartReadingText(
+                    bpm5Values[4].toInt(),
+                    status5Values[4]
+                ),
                 fontWeight = FontWeight.Bold,
                 lineHeight = 20.sp,
                 fontSize = 20.sp,

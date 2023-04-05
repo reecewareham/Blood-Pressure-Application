@@ -69,12 +69,228 @@ fun checkReadingText(systolic: Int, diastolic: Int): String {
     return text
 }
 
+fun checkHeartReading(bpm: Int, status: String) : Color {
+
+    var colour : Color = Color.White
+    if (status == "Resting") {
+        if (bpm < 60) {
+            //Slow heart rate (bradycardia)
+            colour = Color(0xFFFFB52E)
+        } else if (bpm in 60..100) {
+            //Normal heart rate
+            colour = Color.Green
+        } else if (bpm > 100) {
+            //Fast heart rate (tachycardia)
+            colour = Color.Red
+        }
+    } else if (status == "Active" || status == "Exercise") {
+        if (userAge in 20..30) {
+            if (bpm < 100) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 100..140) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 140) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge in 30..40) {
+            if (bpm < 95) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 95..133) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 133) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge in 40..50) {
+            if (bpm < 90) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 90..126) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 126) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge in 50..60) {
+            if (bpm < 85) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 85..119) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 119) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge in 60..70) {
+            if (bpm < 80) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 80..112) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 112) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge in 70..80) {
+            if (bpm < 75) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 75..105) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 105) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge in 80..90) {
+            if (bpm < 70) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 70..98) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 98) {
+                //Too high
+                colour = Color.Red
+            }
+        } else if (userAge > 90) {
+            if (bpm < 65) {
+                //Too slow for active
+                colour = Color(0xFFFFB52E)
+            } else if (bpm in 65..91) {
+                //Good Range
+                colour = Color.Green
+            } else if (bpm > 91) {
+                //Too high
+                colour = Color.Red
+            }
+        }
+    }
+    return colour
+}
+
+fun checkHeartReadingText(bpm: Int, status: String) : String {
+
+    var text = ""
+    if (status == "Resting") {
+        if (bpm < 60) {
+            //Slow heart rate (bradycardia)
+            text = "Your heart rate is showing bradycardia because it is too low for resting. If this is a common occurrence, please consult a doctor."
+        } else if (bpm in 60..100) {
+            //Normal heart rate
+            text = "Your heart rate is within the healthy resting range. Keep it up."
+        } else if (bpm > 100) {
+            //Fast heart rate (tachycardia)
+            text = "Your heart rate is showing tachycardia because it is too high for resting. If this is a common occurrence, please consult a doctor."
+        }
+    } else if (status == "Active") {
+        if (userAge in 20..30) {
+            if (bpm < 100) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 100..140) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 140) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge in 30..40) {
+            if (bpm < 95) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 95..133) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 133) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge in 40..50) {
+            if (bpm < 90) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 90..126) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 126) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge in 50..60) {
+            if (bpm < 85) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 85..119) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 119) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge in 60..70) {
+            if (bpm < 80) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 80..112) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 112) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge in 70..80) {
+            if (bpm < 75) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 75..105) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 105) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge in 80..90) {
+            if (bpm < 70) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 70..98) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 98) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        } else if (userAge > 90) {
+            if (bpm < 65) {
+                //Too slow for active
+                text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."
+            } else if (bpm in 65..91) {
+                //Good Range
+                text = "Your heart rate is within the healthy active range. Keep it up."
+            } else if (bpm > 91) {
+                //Too high
+                text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
+            }
+        }
+    }
+    return text
+}
+
 
 
 @Composable
 fun BloodTrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
-    LazyColumn(
-    ) {
+    LazyColumn()
+     {
         items(items = bloodPressureReadings, itemContent =  {
             BloodListContent(it)
             bloodPressureGraph = true
@@ -104,7 +320,7 @@ fun BloodListContent(it: BloodPressureReadings) {
     diastolic5Values.add(0,dia)
 
     val test = Calendar.getInstance()
-    test.time = it.timestamp?.toDate()
+    test.time = it.timestamp?.toDate()!!
     val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
     date5Values.add(0,date)
@@ -115,8 +331,25 @@ fun BloodListContent(it: BloodPressureReadings) {
 fun BloodListOfReadingsBar(it: BloodPressureReadings) {
 
     val test = Calendar.getInstance()
-    test.time = it.timestamp?.toDate()
-    var date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+    test.time = it.timestamp?.toDate()!!
+    val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+
+    val colour = checkReading(it.systolicPressure, it.diastolicPressure)
+    var text = ""
+
+    if (colour == Color(0xFF3aeaf0)) {
+        text = "Hypotension"
+    } else if (colour == Color.Green) {
+        text = "Normal"
+    } else if (colour == Color.Yellow) {
+        text = "Elevated"
+    } else if(colour == Color(0xFFFFB52E)) {
+        text = "Hypertension Stage 1"
+    } else if (colour == Color.Red) {
+        text = "Hypertension Stage 2"
+    } else if (colour == Color(0xFF8c0f0f)) {
+        text = "Hypertensive Crisis"
+    }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -130,7 +363,7 @@ fun BloodListOfReadingsBar(it: BloodPressureReadings) {
 
         ) {
             Text(
-                text = "$date",
+                text = date,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
@@ -144,7 +377,7 @@ fun BloodListOfReadingsBar(it: BloodPressureReadings) {
                 .size(width = 20.dp, height = 50.dp)
         ) {
             drawRoundRect(
-                color = checkReading(it.systolicPressure, it.diastolicPressure),
+                color = colour,
                 size = Size(width = 20.dp.toPx(), height = 50.dp.toPx()),
                 cornerRadius = CornerRadius(x = 20.dp.toPx(), y = 20.dp.toPx())
             )
@@ -153,27 +386,44 @@ fun BloodListOfReadingsBar(it: BloodPressureReadings) {
             modifier = Modifier
                 .padding(5.dp)
         )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.4f),
-            contentAlignment = Alignment.Center
+        Column(
         ) {
-            Text(
-                text = "Sys: " + it.systolicPressure.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.8f),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Dia: " + it.diastolicPressure.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.6f),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = text,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
+            }
+
+            Row() {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Sys: " + it.systolicPressure.toString(),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Dia: " + it.diastolicPressure.toString(),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
         }
     }
 }
@@ -228,7 +478,7 @@ fun HeartListContent(it: HeartRateReadings) {
     status5Values.add(0,status)
 
     val test = Calendar.getInstance()
-    test.time = it.timestamp?.toDate()
+    test.time = it.timestamp?.toDate()!!
     val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
     date5HeartValues.add(0,date)
@@ -239,8 +489,19 @@ fun HeartListContent(it: HeartRateReadings) {
 fun HeartListOfReadingsBar(it: HeartRateReadings) {
 
     val test = Calendar.getInstance()
-    test.time = it.timestamp?.toDate()
-    var date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+    test.time = it.timestamp?.toDate()!!
+    val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+
+    val colour = checkHeartReading(it.bpm, it.readingStatus)
+    var text = ""
+
+    if (colour == Color(0xFFFFB52E)) {
+        text = "Bradycardia"
+    } else if (colour == Color.Green) {
+        text = "Normal"
+    } else if (colour == Color.Red) {
+        text = "Tachycardia"
+    }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -254,7 +515,7 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
 
         ) {
             Text(
-                text = "$date",
+                text = date,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
@@ -268,7 +529,7 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
                 .size(width = 20.dp, height = 50.dp)
         ) {
             drawRoundRect(
-                color = Color.Red,
+                color = colour,
                 size = Size(width = 20.dp.toPx(), height = 50.dp.toPx()),
                 cornerRadius = CornerRadius(x = 20.dp.toPx(), y = 20.dp.toPx())
             )
@@ -277,27 +538,45 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
             modifier = Modifier
                 .padding(5.dp)
         )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.4f),
-            contentAlignment = Alignment.Center
+        Column(
         ) {
-            Text(
-                text = "BPM: " + it.bpm.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.8f),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Status: " + it.readingStatus,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.6f),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = text,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
+            }
+
+            Row() {
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "BPM: " + it.bpm.toString(),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Status: " + it.readingStatus,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
         }
     }
 }
