@@ -3,7 +3,7 @@ package com.example.bloodpressureapplication.presentation.profile.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -33,7 +33,7 @@ fun MyProfile(
             .fillMaxWidth()
             .padding(10.dp),
         shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
+        elevation = CardDefaults.cardElevation(5.dp)
     ) {
         Column(
             modifier = Modifier
@@ -78,14 +78,14 @@ fun MyProfile(
                 modifier = Modifier
                     .fillMaxWidth(0.5f),
                 shape = RoundedCornerShape(15.dp),
-                elevation = ButtonDefaults.elevation(
+                elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 5.dp,
                     pressedElevation = 7.dp,
                     disabledElevation = 0.dp
                 ),
                 onClick = { navController.navigate(Screens.ProfileEditScreen.route) }
             ) {
-                Text(text = AnnotatedString("Edit Profile"), textAlign = TextAlign.Center)
+                Text(text = AnnotatedString("Edit Profile"), textAlign = TextAlign.Center, fontSize = 20.sp)
             }
 
             Spacer(

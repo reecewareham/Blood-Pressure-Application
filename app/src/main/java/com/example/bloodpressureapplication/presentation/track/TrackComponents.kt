@@ -191,7 +191,7 @@ fun checkHeartReadingText(bpm: Int, status: String) : String {
             //Fast heart rate (tachycardia)
             text = "Your heart rate is showing tachycardia because it is too high for resting. If this is a common occurrence, please consult a doctor."
         }
-    } else if (status == "Active") {
+    } else if (status == "Active" || status == "Exercise") {
         if (userAge in 20..30) {
             if (bpm < 100) {
                 //Too slow for active
@@ -567,7 +567,7 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
                 }
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.9f),
+                        .fillMaxWidth(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

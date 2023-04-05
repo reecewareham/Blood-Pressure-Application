@@ -80,149 +80,167 @@ fun ProfileEditScreen(
                     if (response.data != null) {
                         val obj = response.data
 
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            Column(
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                                    .verticalScroll(rememberScrollState()),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                                    .fillMaxSize()
+                                    .padding(top = it.calculateTopPadding())
                             ) {
-                                val emailState = remember {
-                                    mutableStateOf(obj.email)
-                                }
-                                val passwordState = remember {
-                                    mutableStateOf(obj.password)
-                                }
-                                val firstNameState = remember {
-                                    mutableStateOf(obj.firstName)
-                                }
-                                val lastNameState = remember {
-                                    mutableStateOf(obj.lastName)
-                                }
-                                val ageState = remember {
-                                    mutableStateOf(obj.age)
-                                }
-                                val imageURLState = remember {
-                                    mutableStateOf(obj.imageUrl)
-                                }
-
-
-                                OutlinedTextField(value = emailState.value, onValueChange = {
-                                    emailState.value = it
-                                },
+                                Card(
                                     modifier = Modifier
-                                        .padding(10.dp),
-                                    singleLine = true,
-                                    label = {
-                                        Text(text = "Enter your email: ")
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-                                )
-
-                                OutlinedTextField(
-                                    value = passwordState.value, onValueChange = {
-                                        passwordState.value = it
-                                    },
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    singleLine = true,
-                                    label = {
-                                        Text(text = "Enter your password: ")
-                                    },
-                                    visualTransformation = PasswordVisualTransformation(),
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-                                )
-
-                                OutlinedTextField(value = firstNameState.value, onValueChange = {
-                                    firstNameState.value = it
-                                },
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    singleLine = true,
-                                    label = {
-                                        Text(text = "Enter your first name: ")
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                                )
-
-                                OutlinedTextField(value = lastNameState.value, onValueChange = {
-                                    lastNameState.value = it
-                                },
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    singleLine = true,
-                                    label = {
-                                        Text(text = "Enter your last name: ")
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                                )
-
-                                OutlinedTextField(value = ageState.value, onValueChange = {
-                                    ageState.value = it
-                                },
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    singleLine = true,
-                                    label = {
-                                        Text(text = "Enter your age: ")
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                                )
-
-                                OutlinedTextField(value = imageURLState.value, onValueChange = {
-                                    imageURLState.value = it
-                                },
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    singleLine = true,
-                                    label = {
-                                        Text(text = "Enter your image url: ")
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                                )
-
-                                Button(
-                                    onClick = {
-                                        userViewModel.setUserInfo(
-                                            email = emailState.value,
-                                            password = passwordState.value,
-                                            firstName = firstNameState.value,
-                                            lastName = lastNameState.value,
-                                            age = ageState.value,
-                                            imageUrl = imageURLState.value
-                                        )
-                                    },
-                                    modifier = Modifier
-                                        .padding(8.dp)
+                                        .fillMaxWidth()
+                                        .padding(10.dp)
                                 ) {
-                                    Text(text = "Edit Profile")
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentHeight()
+                                        .verticalScroll(rememberScrollState()),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    val emailState = remember {
+                                        mutableStateOf(obj.email)
+                                    }
+                                    val passwordState = remember {
+                                        mutableStateOf(obj.password)
+                                    }
+                                    val firstNameState = remember {
+                                        mutableStateOf(obj.firstName)
+                                    }
+                                    val lastNameState = remember {
+                                        mutableStateOf(obj.lastName)
+                                    }
+                                    val ageState = remember {
+                                        mutableStateOf(obj.age)
+                                    }
+                                    val imageURLState = remember {
+                                        mutableStateOf(obj.imageUrl)
+                                    }
 
-                                    when (val response = userViewModel.setUserData.value) {
-                                        is Response.Loading -> {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
+
+                                    OutlinedTextField(
+                                        value = emailState.value, onValueChange = {
+                                            emailState.value = it
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        singleLine = true,
+                                        label = {
+                                            Text(text = "Enter your email: ")
+                                        },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                                    )
+
+                                    OutlinedTextField(
+                                        value = passwordState.value, onValueChange = {
+                                            passwordState.value = it
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        singleLine = true,
+                                        label = {
+                                            Text(text = "Enter your password: ")
+                                        },
+                                        visualTransformation = PasswordVisualTransformation(),
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                                    )
+
+                                    OutlinedTextField(
+                                        value = firstNameState.value, onValueChange = {
+                                            firstNameState.value = it
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        singleLine = true,
+                                        label = {
+                                            Text(text = "Enter your first name: ")
+                                        },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                                    )
+
+                                    OutlinedTextField(
+                                        value = lastNameState.value, onValueChange = {
+                                            lastNameState.value = it
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        singleLine = true,
+                                        label = {
+                                            Text(text = "Enter your last name: ")
+                                        },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                                    )
+
+                                    OutlinedTextField(
+                                        value = ageState.value, onValueChange = {
+                                            ageState.value = it
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        singleLine = true,
+                                        label = {
+                                            Text(text = "Enter your age: ")
+                                        },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                                    )
+
+                                    OutlinedTextField(
+                                        value = imageURLState.value, onValueChange = {
+                                            imageURLState.value = it
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        singleLine = true,
+                                        label = {
+                                            Text(text = "Enter your image url: ")
+                                        },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                                    )
+
+                                    Button(
+                                        onClick = {
+                                            userViewModel.setUserInfo(
+                                                email = emailState.value,
+                                                password = passwordState.value,
+                                                firstName = firstNameState.value,
+                                                lastName = lastNameState.value,
+                                                age = ageState.value,
+                                                imageUrl = imageURLState.value
                                             )
-                                        }
-                                        is Response.Success -> {
-                                            if (response.data) {
-                                                LaunchedEffect(key1 = true) {
-                                                    navController.navigate(Screens.ProfileScreen.route) {
-                                                        popUpTo(Screens.ProfileEditScreen.route) {
-                                                            inclusive = true
+                                        },
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        shape = RoundedCornerShape(15.dp),
+                                        elevation = ButtonDefaults.buttonElevation(
+                                            defaultElevation = 5.dp,
+                                            pressedElevation = 7.dp,
+                                            disabledElevation = 0.dp
+                                        ),
+                                    ) {
+                                        Text(text = "Edit Profile", fontSize = 20.sp )
+
+                                        when (val response = userViewModel.setUserData.value) {
+                                            is Response.Loading -> {
+                                                CircularProgressIndicator(
+                                                    modifier = Modifier
+                                                        .fillMaxSize()
+                                                )
+                                            }
+                                            is Response.Success -> {
+                                                if (response.data) {
+                                                    LaunchedEffect(key1 = true) {
+                                                        navController.navigate(Screens.ProfileScreen.route) {
+                                                            popUpTo(Screens.ProfileEditScreen.route) {
+                                                                inclusive = true
+                                                            }
                                                         }
                                                     }
+                                                } else {
+                                                    Toast(message = "Edit failed")
                                                 }
-                                            } else {
-                                                Toast(message = "Edit failed")
                                             }
-                                        }
-                                        is Response.Error -> {
-                                            Toast(message = response.message)
+                                            is Response.Error -> {
+                                                Toast(message = response.message)
+                                            }
                                         }
                                     }
                                 }

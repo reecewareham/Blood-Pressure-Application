@@ -1,18 +1,49 @@
 package com.example.bloodpressureapplication.presentation.reminders
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.bloodpressureapplication.presentation.BottomNavigationItem
+import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
+import com.example.bloodpressureapplication.presentation.Toast
+import com.example.bloodpressureapplication.presentation.home.*
+import com.example.bloodpressureapplication.util.Response
 import java.time.LocalDateTime
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RemindersScreen() {
+fun RemindersScreen(
+    navController : NavController
+) {
 
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Reminders", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                },
+                actions = {
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
+            )
+        },
+        content = {
+
+        },
+        bottomBar = {
+            BottomNavigationMenu(selectedItem = BottomNavigationItem.REMINDERS, navController = navController)
+        }
+    )
 
 }

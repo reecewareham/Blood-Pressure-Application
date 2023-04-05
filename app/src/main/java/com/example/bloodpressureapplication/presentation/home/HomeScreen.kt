@@ -117,7 +117,7 @@ fun HomeScreen(
                         elevation = CardDefaults.cardElevation()
                     ) {
                         Text(
-                            text = "Latest Reading",
+                            text = "Latest Readings",
                             fontWeight = FontWeight.Bold,
                             lineHeight = 20.sp,
                             fontSize = 25.sp,
@@ -266,8 +266,13 @@ fun HomeScreen(
                             }
                         }
                     }
-                    if (gotBloodReading && gotHeartReading) {
-                        HomeCheck()
+                    Column {
+                        if (gotBloodReading) {
+                            HomeCheckBlood()
+                        }
+                        if (gotHeartReading) {
+                            HomeCheckHeart()
+                        }
                     }
 
                 }
@@ -320,12 +325,11 @@ fun AddToHeartList(it: HeartRateReadings) {
 }
 
 @Composable
-fun HomeCheck() {
-        val colour = checkReading(systolicValue[0].toInt(), diastolicValue[0].toInt())
-        val text = checkReadingText(systolicValue[0].toInt(), diastolicValue[0].toInt())
-        Column(
+fun HomeCheckBlood() {
+    val colour = checkReading(systolicValue[0].toInt(), diastolicValue[0].toInt())
+    val text = checkReadingText(systolicValue[0].toInt(), diastolicValue[0].toInt())
 
-        ) {
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -344,24 +348,30 @@ fun HomeCheck() {
                 )
 
             }
+}
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                shape = RoundedCornerShape(15.dp),
-                elevation = CardDefaults.cardElevation(),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFB52E))
-            ) {
-                Text(
-                    text = "Your heart rate is too fast. Check ways to reduce it in the info section.",
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 20.sp,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp)
-                )
+@Composable
+fun HomeCheckHeart() {
+    val colourHeart = checkHeartReading(bpmValue[0].toInt(), statusValue[0])
+    val textHeart = checkHeartReadingText(bpmValue[0].toInt(), statusValue[0])
 
-            }
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = CardDefaults.cardElevation(),
+            colors = CardDefaults.cardColors(containerColor = colourHeart)
+        ) {
+            Text(
+                text = textHeart,
+                fontWeight = FontWeight.Bold,
+                lineHeight = 20.sp,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp)
+            )
+
         }
 }

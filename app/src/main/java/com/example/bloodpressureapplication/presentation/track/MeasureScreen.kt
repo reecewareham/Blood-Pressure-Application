@@ -87,8 +87,13 @@ fun MeasureScreen(
                             ),
                             onClick = { navController.navigate(Screens.MeasureBloodPressureScreen.route) }
                         ) {
-                            Text(text = AnnotatedString("Manual"), textAlign = TextAlign.Center)
+                            Text(text = AnnotatedString("Manual"), textAlign = TextAlign.Center, fontSize = 20.sp)
                         }
+
+                        Spacer(
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
 
                         Button(
                             modifier = Modifier
@@ -106,8 +111,13 @@ fun MeasureScreen(
                                 )
                             }
                         ) {
-                            Text(text = AnnotatedString("Automatic"), textAlign = TextAlign.Center)
+                            Text(text = AnnotatedString("Automatic"), textAlign = TextAlign.Center, fontSize = 20.sp)
                         }
+
+                        Spacer(
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
 
                     }
                 }
@@ -145,8 +155,13 @@ fun MeasureScreen(
                             ),
                             onClick = { navController.navigate(Screens.MeasureHeartRateScreen.route) }
                         ) {
-                            Text(text = AnnotatedString("Manual"), textAlign = TextAlign.Center)
+                            Text(text = AnnotatedString("Manual"), textAlign = TextAlign.Center, fontSize = 20.sp)
                         }
+
+                        Spacer(
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
 
                         Button(
                             modifier = Modifier
@@ -159,8 +174,13 @@ fun MeasureScreen(
                             ),
                             onClick = { Log.d("ClickableButton", "Automatic Heart Rate Pressed") }
                         ) {
-                            Text(text = AnnotatedString("Automatic"), textAlign = TextAlign.Center)
+                            Text(text = AnnotatedString("Automatic"), textAlign = TextAlign.Center, fontSize = 20.sp)
                         }
+
+                        Spacer(
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
                     }
 
                 }

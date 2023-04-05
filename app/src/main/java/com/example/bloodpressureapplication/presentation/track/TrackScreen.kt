@@ -1,7 +1,6 @@
 package com.example.bloodpressureapplication.presentation.track
 
 import android.annotation.SuppressLint
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -10,7 +9,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -19,7 +17,7 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,10 +29,9 @@ import com.example.bloodpressureapplication.R
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
-import com.example.bloodpressureapplication.presentation.info.BloodPressureInfoGrid
-import com.example.bloodpressureapplication.presentation.info.HeartRateInfoGrid
 import com.example.bloodpressureapplication.presentation.info.TabRowItem
 import com.example.bloodpressureapplication.presentation.profile.UserViewModel
+import com.example.bloodpressureapplication.ui.theme.md_theme_light_primary
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.patrykandpatrick.vico.core.entry.*
@@ -209,7 +206,8 @@ fun TrackScreen(
                                 icon = {
                                     Image(
                                         painterResource(id = item.icon),
-                                        contentDescription = null
+                                        contentDescription = null,
+                                        colorFilter = ColorFilter.tint(md_theme_light_primary)
                                     )
 
                                 },
@@ -244,7 +242,7 @@ fun BloodPressureTrack() {
 
     Column (
         modifier = Modifier
-            .padding(10.dp)
+            .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
     ) {
         if (bloodPressureGraph) {
             Card(
@@ -305,7 +303,7 @@ fun BloodPressureTrack() {
 fun HeartRateTrack() {
     Column (
         modifier = Modifier
-            .padding(10.dp)
+            .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
     ) {
         if (heartRateGraph) {
             Card(

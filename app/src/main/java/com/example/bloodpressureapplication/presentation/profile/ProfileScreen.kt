@@ -47,9 +47,15 @@ fun ProfileScreen(
                     Button(
                         onClick = {
                             authViewModel.signOut()
-                        }
+                        },
+                        shape = RoundedCornerShape(15.dp),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 5.dp,
+                            pressedElevation = 7.dp,
+                            disabledElevation = 0.dp
+                        ),
                     ) {
-                        Text(text = "Sign Out")
+                        Text(text = "Sign Out", fontSize = 20.sp)
                         when (val response = authViewModel.signOutState.value) {
                             is Response.Loading -> {
                                 CircularProgressIndicator(
@@ -189,6 +195,6 @@ fun ProfileExportFile() {
         ),
         onClick = { Log.d("ClickableButton", "Export button pressed")}
     ) {
-        Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center)
+        Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center, fontSize = 20.sp)
     }
 }

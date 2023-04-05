@@ -1,5 +1,6 @@
 package com.example.bloodpressureapplication
 
+import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,8 +23,8 @@ import com.example.bloodpressureapplication.presentation.reminders.MeasureHeartR
 import com.example.bloodpressureapplication.presentation.reminders.MeasureScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileEditScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileScreen
+import com.example.bloodpressureapplication.presentation.reminders.RemindersScreen
 import com.example.bloodpressureapplication.presentation.track.TrackScreen
-import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
 import com.example.bloodpressureapplication.util.Screens
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,6 +80,9 @@ fun BloodPressureAppScreen(navController: NavHostController, authenticationViewM
         }
         composable(route = Screens.ProfileEditScreen.route) {
             ProfileEditScreen(navController = navController)
+        }
+        composable(route = Screens.RemindersScreen.route) {
+            RemindersScreen(navController = navController)
         }
     }
 }
