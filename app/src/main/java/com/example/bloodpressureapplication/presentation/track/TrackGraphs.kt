@@ -29,8 +29,8 @@ import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 
-private val color1 = Color.Blue //1st bar
-private val color2 = Color.Green //2nd bar
+private val color1 = Color.Red //1st bar
+private val color2 = Color(0xFFFFB52E) //2nd bar
 private val chartColors = listOf(color1, color2)
 private val bottomAxisValueFormatter =
     AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> date5Values[x.toInt() % date5Values.size] }
@@ -44,13 +44,8 @@ private val legendPadding = dimensionsOf(top = legendTopPaddingValue)
 var name = ""
 
 private const val COLUMN_WIDTH_DP = 16f
-private const val START_AXIS_LABEL_COUNT = 5
-private const val BOTTOM_AXIS_TICK_OFFSET = 1
-private const val BOTTOM_AXIS_TICK_SPACING = 3
-
-private val color3 = Color.Blue
+private val color3 = Color.Red
 private val heartChartColors = listOf(color3)
-private val startAxisValueFormatter = PercentageFormatAxisValueFormatter<AxisPosition.Vertical.Start>()
 private val heartBottomAxisValueFormatter =
     AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> date5HeartValues[x.toInt() % date5HeartValues.size] }
 

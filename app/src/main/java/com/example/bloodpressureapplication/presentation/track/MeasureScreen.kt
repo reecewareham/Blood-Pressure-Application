@@ -1,4 +1,4 @@
-package com.example.bloodpressureapplication.presentation.reminders
+package com.example.bloodpressureapplication.presentation.track
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -8,6 +8,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -54,6 +56,9 @@ fun MeasureScreen(
                     .fillMaxSize()
                     .padding(top = it.calculateTopPadding())
             ) {
+
+                val openDialog = remember { mutableStateOf(false) }
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
@@ -105,10 +110,7 @@ fun MeasureScreen(
                                 disabledElevation = 0.dp
                             ),
                             onClick = {
-                                Log.d(
-                                    "ClickableButton",
-                                    "Automatic Blood Pressure Pressed"
-                                )
+                                openDialog.value = true
                             }
                         ) {
                             Text(text = AnnotatedString("Automatic"), textAlign = TextAlign.Center, fontSize = 20.sp)
@@ -118,6 +120,31 @@ fun MeasureScreen(
                             modifier = Modifier
                                 .padding(5.dp)
                         )
+
+                        if (openDialog.value) {
+                            AlertDialog(
+                                onDismissRequest = {
+                                    openDialog.value = false
+                                },
+                                dismissButton = {
+                                    TextButton(
+                                        onClick = {
+                                            openDialog.value = false
+                                        }
+                                    ) {
+                                        Text("Dismiss")
+                                    }
+                                },
+                                confirmButton = {
+                                    TextButton(onClick = {
+                                        openDialog.value = false
+                                    })
+                                    { Text(text = "OK") }
+                                },
+                                title = { Text(text = "Feature Unavailable") },
+                                text = { Text(text = "This feature has not yet been implemented. Check back in a later update.") }
+                            )
+                        }
 
                     }
                 }
@@ -172,7 +199,9 @@ fun MeasureScreen(
                                 pressedElevation = 7.dp,
                                 disabledElevation = 0.dp
                             ),
-                            onClick = { Log.d("ClickableButton", "Automatic Heart Rate Pressed") }
+                            onClick = {
+                                openDialog.value = true
+                            }
                         ) {
                             Text(text = AnnotatedString("Automatic"), textAlign = TextAlign.Center, fontSize = 20.sp)
                         }
@@ -181,6 +210,31 @@ fun MeasureScreen(
                             modifier = Modifier
                                 .padding(5.dp)
                         )
+
+                        if (openDialog.value) {
+                            AlertDialog(
+                                onDismissRequest = {
+                                    openDialog.value = false
+                                },
+                                dismissButton = {
+                                    TextButton(
+                                        onClick = {
+                                            openDialog.value = false
+                                        }
+                                    ) {
+                                        Text("Dismiss")
+                                    }
+                                },
+                                confirmButton = {
+                                    TextButton(onClick = {
+                                        openDialog.value = false
+                                    })
+                                    { Text(text = "OK") }
+                                },
+                                title = { Text(text = "Feature Unavailable") },
+                                text = { Text(text = "This feature has not yet been implemented. Check back in a later update.") }
+                            )
+                        }
                     }
 
                 }

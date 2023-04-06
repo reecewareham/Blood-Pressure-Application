@@ -20,10 +20,10 @@ import com.example.bloodpressureapplication.presentation.SplashScreen
 import com.example.bloodpressureapplication.presentation.info.InfoScreen
 import com.example.bloodpressureapplication.presentation.reminders.MeasureBloodPressureScreen
 import com.example.bloodpressureapplication.presentation.reminders.MeasureHeartRateScreen
-import com.example.bloodpressureapplication.presentation.reminders.MeasureScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileEditScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileScreen
 import com.example.bloodpressureapplication.presentation.reminders.RemindersScreen
+import com.example.bloodpressureapplication.presentation.track.MeasureScreen
 import com.example.bloodpressureapplication.presentation.track.TrackScreen
 import com.example.bloodpressureapplication.util.Screens
 import dagger.hilt.android.AndroidEntryPoint
