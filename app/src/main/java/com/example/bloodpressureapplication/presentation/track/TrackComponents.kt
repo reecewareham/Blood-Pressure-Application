@@ -69,9 +69,9 @@ fun checkReadingText(systolic: Int, diastolic: Int): String {
     return text
 }
 
-fun checkHeartReading(bpm: Int, status: String) : Color {
+fun checkHeartReading(bpm: Int, status: String, userAge: Int) : Color {
 
-    var colour : Color = Color.White
+    var colour = Color.White
     if (status == "Resting") {
         if (bpm < 60) {
             //Slow heart rate (bradycardia)
@@ -177,7 +177,7 @@ fun checkHeartReading(bpm: Int, status: String) : Color {
     return colour
 }
 
-fun checkHeartReadingText(bpm: Int, status: String) : String {
+fun checkHeartReadingText(bpm: Int, status: String, userAge: Int) : String {
 
     var text = ""
     if (status == "Resting") {
@@ -276,7 +276,7 @@ fun checkHeartReadingText(bpm: Int, status: String) : String {
             } else if (bpm in 65..91) {
                 //Good Range
                 text = "Your heart rate is within the healthy active range. Keep it up."
-            } else if (bpm > 91) {
+            } else if (bpm > 91){
                 //Too high
                 text = "Your heart rate is showing tachycardia because it is too high for being active. If this is a common occurrence, please consult a doctor."
             }
@@ -492,7 +492,7 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
     test.time = it.timestamp?.toDate()!!
     val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
-    val colour = checkHeartReading(it.bpm, it.readingStatus)
+    val colour = checkHeartReading(it.bpm, it.readingStatus, userAge)
     var text = ""
 
     if (colour == Color(0xFFFFB52E)) {

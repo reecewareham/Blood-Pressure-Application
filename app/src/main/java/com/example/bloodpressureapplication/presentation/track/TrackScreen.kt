@@ -326,13 +326,15 @@ fun HeartRateTrack() {
             colors = CardDefaults.cardColors(
                 checkHeartReading(
                     bpm5Values[4].toInt(),
-                    status5Values[4]
+                    status5Values[4],
+                    userAge
                 ))
         ) {
             Text(
                 text = checkHeartReadingText(
                     bpm5Values[4].toInt(),
-                    status5Values[4]
+                    status5Values[4],
+                    userAge
                 ),
                 fontWeight = FontWeight.Bold,
                 lineHeight = 20.sp,

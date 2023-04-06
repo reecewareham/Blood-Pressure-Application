@@ -36,6 +36,7 @@ var gotBloodReading = false
 var bpmValue = arrayListOf<String>()
 var statusValue = arrayListOf<String>()
 var gotHeartReading = false
+var userAge = 0
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
@@ -82,6 +83,9 @@ fun HomeScreen(
                         }
                         is Response.Success -> {
                             val obj = response.data
+                            if (obj != null) {
+                                userAge = obj.age.toInt()
+                            }
 
                                 Card(
                                     modifier = Modifier
@@ -329,49 +333,45 @@ fun HomeCheckBlood() {
     val colour = checkReading(systolicValue[0].toInt(), diastolicValue[0].toInt())
     val text = checkReadingText(systolicValue[0].toInt(), diastolicValue[0].toInt())
 
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                shape = RoundedCornerShape(15.dp),
-                elevation = CardDefaults.cardElevation(),
-                colors = CardDefaults.cardColors(containerColor = colour)
-            ) {
-                Text(
-                    text = text,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 20.sp,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp)
-                )
-
-            }
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = CardDefaults.cardElevation(),
+        colors = CardDefaults.cardColors(containerColor = colour)
+    ) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 20.sp,
+            fontSize = 20.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(10.dp)
+        )
+    }
 }
 
 @Composable
 fun HomeCheckHeart() {
-    val colourHeart = checkHeartReading(bpmValue[0].toInt(), statusValue[0])
-    val textHeart = checkHeartReadingText(bpmValue[0].toInt(), statusValue[0])
+    val colourHeart = checkHeartReading(bpmValue[0].toInt(), statusValue[0], userAge)
+    val textHeart = checkHeartReadingText(bpmValue[0].toInt(), statusValue[0], userAge)
 
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            shape = RoundedCornerShape(15.dp),
-            elevation = CardDefaults.cardElevation(),
-            colors = CardDefaults.cardColors(containerColor = colourHeart)
-        ) {
-            Text(
-                text = textHeart,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 20.sp,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(10.dp)
-            )
-
-        }
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = CardDefaults.cardElevation(),
+        colors = CardDefaults.cardColors(containerColor = colourHeart)
+    ) {
+        Text(
+            text = textHeart,
+            fontWeight = FontWeight.Bold,
+            lineHeight = 20.sp,
+            fontSize = 20.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(10.dp)
+        )
+    }
 }
