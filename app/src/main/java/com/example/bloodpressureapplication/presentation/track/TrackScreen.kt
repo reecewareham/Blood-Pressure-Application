@@ -17,6 +17,7 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -174,35 +175,35 @@ fun GetReadings(userViewModel: UserViewModel, bloodPressureViewModel : BloodPres
             CircularProgressIndicator()
         }
         is Response.Success -> {
-            val obj = response.data
-            if (obj != null) {
+            if (response.data != null) {
+                val obj = response.data
                 userAge = obj.age.toInt()
-            }
-            when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Response.Success -> {
-                    val obj = response.data
-                    bloodPressureReadings = obj
-                    bloodTrackContent(bloodPressureReadings)
-                    when (val response = heartRateViewModel.heartRateReadingData.value) {
-                        is Response.Loading -> {
-                            CircularProgressIndicator()
-                        }
-                        is Response.Success -> {
-                            val obj = response.data
-                            heartRateReadings = obj
-                            heartTrackContent(heartRateReadings)
-                            complete = true
-                        }
-                        is Response.Error -> {
-                            Toast(message = response.message)
+                when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+                    is Response.Loading -> {
+                        CircularProgressIndicator()
+                    }
+                    is Response.Success -> {
+                        val obj = response.data
+                        bloodPressureReadings = obj
+                        bloodTrackContent(bloodPressureReadings)
+                        when (val response = heartRateViewModel.heartRateReadingData.value) {
+                            is Response.Loading -> {
+                                CircularProgressIndicator()
+                            }
+                            is Response.Success -> {
+                                val obj = response.data
+                                heartRateReadings = obj
+                                heartTrackContent(heartRateReadings)
+                                complete = true
+                            }
+                            is Response.Error -> {
+                                Toast(message = response.message)
+                            }
                         }
                     }
-                }
-                is Response.Error -> {
-                    Toast(message = response.message)
+                    is Response.Error -> {
+                        Toast(message = response.message)
+                    }
                 }
             }
         }
@@ -235,17 +236,23 @@ fun BloodPressureTrack() {
                 shape = RoundedCornerShape(15.dp),
                 elevation = CardDefaults.cardElevation(),
                 colors = CardDefaults.cardColors(
-                    checkReading(
-                        systolic5Values[systolic5Values.size - 1].toInt(),
-                        diastolic5Values[diastolic5Values.size - 1].toInt()
-                    )
+                    if (systolic5Values.size == 0) {
+                        Color.White
+                    } else {
+                        checkReading(
+                            systolic5Values[systolic5Values.size - 1].toInt(),
+                            diastolic5Values[diastolic5Values.size - 1].toInt()
+                        )
+                    }
                 )
             ) {
                 Text(
-                    text = checkReadingText(
+                    text = if (systolic5Values.size == 0) {
+                        "You have not entered any readings yet. Press the plus button in the bottom right to get started."
+                    } else { checkReadingText(
                         systolic5Values[systolic5Values.size - 1].toInt(),
                         diastolic5Values[diastolic5Values.size - 1].toInt()
-                    ),
+                    )},
                     fontWeight = FontWeight.Bold,
                     lineHeight = 20.sp,
                     fontSize = 20.sp,
@@ -293,19 +300,25 @@ fun HeartRateTrack() {
                 shape = RoundedCornerShape(15.dp),
                 elevation = CardDefaults.cardElevation(),
                 colors = CardDefaults.cardColors(
-                    checkHeartReading(
-                        bpm5Values[bpm5Values.size - 1].toInt(),
-                        status5Values[status5Values.size - 1],
-                        userAge
-                    )
+                    if (bpm5Values.size == 0) {
+                        Color.White
+                    } else {
+                        checkHeartReading(
+                            bpm5Values[bpm5Values.size - 1].toInt(),
+                            status5Values[status5Values.size - 1],
+                            userAge
+                        )
+                    }
                 )
             ) {
                 Text(
-                    text = checkHeartReadingText(
+                    text = if (bpm5Values.size == 0) {
+                        "You have not entered any readings yet. Press the plus button in the bottom right to get started."
+                    } else { checkHeartReadingText(
                         bpm5Values[bpm5Values.size - 1].toInt(),
                         status5Values[status5Values.size - 1],
                         userAge
-                    ),
+                    )},
                     fontWeight = FontWeight.Bold,
                     lineHeight = 20.sp,
                     fontSize = 20.sp,

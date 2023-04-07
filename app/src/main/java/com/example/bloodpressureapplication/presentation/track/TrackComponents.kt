@@ -1,5 +1,6 @@
 package com.example.bloodpressureapplication.presentation.track
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -72,6 +73,7 @@ fun checkReadingText(systolic: Int, diastolic: Int): String {
 fun checkHeartReading(bpm: Int, status: String, userAge: Int) : Color {
 
     var colour = Color.White
+
     if (status == "Resting") {
         if (bpm < 60) {
             //Slow heart rate (bradycardia)
@@ -84,7 +86,7 @@ fun checkHeartReading(bpm: Int, status: String, userAge: Int) : Color {
             colour = Color.Red
         }
     } else if (status == "Active" || status == "Exercise") {
-        if (userAge in 20..30) {
+        if (userAge in 0..30) {
             if (bpm < 100) {
                 //Too slow for active
                 colour = Color(0xFFFFB52E)
@@ -192,7 +194,7 @@ fun checkHeartReadingText(bpm: Int, status: String, userAge: Int) : String {
             text = "Your heart rate is showing tachycardia because it is too high for resting. If this is a common occurrence, please consult a doctor."
         }
     } else if (status == "Active" || status == "Exercise") {
-        if (userAge in 20..30) {
+        if (userAge in 0..30) {
             if (bpm < 100) {
                 //Too slow for active
                 text = "Your heart rate is showing bradycardia because it is too low for being active. If this is a common occurrence, please consult a doctor."

@@ -99,47 +99,57 @@ fun MeasureHeartRateScreen(
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            Column() {
-                                Text(
-                                    text = "BPM",
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    fontSize = 20.sp,
-                                    textAlign = TextAlign.Center
-                                )
+                            Card(
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            ) {
+                                Column() {
+                                    Text(
+                                        text = "BPM",
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        fontSize = 20.sp,
+                                        textAlign = TextAlign.Center
+                                    )
 
-                                NumberPicker(
-                                    value = bpmState,
-                                    range = 0..200,
-                                    onValueChange = {
-                                        bpmState = it
-                                    },
-                                    dividersColor = md_theme_light_primary,
-                                    modifier = Modifier
-                                        .align(Alignment.CenterHorizontally)
-                                )
+                                    NumberPicker(
+                                        value = bpmState,
+                                        range = 0..200,
+                                        onValueChange = {
+                                            bpmState = it
+                                        },
+                                        dividersColor = md_theme_light_primary,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterHorizontally)
+                                    )
+                                }
                             }
 
-                            Column() {
-                                Text(
-                                    text = "Status",
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    fontSize = 20.sp,
-                                    textAlign = TextAlign.Center
-                                )
+                            Card(
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            ) {
+                                Column() {
+                                    Text(
+                                        text = "Status",
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        fontSize = 20.sp,
+                                        textAlign = TextAlign.Center
+                                    )
 
-                                ListItemPicker(
-                                    label = { it },
-                                    value = statusState,
-                                    onValueChange = {
-                                        statusState = it
-                                    },
-                                    list = possibleStatuses,
-                                    dividersColor = md_theme_light_primary,
-                                    modifier = Modifier
-                                        .align(Alignment.CenterHorizontally)
-                                )
+                                    ListItemPicker(
+                                        label = { it },
+                                        value = statusState,
+                                        onValueChange = {
+                                            statusState = it
+                                        },
+                                        list = possibleStatuses,
+                                        dividersColor = md_theme_light_primary,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterHorizontally)
+                                    )
+                                }
                             }
                         }
 

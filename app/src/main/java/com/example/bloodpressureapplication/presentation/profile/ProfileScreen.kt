@@ -198,3 +198,8 @@ fun ProfileExportFile() {
         Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center, fontSize = 20.sp)
     }
 }
+
+@Composable
+fun ExportToCSV() {
+
+}

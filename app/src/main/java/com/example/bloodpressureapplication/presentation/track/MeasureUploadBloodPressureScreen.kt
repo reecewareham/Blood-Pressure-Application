@@ -2,6 +2,7 @@ package com.example.bloodpressureapplication.presentation.reminders
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +16,7 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -101,27 +103,36 @@ fun MeasureBloodPressureScreen(
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            Column() {
-                                Text(
-                                    text = "Systolic",
-                                    modifier = Modifier
-                                        .padding(10.dp),
-                                    fontSize = 20.sp,
-                                    textAlign = TextAlign.Center
-                                )
+                            Card(
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            ) {
+                                Column() {
+                                    Text(
+                                        text = "Systolic",
+                                        modifier = Modifier
+                                            .padding(10.dp),
+                                        fontSize = 20.sp,
+                                        textAlign = TextAlign.Center
+                                    )
 
-                                NumberPicker(
-                                    value = systolicState,
-                                    range = 0..300,
-                                    onValueChange = {
-                                        systolicState = it
-                                    },
-                                    dividersColor = md_theme_light_primary,
-                                    modifier = Modifier
-                                        .align(Alignment.CenterHorizontally)
-                                )
+                                    NumberPicker(
+                                        value = systolicState,
+                                        range = 0..300,
+                                        onValueChange = {
+                                            systolicState = it
+                                        },
+                                        dividersColor = md_theme_light_primary,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterHorizontally)
+                                    )
+                                }
                             }
 
+                            Card(
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            ) {
                             Column() {
                                 Text(
                                     text = "Diastolic",
@@ -131,16 +142,19 @@ fun MeasureBloodPressureScreen(
                                     textAlign = TextAlign.Center
                                 )
 
-                                NumberPicker(
-                                    value = diastolicState,
-                                    range = 0..300,
-                                    onValueChange = {
-                                        diastolicState = it
-                                    },
-                                    dividersColor = md_theme_light_primary,
-                                    modifier = Modifier
-                                        .align(Alignment.CenterHorizontally)
-                                )
+
+
+                                    NumberPicker(
+                                        value = diastolicState,
+                                        range = 0..300,
+                                        onValueChange = {
+                                            diastolicState = it
+                                        },
+                                        dividersColor = md_theme_light_primary,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterHorizontally)
+                                    )
+                                }
                             }
                         }
 

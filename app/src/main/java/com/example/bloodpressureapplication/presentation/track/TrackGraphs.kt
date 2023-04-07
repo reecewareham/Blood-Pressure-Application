@@ -52,27 +52,29 @@ private val heartBottomAxisValueFormatter =
 
 @Composable
 internal fun BloodPressureGraph(chartEntryModelProducer: ChartEntryModelProducer, modifier: Modifier = Modifier) {
-    ProvideChartStyle(rememberChartStyle(chartColors)) {
-        val defaultColumns = currentChartStyle.columnChart.columns
-        Chart(
-            chart = columnChart(
-                columns = remember(defaultColumns) {
-                    defaultColumns.map { defaultColumn ->
-                        LineComponent(
-                            defaultColumn.color,
-                            defaultColumn.thicknessDp,
-                        )
-                    }
-                },
-                mergeMode = ColumnChart.MergeMode.Grouped,
-            ),
-            chartModelProducer = chartEntryModelProducer,
-            modifier = modifier,
-            startAxis = startAxis(),
-            bottomAxis = bottomAxis(valueFormatter = bottomAxisValueFormatter),
-            marker = rememberMarker(),
-            legend = bloodRememberLegend()
-        )
+    if (date5Values.size !== 0) {
+        ProvideChartStyle(rememberChartStyle(chartColors)) {
+            val defaultColumns = currentChartStyle.columnChart.columns
+            Chart(
+                chart = columnChart(
+                    columns = remember(defaultColumns) {
+                        defaultColumns.map { defaultColumn ->
+                            LineComponent(
+                                defaultColumn.color,
+                                defaultColumn.thicknessDp,
+                            )
+                        }
+                    },
+                    mergeMode = ColumnChart.MergeMode.Grouped,
+                ),
+                chartModelProducer = chartEntryModelProducer,
+                modifier = modifier,
+                startAxis = startAxis(),
+                bottomAxis = bottomAxis(valueFormatter = bottomAxisValueFormatter),
+                marker = rememberMarker(),
+                legend = bloodRememberLegend()
+            )
+        }
     }
 }
 
@@ -126,22 +128,24 @@ private fun heartRememberLegend() =
 
 @Composable
 internal fun HeartRateGraph(chartEntryModelProducer: ChartEntryModelProducer, modifier: Modifier = Modifier) {
-    ProvideChartStyle(rememberChartStyle(heartChartColors)) {
-        val defaultColumns = currentChartStyle.columnChart.columns
-        Chart(
-            chart = columnChart(
-                columns = remember(defaultColumns) {
-                    defaultColumns.map { defaultColumn ->
-                        LineComponent(defaultColumn.color, COLUMN_WIDTH_DP, defaultColumn.shape)
-                    }
-                },
-            ),
-            chartModelProducer = chartEntryModelProducer,
-            modifier = modifier,
-            startAxis = startAxis(),
-            bottomAxis = bottomAxis(valueFormatter = heartBottomAxisValueFormatter),
-            marker = rememberMarker(),
-            legend = heartRememberLegend()
-        )
+    if (date5HeartValues.size !== 0) {
+        ProvideChartStyle(rememberChartStyle(heartChartColors)) {
+            val defaultColumns = currentChartStyle.columnChart.columns
+            Chart(
+                chart = columnChart(
+                    columns = remember(defaultColumns) {
+                        defaultColumns.map { defaultColumn ->
+                            LineComponent(defaultColumn.color, COLUMN_WIDTH_DP, defaultColumn.shape)
+                        }
+                    },
+                ),
+                chartModelProducer = chartEntryModelProducer,
+                modifier = modifier,
+                startAxis = startAxis(),
+                bottomAxis = bottomAxis(valueFormatter = heartBottomAxisValueFormatter),
+                marker = rememberMarker(),
+                legend = heartRememberLegend()
+            )
+        }
     }
 }
