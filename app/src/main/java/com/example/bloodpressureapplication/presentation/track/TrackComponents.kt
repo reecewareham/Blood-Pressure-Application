@@ -287,44 +287,27 @@ fun checkHeartReadingText(bpm: Int, status: String, userAge: Int) : String {
 
 
 
-@Composable
-fun BloodTrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
-    LazyColumn()
-     {
-        items(items = bloodPressureReadings, itemContent =  {
-            BloodListContent(it)
-            bloodPressureGraph = true
-        })
+fun bloodTrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
+    systolic5Values.clear()
+    diastolic5Values.clear()
+    date5Values.clear()
+
+    for (item in bloodPressureReadings) {
+        val sys = item.systolicPressure.toFloat()
+        val dia = item.diastolicPressure.toFloat()
+
+        systolic5Values.add(0,sys)
+        diastolic5Values.add(0,dia)
+
+        val test = Calendar.getInstance()
+        test.time = item.timestamp?.toDate()!!
+        val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+
+        date5Values.add(0,date)
     }
-
-    if (bloodPressureGraph) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-        ) {
-            fun getSys() = List(systolic5Values.size) { FloatEntry(it.toFloat(), systolic5Values.elementAt(it)) }
-            fun getDia() = List(diastolic5Values.size) { FloatEntry(it.toFloat(), diastolic5Values.elementAt(it)) }
-            bloodChartEntryModel = ChartEntryModelProducer(getSys(), getDia())
-
-        }
-    }
-}
-
-@Composable
-fun BloodListContent(it: BloodPressureReadings) {
-    val sys = it.systolicPressure.toFloat()
-    val dia = it.diastolicPressure.toFloat()
-
-    systolic5Values.add(0,sys)
-    diastolic5Values.add(0,dia)
-
-    val test = Calendar.getInstance()
-    test.time = it.timestamp?.toDate()!!
-    val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
-
-    date5Values.add(0,date)
-
+    fun getSys() = List(systolic5Values.size) { FloatEntry(it.toFloat(), systolic5Values.elementAt(it)) }
+    fun getDia() = List(diastolic5Values.size) { FloatEntry(it.toFloat(), diastolic5Values.elementAt(it)) }
+    bloodChartEntryModel = ChartEntryModelProducer(getSys(), getDia())
 }
 
 @Composable
@@ -446,31 +429,20 @@ fun BloodListOfReadings(bloodPressureReadings: List<BloodPressureReadings>) {
     }
 }
 
-@Composable
-fun HeartTrackContent(heartRateReadings: List<HeartRateReadings>) {
-    LazyColumn(
-    ) {
-        items(items = heartRateReadings, itemContent =  {
-            HeartListContent(it)
-            heartRateGraph = true
-        })
+fun heartTrackContent(heartRateReadings: List<HeartRateReadings>) {
+    bpm5Values.clear()
+    status5Values.clear()
+    date5HeartValues.clear()
+
+    for(item in heartRateReadings) {
+        heartListContent(item)
     }
 
-    if (heartRateGraph) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-        ) {
-            fun getBpm() = List(bpm5Values.size) { FloatEntry(it.toFloat(), bpm5Values.elementAt(it)) }
-            heartChartEntryModel = ChartEntryModelProducer(getBpm())
-
-        }
-    }
+    fun getBpm() = List(bpm5Values.size) { FloatEntry(it.toFloat(), bpm5Values.elementAt(it)) }
+    heartChartEntryModel = ChartEntryModelProducer(getBpm())
 }
 
-@Composable
-fun HeartListContent(it: HeartRateReadings) {
+fun heartListContent(it: HeartRateReadings) {
     val bpm = it.bpm.toFloat()
     val status = it.readingStatus
 

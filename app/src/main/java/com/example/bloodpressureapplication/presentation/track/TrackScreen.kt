@@ -42,7 +42,6 @@ var diastolic5Values = arrayListOf<Float>()
 var date5Values = arrayListOf<String>()
 var bloodPressureGraph = false
 var bloodChartEntryModel = ChartEntryModelProducer()
-var bloodPressure5Readings = listOf<BloodPressureReadings>()
 var bloodPressureReadings = listOf<BloodPressureReadings>()
 var hasBlood5Readings = false
 var hasBloodReadings = false
@@ -52,11 +51,13 @@ var status5Values = arrayListOf<String>()
 var date5HeartValues = arrayListOf<String>()
 var heartRateGraph = false
 var heartChartEntryModel = ChartEntryModelProducer()
-var heartRate5Readings = listOf<HeartRateReadings>()
 var heartRateReadings = listOf<HeartRateReadings>()
 var hasHeart5Readings = false
 var hasHeartReadings = false
 var userAge = 0
+
+var complete = false
+
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -64,107 +65,29 @@ var userAge = 0
 fun TrackScreen(
     navController : NavController
 ) {
-    val bloodPressureViewModel : BloodPressureReadingsViewModel = hiltViewModel()
-    bloodPressureViewModel.getLast5Readings()
-    bloodPressureViewModel.getAllReadings()
-
-    val heartRateViewModel : HeartRateReadingsViewModel = hiltViewModel()
-    heartRateViewModel.getLast5HeartReadings()
-    heartRateViewModel.getAllHeartReadings()
-
     val userViewModel : UserViewModel = hiltViewModel()
-    userViewModel.getUserInfo()
+    val bloodPressureViewModel : BloodPressureReadingsViewModel = hiltViewModel()
+    val heartRateViewModel : HeartRateReadingsViewModel = hiltViewModel()
 
+    GetReadings(userViewModel, bloodPressureViewModel, heartRateViewModel)
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Track", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-                },
-                actions = {
+    if (complete) {
 
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = "Track", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    },
+                    actions = {
+
+                    },
+                    colors = TopAppBarDefaults.smallTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    )
                 )
-            )
-        },
-        content = {
-            when (val response = userViewModel.getUserData.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Response.Success -> {
-                    val obj = response.data
-                    if (obj != null) {
-                        userAge = obj.age.toInt()
-                    }
-                }
-                is Response.Error -> {
-                    Toast(message = response.message)
-                }
-            }
-
-            when (val response = bloodPressureViewModel.bloodPressure5ReadingData.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Response.Success -> {
-                    val obj = response.data
-                        bloodPressure5Readings = obj
-                        hasBlood5Readings = true
-                }
-                is Response.Error -> {
-                    Toast(message = response.message)
-                }
-            }
-
-            when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Response.Success -> {
-                    val obj = response.data
-                        bloodPressureReadings = obj
-                        hasBloodReadings = true
-                }
-                is Response.Error -> {
-                    Toast(message = response.message)
-                }
-            }
-
-            when (val response = heartRateViewModel.heartRate5ReadingData.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Response.Success -> {
-                    val obj = response.data
-                    heartRate5Readings = obj
-                    hasHeart5Readings = true
-                }
-                is Response.Error -> {
-                    Toast(message = response.message)
-                }
-            }
-
-            when (val response = heartRateViewModel.heartRateReadingData.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Response.Success -> {
-                    val obj = response.data
-                    heartRateReadings = obj
-                    hasHeartReadings = true
-                }
-                is Response.Error -> {
-                    Toast(message = response.message)
-                }
-            }
-
-            if (hasBlood5Readings && hasBloodReadings) {
-                BloodTrackContent(bloodPressure5Readings)
-                HeartTrackContent(heartRate5Readings)
+            },
+            content = {
 
                 val pagerState = rememberPagerState()
                 val coroutineScope = rememberCoroutineScope()
@@ -222,143 +145,188 @@ fun TrackScreen(
                         tabRowItems[pagerState.currentPage].screen()
                     }
                 }
+            },
+            bottomBar = {
+                BottomNavigationMenu(
+                    selectedItem = BottomNavigationItem.TRACK,
+                    navController = navController
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { navController.navigate(Screens.MeasureScreen.route) },
+                ) {
+                    Icon(Icons.Filled.Add, "Add Reading")
+                }
             }
-    },
-        bottomBar = {
-            BottomNavigationMenu(selectedItem = BottomNavigationItem.TRACK, navController = navController)
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate(Screens.MeasureScreen.route) },
-            ) {
-                Icon(Icons.Filled.Add, "Add Reading")
+        )
+    }
+}
+
+@Composable
+fun GetReadings(userViewModel: UserViewModel, bloodPressureViewModel : BloodPressureReadingsViewModel, heartRateViewModel: HeartRateReadingsViewModel) {
+    userViewModel.getUserInfo()
+    bloodPressureViewModel.getAllReadings()
+    heartRateViewModel.getAllHeartReadings()
+
+    when (val response = userViewModel.getUserData.value) {
+        is Response.Loading -> {
+            CircularProgressIndicator()
+        }
+        is Response.Success -> {
+            val obj = response.data
+            if (obj != null) {
+                userAge = obj.age.toInt()
+            }
+            when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+                is Response.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is Response.Success -> {
+                    val obj = response.data
+                    bloodPressureReadings = obj
+                    bloodTrackContent(bloodPressureReadings)
+                    when (val response = heartRateViewModel.heartRateReadingData.value) {
+                        is Response.Loading -> {
+                            CircularProgressIndicator()
+                        }
+                        is Response.Success -> {
+                            val obj = response.data
+                            heartRateReadings = obj
+                            heartTrackContent(heartRateReadings)
+                            complete = true
+                        }
+                        is Response.Error -> {
+                            Toast(message = response.message)
+                        }
+                    }
+                }
+                is Response.Error -> {
+                    Toast(message = response.message)
+                }
             }
         }
-    )
+        is Response.Error -> {
+            Toast(message = response.message)
+        }
+    }
 }
 
 @Composable
 fun BloodPressureTrack() {
-
-    Column (
-        modifier = Modifier
-            .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
-    ) {
-        if (bloodPressureGraph) {
+        Column(
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
+        ) {
             Card(
 
             ) {
                 BloodPressureGraph(chartEntryModelProducer = bloodChartEntryModel)
             }
-        }
-        Spacer(
-            modifier = Modifier
-                .padding(5.dp)
-        )
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            shape = RoundedCornerShape(15.dp),
-            elevation = CardDefaults.cardElevation(),
-            colors = CardDefaults.cardColors(
-                checkReading(
-                    systolic5Values[4].toInt(),
-                    diastolic5Values[4].toInt()
-                ))
-        ) {
-            Text(
-                text = checkReadingText(
-                    systolic5Values[4].toInt(),
-                    diastolic5Values[4].toInt()
-                ),
-                fontWeight = FontWeight.Bold,
-                lineHeight = 20.sp,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(10.dp)
+            Spacer(
+                modifier = Modifier
+                    .padding(5.dp)
             )
 
-        }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                shape = RoundedCornerShape(15.dp),
+                elevation = CardDefaults.cardElevation(),
+                colors = CardDefaults.cardColors(
+                    checkReading(
+                        systolic5Values[systolic5Values.size - 1].toInt(),
+                        diastolic5Values[diastolic5Values.size - 1].toInt()
+                    )
+                )
+            ) {
+                Text(
+                    text = checkReadingText(
+                        systolic5Values[systolic5Values.size - 1].toInt(),
+                        diastolic5Values[diastolic5Values.size - 1].toInt()
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
 
-        Spacer(
-            modifier = Modifier
-                .padding(5.dp)
-        )
+            }
 
-        if(bloodPressureGraph) {
+            Spacer(
+                modifier = Modifier
+                    .padding(5.dp)
+            )
 
-            Card (
+
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
                 BloodListOfReadings(bloodPressureReadings)
             }
         }
-    }
 }
 
 @Composable
 fun HeartRateTrack() {
-    Column (
-        modifier = Modifier
-            .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
-    ) {
-        if (heartRateGraph) {
+        Column(
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
+        ) {
             Card(
 
             ) {
                 HeartRateGraph(chartEntryModelProducer = heartChartEntryModel)
             }
-        }
-        Spacer(
-            modifier = Modifier
-                .padding(5.dp)
-        )
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            shape = RoundedCornerShape(15.dp),
-            elevation = CardDefaults.cardElevation(),
-            colors = CardDefaults.cardColors(
-                checkHeartReading(
-                    bpm5Values[4].toInt(),
-                    status5Values[4],
-                    userAge
-                ))
-        ) {
-            Text(
-                text = checkHeartReadingText(
-                    bpm5Values[4].toInt(),
-                    status5Values[4],
-                    userAge
-                ),
-                fontWeight = FontWeight.Bold,
-                lineHeight = 20.sp,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(10.dp)
+            Spacer(
+                modifier = Modifier
+                    .padding(5.dp)
             )
 
-        }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                shape = RoundedCornerShape(15.dp),
+                elevation = CardDefaults.cardElevation(),
+                colors = CardDefaults.cardColors(
+                    checkHeartReading(
+                        bpm5Values[bpm5Values.size - 1].toInt(),
+                        status5Values[status5Values.size - 1],
+                        userAge
+                    )
+                )
+            ) {
+                Text(
+                    text = checkHeartReadingText(
+                        bpm5Values[bpm5Values.size - 1].toInt(),
+                        status5Values[status5Values.size - 1],
+                        userAge
+                    ),
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 20.sp,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
 
-        Spacer(
-            modifier = Modifier
-                .padding(5.dp)
-        )
+            }
 
-        if(heartRateGraph) {
+            Spacer(
+                modifier = Modifier
+                    .padding(5.dp)
+            )
 
-            Card (
+
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
                 HeartListOfReadings(heartRateReadings)
             }
         }
-    }
 }
 
