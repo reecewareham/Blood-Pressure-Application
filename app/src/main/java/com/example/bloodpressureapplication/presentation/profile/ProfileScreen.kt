@@ -1,33 +1,60 @@
 package com.example.bloodpressureapplication.presentation.profile
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.bloodpressureapplication.presentation.BottomNavigationItem
-import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
+import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
+import com.example.bloodpressureapplication.domain.model.HeartRateReadings
+import com.example.bloodpressureapplication.presentation.*
 import com.example.bloodpressureapplication.util.Response
-import com.example.bloodpressureapplication.presentation.Toast
 import com.example.bloodpressureapplication.presentation.authentication.AuthenticationViewModel
 import com.example.bloodpressureapplication.presentation.profile.components.MyProfile
 import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
+import com.example.bloodpressureapplication.presentation.track.*
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Screens
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import java.io.FileOutputStream
+import java.io.OutputStream
 
-@OptIn(ExperimentalMaterial3Api::class)
+var bloodPressureReadingsCSV = listOf<BloodPressureReadings>()
+var heartRateReadingsCSV = listOf<HeartRateReadings>()
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(
@@ -41,7 +68,7 @@ fun ProfileScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Profile", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Profile", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 actions = {
                     Button(
@@ -81,7 +108,7 @@ fun ProfileScreen(
                     }
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    containerColor = redScaffold
                 )
             )
         },
@@ -146,7 +173,8 @@ fun ProfileScreen(
                                         .fillMaxWidth(0.5f)
                                         .padding(10.dp),
                                     shape = RoundedCornerShape(15.dp),
-                                    elevation = CardDefaults.cardElevation()
+                                    elevation = CardDefaults.cardElevation(5.dp),
+                                    colors = CardDefaults.cardColors(containerColor = Color.White)
                                 ) {
                                     Column(
                                         modifier = Modifier
@@ -181,8 +209,38 @@ fun ProfileScreen(
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ProfileExportFile() {
+    val bloodPressureViewModel: BloodPressureReadingsViewModel = hiltViewModel()
+    bloodPressureViewModel.getAllReadings()
+    val heartRateViewModel: HeartRateReadingsViewModel = hiltViewModel()
+    heartRateViewModel.getAllHeartReadings()
+
+    when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+        is Response.Loading -> {
+            CircularProgressIndicator()
+        }
+        is Response.Success -> {
+            val obj = response.data
+            bloodPressureReadingsCSV = obj
+            when (val response = heartRateViewModel.heartRateReadingData.value) {
+                is Response.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is Response.Success -> {
+                    val obj = response.data
+                    heartRateReadingsCSV = obj
+                }
+                is Response.Error -> {
+                    Toast(message = response.message)
+                }
+            }
+        }
+        is Response.Error -> {
+            Toast(message = response.message)
+        }
+    }
 
     Button(
         modifier = Modifier
@@ -193,13 +251,32 @@ fun ProfileExportFile() {
             pressedElevation = 7.dp,
             disabledElevation = 0.dp
         ),
-        onClick = { Log.d("ClickableButton", "Export button pressed")}
+        onClick = {
+
+                FileOutputStream("BloodPressure&HeartRateReadings.csv").apply {
+                    exportToCSV(
+                        bloodPressureReadingsCSV, heartRateReadingsCSV
+                    )
+                }
+        }
+
     ) {
         Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center, fontSize = 20.sp)
     }
 }
 
-@Composable
-fun ExportToCSV() {
-
+fun OutputStream.exportToCSV(bloodPressureReadings: List<BloodPressureReadings>, heartRateReadings: List<HeartRateReadings>) {
+    val writer = bufferedWriter()
+    writer.write(""""Systolic Pressure", "Diastolic Pressure", "Timestamp"""")
+    writer.newLine()
+    bloodPressureReadings.forEach {
+        writer.write("${it.systolicPressure}, ${it.diastolicPressure}, \"${it.timestamp}\"")
+        writer.newLine()
+    }
+    writer.write(""""BPM", "Reading Status", "Timestamp"""")
+    heartRateReadings.forEach {
+        writer.write("${it.bpm}, ${it.readingStatus}, \"${it.timestamp}\"")
+        writer.newLine()
+    }
+    writer.flush()
 }

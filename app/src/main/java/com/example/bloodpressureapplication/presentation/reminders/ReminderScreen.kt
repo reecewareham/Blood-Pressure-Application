@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -16,6 +17,8 @@ import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.presentation.Toast
 import com.example.bloodpressureapplication.presentation.home.*
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Response
 import java.time.LocalDateTime
 
@@ -30,12 +33,13 @@ fun RemindersScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Reminders", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Reminders", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 actions = {
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
+                    containerColor = redScaffold
+                )
             )
         },
         content = {

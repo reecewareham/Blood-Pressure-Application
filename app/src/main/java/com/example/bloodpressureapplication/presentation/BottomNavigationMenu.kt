@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Screens
 
 
@@ -41,7 +43,7 @@ fun BottomNavigationMenu(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp))
+            .background(Color.White)
     ) {
         for(item in BottomNavigationItem.values()) {
 
@@ -55,8 +57,8 @@ fun BottomNavigationMenu(
                     .clickable {
                         navController.navigate(item.route.route)
                     },
-                colorFilter = if(item == selectedItem) ColorFilter.tint(Color.Red)
-                else ColorFilter.tint(Color.Gray)
+                colorFilter = if(item == selectedItem) ColorFilter.tint(redScaffold)
+                else ColorFilter.tint(Color(0xFFbdb7b7))
             )
 
         }

@@ -9,9 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -19,22 +17,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.presentation.Toast
-import com.example.bloodpressureapplication.presentation.authentication.AuthenticationViewModel
-import com.example.bloodpressureapplication.presentation.profile.components.MyProfile
-import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 
@@ -52,21 +45,21 @@ fun ProfileEditScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Edit Profile", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Edit Profile", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.navigate(Screens.ProfileScreen.route)
 
                     }) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.Filled.ArrowBack, "backIcon", tint = Color.White)
                     }
                 },
                 actions = {
 
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    containerColor = redScaffold
                 )
             )
         },
@@ -79,8 +72,7 @@ fun ProfileEditScreen(
                 is Response.Success -> {
                     if (response.data != null) {
                         val obj = response.data
-
-                            Box(
+                        Box(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(top = it.calculateTopPadding())
@@ -88,7 +80,9 @@ fun ProfileEditScreen(
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(10.dp)
+                                        .padding(10.dp),
+                                    elevation = CardDefaults.cardElevation(5.dp),
+                                    colors = CardDefaults.cardColors(containerColor = Color.White)
                                 ) {
                                 Column(
                                     modifier = Modifier

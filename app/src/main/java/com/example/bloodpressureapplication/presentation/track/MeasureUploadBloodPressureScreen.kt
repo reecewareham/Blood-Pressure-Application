@@ -29,7 +29,9 @@ import com.example.bloodpressureapplication.presentation.BloodPressureReadingsVi
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.presentation.Toast
-import com.example.bloodpressureapplication.ui.theme.md_theme_light_primary
+import com.example.bloodpressureapplication.ui.theme.gray
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.google.firebase.Timestamp
@@ -47,20 +49,20 @@ fun MeasureBloodPressureScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Measure Manually", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Measure Manually", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.navigate(Screens.MeasureScreen.route)
                     }) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.Filled.ArrowBack, "backIcon", tint = Color.White)
                     }
                 },
                 actions = {
 
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    containerColor = redScaffold
                 )
             )
         },
@@ -73,7 +75,9 @@ fun MeasureBloodPressureScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(10.dp)
+                        .padding(10.dp),
+                    elevation = CardDefaults.cardElevation(5.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Column(
                         modifier = Modifier
@@ -105,7 +109,9 @@ fun MeasureBloodPressureScreen(
                         ) {
                             Card(
                                 modifier = Modifier
-                                    .padding(5.dp)
+                                    .padding(5.dp),
+                                elevation = CardDefaults.cardElevation(5.dp),
+                                colors = CardDefaults.cardColors(containerColor = gray)
                             ) {
                                 Column() {
                                     Text(
@@ -122,7 +128,7 @@ fun MeasureBloodPressureScreen(
                                         onValueChange = {
                                             systolicState = it
                                         },
-                                        dividersColor = md_theme_light_primary,
+                                        dividersColor = Color(0xFFBA1926),
                                         modifier = Modifier
                                             .align(Alignment.CenterHorizontally)
                                     )
@@ -131,7 +137,9 @@ fun MeasureBloodPressureScreen(
 
                             Card(
                                 modifier = Modifier
-                                    .padding(5.dp)
+                                    .padding(5.dp),
+                                elevation = CardDefaults.cardElevation(5.dp),
+                                colors = CardDefaults.cardColors(containerColor = gray)
                             ) {
                             Column() {
                                 Text(
@@ -141,16 +149,13 @@ fun MeasureBloodPressureScreen(
                                     fontSize = 20.sp,
                                     textAlign = TextAlign.Center
                                 )
-
-
-
                                     NumberPicker(
                                         value = diastolicState,
                                         range = 0..300,
                                         onValueChange = {
                                             diastolicState = it
                                         },
-                                        dividersColor = md_theme_light_primary,
+                                        dividersColor = Color(0xFFBA1926),
                                         modifier = Modifier
                                             .align(Alignment.CenterHorizontally)
                                     )

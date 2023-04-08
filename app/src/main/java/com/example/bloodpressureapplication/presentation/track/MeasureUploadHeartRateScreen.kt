@@ -14,6 +14,7 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,7 +25,9 @@ import androidx.navigation.NavController
 import com.chargemap.compose.numberpicker.ListItemPicker
 import com.chargemap.compose.numberpicker.NumberPicker
 import com.example.bloodpressureapplication.presentation.*
-import com.example.bloodpressureapplication.ui.theme.md_theme_light_primary
+import com.example.bloodpressureapplication.ui.theme.gray
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.google.firebase.Timestamp
@@ -42,20 +45,20 @@ fun MeasureHeartRateScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Measure Manually", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Measure Manually", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.navigate(Screens.MeasureScreen.route)
                     }) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.Filled.ArrowBack, "backIcon", tint = Color.White)
                     }
                 },
                 actions = {
 
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    containerColor = redScaffold
                 )
             )
         },
@@ -68,7 +71,9 @@ fun MeasureHeartRateScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(10.dp)
+                        .padding(10.dp),
+                    elevation = CardDefaults.cardElevation(5.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Column(
                         modifier = Modifier
@@ -101,7 +106,9 @@ fun MeasureHeartRateScreen(
                         ) {
                             Card(
                                 modifier = Modifier
-                                    .padding(5.dp)
+                                    .padding(5.dp),
+                                elevation = CardDefaults.cardElevation(5.dp),
+                                colors = CardDefaults.cardColors(containerColor = gray)
                             ) {
                                 Column() {
                                     Text(
@@ -118,7 +125,7 @@ fun MeasureHeartRateScreen(
                                         onValueChange = {
                                             bpmState = it
                                         },
-                                        dividersColor = md_theme_light_primary,
+                                        dividersColor = Color(0xFFBA1926),
                                         modifier = Modifier
                                             .align(Alignment.CenterHorizontally)
                                     )
@@ -127,11 +134,13 @@ fun MeasureHeartRateScreen(
 
                             Card(
                                 modifier = Modifier
-                                    .padding(5.dp)
+                                    .padding(5.dp),
+                                elevation = CardDefaults.cardElevation(5.dp),
+                                colors = CardDefaults.cardColors(containerColor = gray)
                             ) {
                                 Column() {
                                     Text(
-                                        text = "Status",
+                                        text = " Status",
                                         modifier = Modifier
                                             .padding(10.dp),
                                         fontSize = 20.sp,
@@ -145,7 +154,7 @@ fun MeasureHeartRateScreen(
                                             statusState = it
                                         },
                                         list = possibleStatuses,
-                                        dividersColor = md_theme_light_primary,
+                                        dividersColor = Color(0xFFBA1926),
                                         modifier = Modifier
                                             .align(Alignment.CenterHorizontally)
                                     )

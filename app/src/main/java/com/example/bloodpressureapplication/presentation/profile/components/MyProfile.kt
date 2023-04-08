@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +34,8 @@ fun MyProfile(
             .fillMaxWidth()
             .padding(10.dp),
         shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation(5.dp)
+        elevation = CardDefaults.cardElevation(5.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
             modifier = Modifier

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -290,25 +291,30 @@ fun checkHeartReadingText(bpm: Int, status: String, userAge: Int) : String {
 
 
 fun bloodTrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
-    systolic5Values.clear()
-    diastolic5Values.clear()
-    date5Values.clear()
+    systolicValues.clear()
+    diastolicValues.clear()
+    dateValues.clear()
 
     for (item in bloodPressureReadings) {
         val sys = item.systolicPressure.toFloat()
         val dia = item.diastolicPressure.toFloat()
 
-        systolic5Values.add(0,sys)
-        diastolic5Values.add(0,dia)
+        systolicValues.add(0,sys)
+        diastolicValues.add(0,dia)
 
         val test = Calendar.getInstance()
         test.time = item.timestamp?.toDate()!!
         val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
-        date5Values.add(0,date)
+        dateValues.add(0,date)
     }
-    fun getSys() = List(systolic5Values.size) { FloatEntry(it.toFloat(), systolic5Values.elementAt(it)) }
-    fun getDia() = List(diastolic5Values.size) { FloatEntry(it.toFloat(), diastolic5Values.elementAt(it)) }
+
+    systolicTemp = ArrayList(systolicValues.reversed())
+    diastolicTemp = ArrayList(diastolicValues.reversed())
+    dateTemp = ArrayList(dateValues.reversed())
+
+    fun getSys() = List(systolicTemp.size) { FloatEntry(it.toFloat(), systolicTemp.elementAt(it)) }
+    fun getDia() = List(diastolicTemp.size) { FloatEntry(it.toFloat(), diastolicTemp.elementAt(it)) }
     bloodChartEntryModel = ChartEntryModelProducer(getSys(), getDia())
 }
 
@@ -423,7 +429,9 @@ fun BloodListOfReadings(bloodPressureReadings: List<BloodPressureReadings>) {
             Card(
                 modifier = Modifier
                     .padding(5.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 BloodListOfReadingsBar(it)
             }
@@ -432,15 +440,19 @@ fun BloodListOfReadings(bloodPressureReadings: List<BloodPressureReadings>) {
 }
 
 fun heartTrackContent(heartRateReadings: List<HeartRateReadings>) {
-    bpm5Values.clear()
-    status5Values.clear()
-    date5HeartValues.clear()
+    bpmValues.clear()
+    statusValues.clear()
+    dateHeartValues.clear()
 
     for(item in heartRateReadings) {
         heartListContent(item)
     }
 
-    fun getBpm() = List(bpm5Values.size) { FloatEntry(it.toFloat(), bpm5Values.elementAt(it)) }
+    bpmTemp = ArrayList(bpmValues.reversed())
+    statusTemp = ArrayList(statusValues.reversed())
+    dateHeartTemp = ArrayList(dateHeartValues.reversed())
+
+    fun getBpm() = List(bpmTemp.size) { FloatEntry(it.toFloat(), bpmTemp.elementAt(it)) }
     heartChartEntryModel = ChartEntryModelProducer(getBpm())
 }
 
@@ -448,14 +460,14 @@ fun heartListContent(it: HeartRateReadings) {
     val bpm = it.bpm.toFloat()
     val status = it.readingStatus
 
-    bpm5Values.add(0,bpm)
-    status5Values.add(0,status)
+    bpmValues.add(0,bpm)
+    statusValues.add(0,status)
 
     val test = Calendar.getInstance()
     test.time = it.timestamp?.toDate()!!
     val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
 
-    date5HeartValues.add(0,date)
+    dateHeartValues.add(0,date)
 
 }
 
@@ -565,7 +577,9 @@ fun HeartListOfReadings(heartRateReadings: List<HeartRateReadings>) {
             Card(
                 modifier = Modifier
                     .padding(5.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 HeartListOfReadingsBar(it)
             }

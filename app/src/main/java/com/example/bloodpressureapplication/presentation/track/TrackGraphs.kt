@@ -33,7 +33,7 @@ private val color1 = Color.Red //1st bar
 private val color2 = Color(0xFFFFB52E) //2nd bar
 private val chartColors = listOf(color1, color2)
 private val bottomAxisValueFormatter =
-    AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> date5Values[x.toInt() % date5Values.size] }
+    AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> dateTemp[x.toInt() % dateTemp.size] }
 private val legendItemLabelTextSize = 12.sp
 private val legendItemIconSize = 8.dp
 private val legendItemIconPaddingValue = 10.dp
@@ -47,12 +47,12 @@ private const val COLUMN_WIDTH_DP = 16f
 private val color3 = Color.Red
 private val heartChartColors = listOf(color3)
 private val heartBottomAxisValueFormatter =
-    AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> date5HeartValues[x.toInt() % date5HeartValues.size] }
+    AxisValueFormatter<AxisPosition.Horizontal.Bottom> { x, _ -> dateHeartTemp[x.toInt() % dateHeartTemp.size] }
 
 
 @Composable
 internal fun BloodPressureGraph(chartEntryModelProducer: ChartEntryModelProducer, modifier: Modifier = Modifier) {
-    if (date5Values.size !== 0) {
+    if (dateTemp.size !== 0) {
         ProvideChartStyle(rememberChartStyle(chartColors)) {
             val defaultColumns = currentChartStyle.columnChart.columns
             Chart(
@@ -128,7 +128,7 @@ private fun heartRememberLegend() =
 
 @Composable
 internal fun HeartRateGraph(chartEntryModelProducer: ChartEntryModelProducer, modifier: Modifier = Modifier) {
-    if (date5HeartValues.size !== 0) {
+    if (dateHeartTemp.size !== 0) {
         ProvideChartStyle(rememberChartStyle(heartChartColors)) {
             val defaultColumns = currentChartStyle.columnChart.columns
             Chart(

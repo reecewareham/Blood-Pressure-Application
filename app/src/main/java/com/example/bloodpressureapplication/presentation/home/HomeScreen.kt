@@ -27,6 +27,8 @@ import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
 import com.example.bloodpressureapplication.presentation.profile.UserViewModel
 import com.example.bloodpressureapplication.presentation.track.*
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Response
 import java.util.*
 
@@ -57,12 +59,12 @@ fun HomeScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Home", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Home", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 actions = {
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
+                    containerColor = redScaffold)
             )
         },
         content = {
@@ -92,7 +94,8 @@ fun HomeScreen(
                                         .fillMaxWidth()
                                         .padding(15.dp),
                                     shape = RoundedCornerShape(15.dp),
-                                    elevation = CardDefaults.cardElevation(),
+                                    elevation = CardDefaults.cardElevation(5.dp),
+                                    colors = CardDefaults.cardColors(containerColor = Color.White)
                                 ) {
                                     if (obj != null) {
                                         Text(
@@ -118,7 +121,8 @@ fun HomeScreen(
                             .fillMaxWidth(0.8f)
                             .padding(10.dp),
                         shape = RoundedCornerShape(15.dp),
-                        elevation = CardDefaults.cardElevation()
+                        elevation = CardDefaults.cardElevation(5.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
                         Text(
                             text = "Latest Readings",
@@ -147,7 +151,8 @@ fun HomeScreen(
                                             .fillMaxWidth(0.5f)
                                             .padding(10.dp),
                                         shape = RoundedCornerShape(15.dp),
-                                        elevation = CardDefaults.cardElevation()
+                                        elevation = CardDefaults.cardElevation(5.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color.White)
                                     ) {
                                         Column(
                                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -219,7 +224,8 @@ fun HomeScreen(
                                             .fillMaxWidth()
                                             .padding(10.dp),
                                         shape = RoundedCornerShape(15.dp),
-                                        elevation = CardDefaults.cardElevation()
+                                        elevation = CardDefaults.cardElevation(5.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color.White)
                                     ) {
                                         Column(
                                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -338,7 +344,7 @@ fun HomeCheckBlood() {
             .fillMaxWidth()
             .padding(10.dp),
         shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation(),
+        elevation = CardDefaults.cardElevation(5.dp),
         colors = CardDefaults.cardColors(containerColor = colour)
     ) {
         Text(
@@ -362,7 +368,7 @@ fun HomeCheckHeart() {
             .fillMaxWidth()
             .padding(10.dp),
         shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation(),
+        elevation = CardDefaults.cardElevation(5.dp),
         colors = CardDefaults.cardColors(containerColor = colourHeart)
     ) {
         Text(

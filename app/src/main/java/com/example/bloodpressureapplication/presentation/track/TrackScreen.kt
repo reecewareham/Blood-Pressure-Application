@@ -32,31 +32,32 @@ import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
 import com.example.bloodpressureapplication.presentation.info.TabRowItem
 import com.example.bloodpressureapplication.presentation.profile.UserViewModel
-import com.example.bloodpressureapplication.ui.theme.md_theme_light_primary
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import com.patrykandpatrick.vico.core.entry.*
 import kotlinx.coroutines.launch
 
-var systolic5Values = arrayListOf<Float>()
-var diastolic5Values = arrayListOf<Float>()
-var date5Values = arrayListOf<String>()
-var bloodPressureGraph = false
+var systolicValues = arrayListOf<Float>()
+var diastolicValues = arrayListOf<Float>()
+var dateValues = arrayListOf<String>()
+var systolicTemp = arrayListOf<Float>()
+var diastolicTemp = arrayListOf<Float>()
+var dateTemp = arrayListOf<String>()
 var bloodChartEntryModel = ChartEntryModelProducer()
 var bloodPressureReadings = listOf<BloodPressureReadings>()
-var hasBlood5Readings = false
-var hasBloodReadings = false
 
-var bpm5Values = arrayListOf<Float>()
-var status5Values = arrayListOf<String>()
-var date5HeartValues = arrayListOf<String>()
-var heartRateGraph = false
+var bpmValues = arrayListOf<Float>()
+var statusValues = arrayListOf<String>()
+var dateHeartValues = arrayListOf<String>()
+var bpmTemp = arrayListOf<Float>()
+var statusTemp = arrayListOf<String>()
+var dateHeartTemp = arrayListOf<String>()
 var heartChartEntryModel = ChartEntryModelProducer()
 var heartRateReadings = listOf<HeartRateReadings>()
-var hasHeart5Readings = false
-var hasHeartReadings = false
-var userAge = 0
 
+var userAge = 0
 var complete = false
 
 
@@ -78,13 +79,13 @@ fun TrackScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "Track", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                        Text(text = "Track", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                     },
                     actions = {
 
                     },
                     colors = TopAppBarDefaults.smallTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                        containerColor = redScaffold
                     )
                 )
             },
@@ -131,7 +132,7 @@ fun TrackScreen(
                                     Image(
                                         painterResource(id = item.icon),
                                         contentDescription = null,
-                                        colorFilter = ColorFilter.tint(md_theme_light_primary)
+                                        colorFilter = ColorFilter.tint(Color(0xFFBA1926))
                                     )
 
                                 },
@@ -150,14 +151,15 @@ fun TrackScreen(
             bottomBar = {
                 BottomNavigationMenu(
                     selectedItem = BottomNavigationItem.TRACK,
-                    navController = navController
+                    navController = navController,
                 )
             },
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { navController.navigate(Screens.MeasureScreen.route) },
+                    containerColor = red
                 ) {
-                    Icon(Icons.Filled.Add, "Add Reading")
+                    Icon(Icons.Filled.Add, "Add Reading", tint = Color.White)
                 }
             }
         )
@@ -220,7 +222,8 @@ fun BloodPressureTrack() {
                 .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
         ) {
             Card(
-
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 BloodPressureGraph(chartEntryModelProducer = bloodChartEntryModel)
             }
@@ -234,24 +237,24 @@ fun BloodPressureTrack() {
                     .fillMaxWidth()
                     .padding(10.dp),
                 shape = RoundedCornerShape(15.dp),
-                elevation = CardDefaults.cardElevation(),
+                elevation = CardDefaults.cardElevation(5.dp),
                 colors = CardDefaults.cardColors(
-                    if (systolic5Values.size == 0) {
+                    if (systolicValues.size == 0) {
                         Color.White
                     } else {
                         checkReading(
-                            systolic5Values[systolic5Values.size - 1].toInt(),
-                            diastolic5Values[diastolic5Values.size - 1].toInt()
+                            systolicValues[systolicValues.size - 1].toInt(),
+                            diastolicValues[diastolicValues.size - 1].toInt()
                         )
                     }
                 )
             ) {
                 Text(
-                    text = if (systolic5Values.size == 0) {
+                    text = if (systolicValues.size == 0) {
                         "You have not entered any readings yet. Press the plus button in the bottom right to get started."
                     } else { checkReadingText(
-                        systolic5Values[systolic5Values.size - 1].toInt(),
-                        diastolic5Values[diastolic5Values.size - 1].toInt()
+                        systolicValues[systolicValues.size - 1].toInt(),
+                        diastolicValues[diastolicValues.size - 1].toInt()
                     )},
                     fontWeight = FontWeight.Bold,
                     lineHeight = 20.sp,
@@ -270,7 +273,9 @@ fun BloodPressureTrack() {
 
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 BloodListOfReadings(bloodPressureReadings)
             }
@@ -284,7 +289,8 @@ fun HeartRateTrack() {
                 .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
         ) {
             Card(
-
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 HeartRateGraph(chartEntryModelProducer = heartChartEntryModel)
             }
@@ -298,25 +304,25 @@ fun HeartRateTrack() {
                     .fillMaxWidth()
                     .padding(10.dp),
                 shape = RoundedCornerShape(15.dp),
-                elevation = CardDefaults.cardElevation(),
+                elevation = CardDefaults.cardElevation(5.dp),
                 colors = CardDefaults.cardColors(
-                    if (bpm5Values.size == 0) {
+                    if (bpmValues.size == 0) {
                         Color.White
                     } else {
                         checkHeartReading(
-                            bpm5Values[bpm5Values.size - 1].toInt(),
-                            status5Values[status5Values.size - 1],
+                            bpmValues[bpmValues.size - 1].toInt(),
+                            statusValues[statusValues.size - 1],
                             userAge
                         )
                     }
                 )
             ) {
                 Text(
-                    text = if (bpm5Values.size == 0) {
+                    text = if (bpmValues.size == 0) {
                         "You have not entered any readings yet. Press the plus button in the bottom right to get started."
                     } else { checkHeartReadingText(
-                        bpm5Values[bpm5Values.size - 1].toInt(),
-                        status5Values[status5Values.size - 1],
+                        bpmValues[bpmValues.size - 1].toInt(),
+                        statusValues[statusValues.size - 1],
                         userAge
                     )},
                     fontWeight = FontWeight.Bold,
@@ -336,7 +342,9 @@ fun HeartRateTrack() {
 
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 HeartListOfReadings(heartRateReadings)
             }

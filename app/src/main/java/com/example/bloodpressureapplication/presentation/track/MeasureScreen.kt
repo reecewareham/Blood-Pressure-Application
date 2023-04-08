@@ -12,6 +12,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,20 +36,20 @@ fun MeasureScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Measure", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Measure", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.navigate(Screens.TrackScreen.route)
                     }) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                        Icon(Icons.Filled.ArrowBack, "backIcon", tint = Color.White)
                     }
                 },
                 actions = {
 
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    containerColor = redScaffold
                 )
             )
         },
@@ -64,7 +68,8 @@ fun MeasureScreen(
                         .fillMaxWidth(0.8f)
                         .padding(10.dp),
                     shape = RoundedCornerShape(15.dp),
-                    elevation = CardDefaults.cardElevation(),
+                    elevation = CardDefaults.cardElevation(5.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -154,7 +159,8 @@ fun MeasureScreen(
                         .fillMaxWidth(0.8f)
                         .padding(10.dp),
                     shape = RoundedCornerShape(15.dp),
-                    elevation = CardDefaults.cardElevation()
+                    elevation = CardDefaults.cardElevation(5.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,

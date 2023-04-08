@@ -25,7 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
-import com.example.bloodpressureapplication.ui.theme.md_theme_light_primary
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.ui.theme.redScaffold
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -40,12 +41,12 @@ fun InfoScreen(
         topBar = {
             TopAppBar (
                 title = {
-                    Text(text = "Information", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(text = "Information", fontWeight = FontWeight.Bold, fontSize = 24.sp, color = Color.White)
                 },
                 actions = {
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    containerColor = redScaffold
                 )
             )
         },
@@ -90,7 +91,7 @@ fun InfoScreen(
                                 Image(
                                     painterResource(id = item.icon),
                                     contentDescription = null,
-                                    colorFilter = ColorFilter.tint(md_theme_light_primary)
+                                    colorFilter = ColorFilter.tint(Color(0xFFBA1926))
                                 )
 
                             },
@@ -432,7 +433,8 @@ fun InfoCard(
         modifier = Modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation()
+        elevation = CardDefaults.cardElevation(5.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Box(
             modifier = Modifier
