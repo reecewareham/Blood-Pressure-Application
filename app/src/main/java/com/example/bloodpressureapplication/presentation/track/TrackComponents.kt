@@ -5,9 +5,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,8 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
+import com.example.bloodpressureapplication.ui.theme.red
+import com.example.bloodpressureapplication.util.Screens
 import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.FloatEntry
 import java.util.*
@@ -319,7 +323,7 @@ fun bloodTrackContent(bloodPressureReadings: List<BloodPressureReadings>) {
 }
 
 @Composable
-fun BloodListOfReadingsBar(it: BloodPressureReadings) {
+fun BloodListOfReadingsBar(it: BloodPressureReadings, navController: NavController) {
 
     val test = Calendar.getInstance()
     test.time = it.timestamp?.toDate()!!
@@ -414,13 +418,28 @@ fun BloodListOfReadingsBar(it: BloodPressureReadings) {
                         fontSize = 20.sp
                     )
                 }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    IconButton(onClick = {
+                        bloodReadingEdit = it.bloodPressureReadingId
+                        sysEdit = it.systolicPressure
+                        diaEdit = it.diastolicPressure
+                        navController.navigate(Screens.EditBloodPressureScreen.route)
+
+                    }) {
+                        Icon(Icons.Filled.Edit, "EditIcon", tint = red)
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun BloodListOfReadings(bloodPressureReadings: List<BloodPressureReadings>) {
+fun BloodListOfReadings(bloodPressureReadings: List<BloodPressureReadings>, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(0.85f)
@@ -433,7 +452,7 @@ fun BloodListOfReadings(bloodPressureReadings: List<BloodPressureReadings>) {
                 elevation = CardDefaults.cardElevation(5.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-                BloodListOfReadingsBar(it)
+                BloodListOfReadingsBar(it, navController)
             }
         })
     }
@@ -472,7 +491,7 @@ fun heartListContent(it: HeartRateReadings) {
 }
 
 @Composable
-fun HeartListOfReadingsBar(it: HeartRateReadings) {
+fun HeartListOfReadingsBar(it: HeartRateReadings, navController: NavController) {
 
     val test = Calendar.getInstance()
     test.time = it.timestamp?.toDate()!!
@@ -553,7 +572,7 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
                 }
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(1f),
+                        .fillMaxWidth(0.8f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -562,13 +581,28 @@ fun HeartListOfReadingsBar(it: HeartRateReadings) {
                         fontSize = 20.sp
                     )
                 }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    IconButton(onClick = {
+                        heartReadingEdit = it.heartRateReadingId
+                        bpmEdit = it.bpm
+                        statusEdit = it.readingStatus
+                        navController.navigate(Screens.EditHeartRateScreen.route)
+
+                    }) {
+                        Icon(Icons.Filled.Edit, "EditIcon", tint = red)
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun HeartListOfReadings(heartRateReadings: List<HeartRateReadings>) {
+fun HeartListOfReadings(heartRateReadings: List<HeartRateReadings>, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight(0.85f)
@@ -581,7 +615,7 @@ fun HeartListOfReadings(heartRateReadings: List<HeartRateReadings>) {
                 elevation = CardDefaults.cardElevation(5.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-                HeartListOfReadingsBar(it)
+                HeartListOfReadingsBar(it, navController)
             }
         })
     }

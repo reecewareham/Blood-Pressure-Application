@@ -87,7 +87,10 @@ object BloodPressureAppModule {
         getAllReadings = GetAllReadings(repository = repository),
         getLast5Readings = GetLast5Readings(repository = repository),
         uploadReading = UploadReading(repository = repository),
-        getLastReading = GetLastReading(repository = repository)
+        getLastReading = GetLastReading(repository = repository),
+        getReading = GetReading(repository = repository),
+        updateReading = UpdateReading(repository = repository),
+        deleteReading = DeleteReading(repository = repository)
     )
 
     @Singleton
@@ -102,6 +105,9 @@ object BloodPressureAppModule {
         getAllHeartReadings = GetAllHeartReadings(repository = repository),
         getLast5HeartReadings = GetLast5HeartReadings(repository = repository),
         uploadHeartReading = UploadHeartReading(repository = repository),
-        getLastHeartReading = GetLastHeartReading(repository = repository)
+        getLastHeartReading = GetLastHeartReading(repository = repository),
+        getHeartReading = GetHeartReading(repository = repository),
+        updateHeartReading = UpdateHeartReading(repository = repository),
+        deleteHeartReading = DeleteHeartReading(repository = repository)
     )
 }

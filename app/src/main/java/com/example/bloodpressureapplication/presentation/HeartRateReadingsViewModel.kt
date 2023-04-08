@@ -21,8 +21,8 @@ class HeartRateReadingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val userid = auth.currentUser?.uid
-    private val _heartRateReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
-    val heartRateReadingData : State<Response<List<HeartRateReadings>>> = _heartRateReadingData
+    private val _heartRateReadingsData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
+    val heartRateReadingsData : State<Response<List<HeartRateReadings>>> = _heartRateReadingsData
 
     private val _heartRateLastReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
     val heartRateLastReadingData : State<Response<List<HeartRateReadings>>> = _heartRateLastReadingData
@@ -30,14 +30,23 @@ class HeartRateReadingsViewModel @Inject constructor(
     private val _heartRate5ReadingData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
     val heartRate5ReadingData : State<Response<List<HeartRateReadings>>> = _heartRate5ReadingData
 
+    private val _heartRateReadingData = mutableStateOf<Response<HeartRateReadings>> (Response.Loading)
+    val heartRateReadingData : State<Response<HeartRateReadings>> = _heartRateReadingData
+
     private val _uploadHeartRateReadingData = mutableStateOf<Response<Boolean>> (Response.Success(false))
     val uploadHeartRateReadingData : State<Response<Boolean>> = _uploadHeartRateReadingData
+
+    private val _updateHeartRateReadingData = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val updateHeartRateReadingData : State<Response<Boolean>> = _updateHeartRateReadingData
+
+    private val _deleteHeartRateReadingData = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val deleteHeartRateReadingData : State<Response<Boolean>> = _deleteHeartRateReadingData
 
     fun getAllHeartReadings() {
         if(userid != null) {
             viewModelScope.launch {
                 heartRateReadingsUseCases.getAllHeartReadings(userid = userid).collect {
-                    _heartRateReadingData.value = it
+                    _heartRateReadingsData.value = it
                 }
             }
         }
@@ -63,6 +72,16 @@ class HeartRateReadingsViewModel @Inject constructor(
         }
     }
 
+    fun getHeartReading(heartRateReadingId: String) {
+        if(userid != null) {
+            viewModelScope.launch {
+                heartRateReadingsUseCases.getHeartReading(heartRateReadingId = heartRateReadingId).collect {
+                    _heartRateReadingData.value = it
+                }
+            }
+        }
+    }
+
     fun uploadHeartReading(bpm: Int, readingStatus: String, timestamp: Timestamp) {
         if (userid != null) {
             viewModelScope.launch {
@@ -73,6 +92,32 @@ class HeartRateReadingsViewModel @Inject constructor(
                     timestamp = timestamp
                 ).collect {
                     _uploadHeartRateReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun updateHeartReading(heartRateReadingId : String, bpm: Int, readingStatus: String) {
+        if(userid != null) {
+            viewModelScope.launch {
+                heartRateReadingsUseCases.updateHeartReading(
+                    heartRateReadingId = heartRateReadingId,
+                    bpm = bpm,
+                    readingStatus = readingStatus
+                ).collect {
+                    _updateHeartRateReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun deleteHeartReading(heartRateReadingId: String) {
+        if(userid != null) {
+            viewModelScope.launch {
+                heartRateReadingsUseCases.deleteHeartReading(
+                    heartRateReadingId = heartRateReadingId
+                ).collect {
+                    _deleteHeartRateReadingData.value = it
                 }
             }
         }

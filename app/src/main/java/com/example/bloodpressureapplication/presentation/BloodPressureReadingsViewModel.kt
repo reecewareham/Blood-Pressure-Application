@@ -20,8 +20,8 @@ class BloodPressureReadingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val userid = auth.currentUser?.uid
-    private val _bloodPressureReadingData = mutableStateOf<Response<List<BloodPressureReadings>>> (Response.Loading)
-    val bloodPressureReadingData : State<Response<List<BloodPressureReadings>>> = _bloodPressureReadingData
+    private val _bloodPressureReadingsData = mutableStateOf<Response<List<BloodPressureReadings>>> (Response.Loading)
+    val bloodPressureReadingsData : State<Response<List<BloodPressureReadings>>> = _bloodPressureReadingsData
 
     private val _bloodPressureLastReadingData = mutableStateOf<Response<List<BloodPressureReadings>>> (Response.Loading)
     val bloodPressureLastReadingData : State<Response<List<BloodPressureReadings>>> = _bloodPressureLastReadingData
@@ -29,14 +29,23 @@ class BloodPressureReadingsViewModel @Inject constructor(
     private val _bloodPressure5ReadingData = mutableStateOf<Response<List<BloodPressureReadings>>> (Response.Loading)
     val bloodPressure5ReadingData : State<Response<List<BloodPressureReadings>>> = _bloodPressure5ReadingData
 
+    private val _bloodPressureReadingData = mutableStateOf<Response<BloodPressureReadings?>> (Response.Success(null))
+    val bloodPressureReadingData : State<Response<BloodPressureReadings?>> = _bloodPressureReadingData
+
     private val _uploadBloodPressureReadingData = mutableStateOf<Response<Boolean>> (Response.Success(false))
     val uploadBloodPressureReadingData : State<Response<Boolean>> = _uploadBloodPressureReadingData
+
+    private val _updateBloodPressureReadingData = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val updateBloodPressureReadingData : State<Response<Boolean>> = _updateBloodPressureReadingData
+
+    private val _deleteBloodPressureReadingData = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val deleteBloodPressureReadingData : State<Response<Boolean>> = _deleteBloodPressureReadingData
 
     fun getAllReadings() {
         if(userid != null) {
             viewModelScope.launch {
                 bloodPressureReadingsUseCases.getAllReadings(userid = userid).collect {
-                    _bloodPressureReadingData.value = it
+                    _bloodPressureReadingsData.value = it
                 }
             }
         }
@@ -62,6 +71,16 @@ class BloodPressureReadingsViewModel @Inject constructor(
         }
     }
 
+    fun getReading(bloodPressureReadingId: String) {
+        if(userid != null) {
+            viewModelScope.launch {
+                bloodPressureReadingsUseCases.getReading(bloodPressureReadingId = bloodPressureReadingId).collect {
+                    _bloodPressureReadingData.value = it
+                }
+            }
+        }
+    }
+
     fun uploadReading(systolicPressure: Int, diastolicPressure: Int, timestamp: Timestamp) {
         if (userid != null) {
             viewModelScope.launch {
@@ -72,6 +91,32 @@ class BloodPressureReadingsViewModel @Inject constructor(
                     timestamp = timestamp
                 ).collect {
                     _uploadBloodPressureReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun updateReading(bloodPressureReadingId : String, systolicPressure: Int, diastolicPressure: Int) {
+        if(userid != null) {
+            viewModelScope.launch {
+                bloodPressureReadingsUseCases.updateReading(
+                    bloodPressureReadingId = bloodPressureReadingId,
+                    systolicPressure = systolicPressure,
+                    diastolicPressure = diastolicPressure
+                ).collect {
+                    _updateBloodPressureReadingData.value = it
+                }
+            }
+        }
+    }
+
+    fun deleteReading(bloodPressureReadingId : String) {
+        if(userid != null) {
+            viewModelScope.launch {
+                bloodPressureReadingsUseCases.deleteReading(
+                    bloodPressureReadingId = bloodPressureReadingId
+                ).collect {
+                    _deleteBloodPressureReadingData.value = it
                 }
             }
         }

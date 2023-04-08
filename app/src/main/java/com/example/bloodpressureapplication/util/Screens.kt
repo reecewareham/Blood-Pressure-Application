@@ -13,4 +13,6 @@ sealed class Screens(val route: String) {
     object MeasureHeartRateScreen : Screens("heart_rate_measure_screen")
     object ProfileEditScreen : Screens("profile_edit_screen")
     object RemindersScreen : Screens("reminders_screen")
+    object EditBloodPressureScreen : Screens("edit_blood_pressure_screen")
+    object EditHeartRateScreen : Screens("edit_heart_rate_screen")
 }

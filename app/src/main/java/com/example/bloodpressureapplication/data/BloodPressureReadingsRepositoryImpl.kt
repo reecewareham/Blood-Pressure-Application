@@ -86,6 +86,25 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
 
     }
 
+    override fun getReading(bloodPressureReadingId: String): Flow<Response<BloodPressureReadings>> = callbackFlow{
+
+        Response.Loading
+        val snapshotListener = firebaseFirestore.collection(COLLECTION_NAME_BLOOD_PRESSURE_READINGS)
+            .document(bloodPressureReadingId)
+            .addSnapshotListener {snapshot, e->
+                val response = if (snapshot != null) {
+                    val bloodPressureReading = snapshot.toObject(BloodPressureReadings::class.java)
+                    Response.Success<BloodPressureReadings>(bloodPressureReading!!)
+                } else {
+                    Response.Error(e?.message?:e.toString())
+                }
+                trySend(response).isSuccess
+            }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
     override fun uploadReading(
         userId: String,
         systolicPressure: Int,
@@ -115,4 +134,50 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun updateReading(
+        bloodPressureReadingId: String,
+        systolicPressure: Int,
+        diastolicPressure: Int
+    ): Flow<Response<Boolean>> = flow {
+
+        operationSuccessful = false
+
+        try {
+            val readingObj = mutableMapOf<String,Int>()
+            readingObj["systolicPressure"] = systolicPressure
+            readingObj["diastolicPressure"] = diastolicPressure
+
+
+            firebaseFirestore.collection(COLLECTION_NAME_BLOOD_PRESSURE_READINGS).document(bloodPressureReadingId).update(readingObj as Map<String,Any>)
+                .addOnSuccessListener {
+                    operationSuccessful = true
+                }.await()
+            if (operationSuccessful) {
+                emit(Response.Success(operationSuccessful))
+            } else {
+                emit(Response.Error("Editing was not successful"))
+            }
+        } catch (e:Exception) {
+            Response.Error(e.localizedMessage?: "An unexpected error has occurred")
+        }
+    }
+
+    override fun deleteReading(bloodPressureReadingId: String) : Flow<Response<Boolean>> = flow {
+
+        operationSuccessful = false
+
+        try {
+            firebaseFirestore.collection(COLLECTION_NAME_BLOOD_PRESSURE_READINGS).document(bloodPressureReadingId).delete()
+                .addOnSuccessListener {
+                    operationSuccessful = true
+                }.await()
+            if (operationSuccessful) {
+                emit(Response.Success(operationSuccessful))
+            } else {
+                emit(Response.Error("Delete was not successful"))
+            }
+        } catch (e:Exception) {
+            Response.Error(e.localizedMessage?: "An unexpected error has occurred")
+        }
+    }
 }

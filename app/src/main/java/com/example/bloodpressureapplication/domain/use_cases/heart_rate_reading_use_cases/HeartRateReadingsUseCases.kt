@@ -7,5 +7,8 @@ data class HeartRateReadingsUseCases(
     var getAllHeartReadings: GetAllHeartReadings,
     var uploadHeartReading: UploadHeartReading,
     var getLast5HeartReadings: GetLast5HeartReadings,
-    var getLastHeartReading: GetLastHeartReading
+    var getLastHeartReading: GetLastHeartReading,
+    var updateHeartReading: UpdateHeartReading,
+    var deleteHeartReading: DeleteHeartReading,
+    var getHeartReading: GetHeartReading
 )

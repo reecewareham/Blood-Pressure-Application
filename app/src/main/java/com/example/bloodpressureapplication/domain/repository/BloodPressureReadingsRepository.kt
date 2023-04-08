@@ -14,10 +14,22 @@ interface BloodPressureReadingsRepository {
 
     fun getLastReading(userid: String) : Flow<Response<List<BloodPressureReadings>>>
 
+    fun getReading(bloodPressureReadingId: String) : Flow<Response<BloodPressureReadings>>
+
     fun uploadReading(
         userId: String,
         systolicPressure: Int,
         diastolicPressure: Int,
         timestamp: Timestamp
+    ) : Flow<Response<Boolean>>
+
+    fun updateReading(
+        bloodPressureReadingId: String,
+        systolicPressure: Int,
+        diastolicPressure: Int
+    ) : Flow<Response<Boolean>>
+
+    fun deleteReading(
+        bloodPressureReadingId: String
     ) : Flow<Response<Boolean>>
 }

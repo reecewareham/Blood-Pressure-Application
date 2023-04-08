@@ -217,14 +217,14 @@ fun ProfileExportFile() {
     val heartRateViewModel: HeartRateReadingsViewModel = hiltViewModel()
     heartRateViewModel.getAllHeartReadings()
 
-    when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+    when (val response = bloodPressureViewModel.bloodPressureReadingsData.value) {
         is Response.Loading -> {
             CircularProgressIndicator()
         }
         is Response.Success -> {
             val obj = response.data
             bloodPressureReadingsCSV = obj
-            when (val response = heartRateViewModel.heartRateReadingData.value) {
+            when (val response = heartRateViewModel.heartRateReadingsData.value) {
                 is Response.Loading -> {
                     CircularProgressIndicator()
                 }

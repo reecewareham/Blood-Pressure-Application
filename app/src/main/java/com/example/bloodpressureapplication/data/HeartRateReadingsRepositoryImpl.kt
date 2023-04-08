@@ -85,6 +85,25 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
 
     }
 
+    override fun getHeartReading(heartRateReadingId: String): Flow<Response<HeartRateReadings>> = callbackFlow {
+
+        Response.Loading
+        val snapshotListener = firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS)
+            .document(heartRateReadingId)
+            .addSnapshotListener {snapshot, e->
+                val response = if (snapshot != null) {
+                    val heartRateReading = snapshot.toObject(HeartRateReadings::class.java)
+                    Response.Success<HeartRateReadings>(heartRateReading!!)
+                } else {
+                    Response.Error(e?.message?:e.toString())
+                }
+                trySend(response).isSuccess
+            }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
     override fun uploadHeartReading(
         userId: String,
         bpm: Int,
@@ -115,4 +134,50 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun updateHeartReading(
+        heartRateReadingId: String,
+        bpm: Int,
+        readingStatus: String
+    ): Flow<Response<Boolean>> = flow {
+
+        operationSuccessful = false
+
+        try {
+            val readingObj = mutableMapOf<String,Any>()
+            readingObj["bpm"] = bpm
+            readingObj["readingStatus"] = readingStatus
+
+
+            firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS).document(heartRateReadingId).update(readingObj as Map<String,Any>)
+                .addOnSuccessListener {
+                    operationSuccessful = true
+                }.await()
+            if (operationSuccessful) {
+                emit(Response.Success(operationSuccessful))
+            } else {
+                emit(Response.Error("Editing was not successful"))
+            }
+        } catch (e:Exception) {
+            Response.Error(e.localizedMessage?: "An unexpected error has occurred")
+        }
+    }
+
+    override fun deleteHeartReading(heartRateReadingId: String) : Flow<Response<Boolean>> = flow {
+
+        operationSuccessful = false
+
+        try {
+            firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS).document(heartRateReadingId).delete()
+                .addOnSuccessListener {
+                    operationSuccessful = true
+                }.await()
+            if (operationSuccessful) {
+                emit(Response.Success(operationSuccessful))
+            } else {
+                emit(Response.Error("Editing was not successful"))
+            }
+        } catch (e:Exception) {
+            Response.Error(e.localizedMessage?: "An unexpected error has occurred")
+        }
+    }
 }

@@ -23,8 +23,7 @@ import com.example.bloodpressureapplication.presentation.reminders.MeasureHeartR
 import com.example.bloodpressureapplication.presentation.profile.ProfileEditScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileScreen
 import com.example.bloodpressureapplication.presentation.reminders.RemindersScreen
-import com.example.bloodpressureapplication.presentation.track.MeasureScreen
-import com.example.bloodpressureapplication.presentation.track.TrackScreen
+import com.example.bloodpressureapplication.presentation.track.*
 import com.example.bloodpressureapplication.util.Screens
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -83,6 +82,12 @@ fun BloodPressureAppScreen(navController: NavHostController, authenticationViewM
         }
         composable(route = Screens.RemindersScreen.route) {
             RemindersScreen(navController = navController)
+        }
+        composable(route = Screens.EditBloodPressureScreen.route) {
+            EditBloodPressureScreen(navController = navController, bloodPressureReadingId = bloodReadingEdit, systolic = sysEdit, diastolic = diaEdit)
+        }
+        composable(route = Screens.EditHeartRateScreen.route) {
+            EditHeartRateScreen(navController = navController, heartRateReadingId = heartReadingEdit, bpm = bpmEdit, status = statusEdit)
         }
     }
 }

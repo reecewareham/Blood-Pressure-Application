@@ -60,6 +60,13 @@ var heartRateReadings = listOf<HeartRateReadings>()
 var userAge = 0
 var complete = false
 
+var bloodReadingEdit = ""
+var sysEdit = 0
+var diaEdit = 0
+var heartReadingEdit = ""
+var bpmEdit = 0
+var statusEdit = ""
+
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -97,12 +104,12 @@ fun TrackScreen(
                     TabRowItem(
                         title = "Blood Pressure",
                         icon = R.drawable.bloodpressure,
-                        screen = { BloodPressureTrack() }
+                        screen = { BloodPressureTrack(navController) }
                     ),
                     TabRowItem(
                         title = "Heart Rate",
                         icon = R.drawable.heartrate,
-                        screen = { HeartRateTrack() }
+                        screen = { HeartRateTrack(navController) }
                     )
                 )
 
@@ -180,7 +187,7 @@ fun GetReadings(userViewModel: UserViewModel, bloodPressureViewModel : BloodPres
             if (response.data != null) {
                 val obj = response.data
                 userAge = obj.age.toInt()
-                when (val response = bloodPressureViewModel.bloodPressureReadingData.value) {
+                when (val response = bloodPressureViewModel.bloodPressureReadingsData.value) {
                     is Response.Loading -> {
                         CircularProgressIndicator()
                     }
@@ -188,7 +195,7 @@ fun GetReadings(userViewModel: UserViewModel, bloodPressureViewModel : BloodPres
                         val obj = response.data
                         bloodPressureReadings = obj
                         bloodTrackContent(bloodPressureReadings)
-                        when (val response = heartRateViewModel.heartRateReadingData.value) {
+                        when (val response = heartRateViewModel.heartRateReadingsData.value) {
                             is Response.Loading -> {
                                 CircularProgressIndicator()
                             }
@@ -216,7 +223,7 @@ fun GetReadings(userViewModel: UserViewModel, bloodPressureViewModel : BloodPres
 }
 
 @Composable
-fun BloodPressureTrack() {
+fun BloodPressureTrack(navController: NavController) {
         Column(
             modifier = Modifier
                 .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
@@ -277,13 +284,13 @@ fun BloodPressureTrack() {
                 elevation = CardDefaults.cardElevation(5.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-                BloodListOfReadings(bloodPressureReadings)
+                BloodListOfReadings(bloodPressureReadings, navController)
             }
         }
 }
 
 @Composable
-fun HeartRateTrack() {
+fun HeartRateTrack(navController: NavController) {
         Column(
             modifier = Modifier
                 .padding(top = 10.dp, bottom = 20.dp, start = 10.dp, end = 10.dp)
@@ -346,7 +353,7 @@ fun HeartRateTrack() {
                 elevation = CardDefaults.cardElevation(5.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-                HeartListOfReadings(heartRateReadings)
+                HeartListOfReadings(heartRateReadings, navController)
             }
         }
 }
