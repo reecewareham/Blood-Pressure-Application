@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -57,136 +58,175 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                 mutableStateOf("")
             }
 
-            Image(
-                painter = painterResource(id = R.drawable.placeholder_image),
-                contentDescription = "Sign Up Screen Logo",
+            Card(
                 modifier = Modifier
-                    .width(250.dp)
-                    .padding(top = 16.dp)
-                    .padding(8.dp)
-            )
-
-            Text(
-                text = "Sign Up",
-                modifier = Modifier
+                    .fillMaxWidth(0.5f)
                     .padding(10.dp),
-                fontSize = 30.sp,
-                fontFamily = FontFamily.SansSerif
-            )
+                shape = RoundedCornerShape(15.dp),
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.Red),
 
-            OutlinedTextField(value = emailState.value, onValueChange = {
-                emailState.value = it
-            },
-                modifier = Modifier
-                    .padding(10.dp),
-                singleLine = true,
-                label = {
-                    Text(text = "Enter your email: ")
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-            )
-
-            OutlinedTextField(value = passwordState.value, onValueChange = {
-                passwordState.value = it
-            },
-                modifier = Modifier
-                    .padding(10.dp),
-                singleLine = true,
-                label = {
-                    Text(text = "Enter your password: ")
-                },
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-            )
-
-            OutlinedTextField(value = firstNameState.value, onValueChange = {
-                firstNameState.value = it
-            },
-                modifier = Modifier
-                    .padding(10.dp),
-                singleLine = true,
-                label = {
-                    Text(text = "Enter your first name: ")
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-            )
-
-            OutlinedTextField(value = lastNameState.value, onValueChange = {
-                lastNameState.value = it
-            },
-                modifier = Modifier
-                    .padding(10.dp),
-                singleLine = true,
-                label = {
-                    Text(text = "Enter your last name: ")
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-            )
-
-            OutlinedTextField(value = ageState.value, onValueChange = {
-                ageState.value = it
-            },
-                modifier = Modifier
-                    .padding(10.dp),
-                singleLine = true,
-                label = {
-                    Text(text = "Enter your age: ")
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-
-            Button(
-                onClick = {
-                    viewModel.signUp(
-                        email = emailState.value,
-                        password = passwordState.value,
-                        firstName = firstNameState.value,
-                        lastName = lastNameState.value,
-                        age = ageState.value,
-                        imageUrl = ""
-                    )
-                },
-                modifier = Modifier
-                    .padding(8.dp)
-            ) {
-                Text(text = "Sign Up")
-                when (val response = viewModel.signUpState.value) {
-                    is Response.Loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
-                    }
-                    is Response.Success -> {
-                        if (response.data) {
-                            LaunchedEffect(key1 = true) {
-                            navController.navigate(Screens.HomeScreen.route) {
-                                popUpTo(Screens.LoginScreen.route) {
-                                    inclusive = true
-                                    }
-                                }
-                            }
-                        } else {
-                            Toast(message = "Sign up failed")
-                        }
-                    }
-                    is Response.Error -> {
-                        Toast(message = response.message)
-                    }
-                }
+                )
+            {
+                Image(
+                    painter = painterResource(id = R.drawable.bloodpressurelogo),
+                    contentDescription = "Sign Up Screen Logo",
+                    modifier = Modifier
+                        .width(250.dp)
+                        .padding(8.dp)
+                )
             }
 
-            Text(
-                text = "Already have an account? Login here.",
-                color = Color.Blue,
+            Card(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .clickable {
-                        navController.navigate(route = Screens.LoginScreen.route) {
-                            launchSingleTop = true
+                    .fillMaxWidth(0.9f)
+                    .padding(10.dp),
+                shape = RoundedCornerShape(15.dp),
+                elevation = CardDefaults.cardElevation(5.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
+            ) {
+
+                Text(
+                    text = "Sign Up",
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.SansSerif
+                )
+
+                OutlinedTextField(
+                    value = emailState.value, onValueChange = {
+                        emailState.value = it
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    singleLine = true,
+                    label = {
+                        Text(text = "Enter your email: ")
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                )
+
+                OutlinedTextField(
+                    value = passwordState.value, onValueChange = {
+                        passwordState.value = it
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    singleLine = true,
+                    label = {
+                        Text(text = "Enter your password: ")
+                    },
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                )
+
+                OutlinedTextField(
+                    value = firstNameState.value, onValueChange = {
+                        firstNameState.value = it
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    singleLine = true,
+                    label = {
+                        Text(text = "Enter your first name: ")
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+
+                OutlinedTextField(
+                    value = lastNameState.value, onValueChange = {
+                        lastNameState.value = it
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    singleLine = true,
+                    label = {
+                        Text(text = "Enter your last name: ")
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+
+                OutlinedTextField(
+                    value = ageState.value, onValueChange = {
+                        ageState.value = it
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    singleLine = true,
+                    label = {
+                        Text(text = "Enter your age: ")
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+
+                Button(
+                    onClick = {
+                        viewModel.signUp(
+                            email = emailState.value,
+                            password = passwordState.value,
+                            firstName = firstNameState.value,
+                            lastName = lastNameState.value,
+                            age = ageState.value,
+                            imageUrl = ""
+                        )
+                    },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally),
+                    shape = RoundedCornerShape(15.dp),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 5.dp,
+                        pressedElevation = 7.dp,
+                        disabledElevation = 0.dp
+                    )
+                ) {
+                    Text(text = "Sign Up", fontSize = 20.sp)
+                    when (val response = viewModel.signUpState.value) {
+                        is Response.Loading -> {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
+                        is Response.Success -> {
+                            if (response.data) {
+                                LaunchedEffect(key1 = true) {
+                                    navController.navigate(Screens.HomeScreen.route) {
+                                        popUpTo(Screens.LoginScreen.route) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            } else {
+                                Toast(message = "Sign up failed")
+                            }
+                        }
+                        is Response.Error -> {
+                            Toast(message = response.message)
                         }
                     }
-            )
+                }
+
+                Text(
+                    text = "Already have an account? Login here.",
+                    color = Color.Blue,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            navController.navigate(route = Screens.LoginScreen.route) {
+                                launchSingleTop = true
+                            }
+                        }
+                        .align(Alignment.CenterHorizontally)
+                )
+            }
         }
     }
 }
