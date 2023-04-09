@@ -15,4 +15,13 @@ sealed class Screens(val route: String) {
     object RemindersScreen : Screens("reminders_screen")
     object EditBloodPressureScreen : Screens("edit_blood_pressure_screen")
     object EditHeartRateScreen : Screens("edit_heart_rate_screen")
+    object WhatIsBPScreen : Screens("what_is_bp_screen")
+    object BPNumbersScreen : Screens("bp_numbers_screen")
+    object ControlBPScreen : Screens("control_bp_screen")
+    object BPMythsScreen : Screens("bp_myths_screen")
+    object WhatIsHyperScreen : Screens("what_is_hyper_screen")
+    object WhatIsHypoScreen : Screens("what_is_hypo_screen")
+    object PreventHyperScreen : Screens("prevent_hyper_screen")
+    object PreventHypoScreen : Screens("prevent_hypo_screen")
+
 }

@@ -27,6 +27,7 @@ import com.example.bloodpressureapplication.presentation.BottomNavigationItem
 import com.example.bloodpressureapplication.presentation.BottomNavigationMenu
 import com.example.bloodpressureapplication.ui.theme.red
 import com.example.bloodpressureapplication.ui.theme.redScaffold
+import com.example.bloodpressureapplication.util.Screens
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -58,12 +59,12 @@ fun InfoScreen(
                 TabRowItem(
                     title = "Blood Pressure",
                     icon = R.drawable.bloodpressure,
-                    screen = { BloodPressureInfoGrid()}
+                    screen = { BloodPressureInfoGrid(navController)}
                 ),
                 TabRowItem(
                     title = "Heart Rate",
                     icon = R.drawable.heartrate,
-                    screen = { HeartRateInfoGrid() }
+                    screen = { HeartRateInfoGrid(navController) }
                 )
             )
 
@@ -114,7 +115,7 @@ fun InfoScreen(
 }
 
 @Composable
-fun BloodPressureInfoGrid() {
+fun BloodPressureInfoGrid(navController: NavController) {
     Column(
         modifier = Modifier
             .padding(10.dp)
@@ -132,6 +133,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.WhatIsBPScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -144,6 +148,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.BPNumbersScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -164,11 +171,14 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.ControlBPScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "How to Measure Blood Pressure?",
-                    title = "How to Measure Blood Pressure?"
+                    contentDescription = "How to Control Blood Pressure?",
+                    title = "How to Control Blood Pressure?"
                 )
             }
 
@@ -176,6 +186,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.BPMythsScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -196,6 +209,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.WhatIsHyperScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -208,6 +224,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.WhatIsHypoScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -228,6 +247,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.PreventHyperScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -240,6 +262,9 @@ fun BloodPressureInfoGrid() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.PreventHypoScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
@@ -269,7 +294,7 @@ fun BloodPressureInfoGrid() {
 }
 
 @Composable
-fun HeartRateInfoGrid() {
+fun HeartRateInfoGrid(navController: NavController) {
     Column(
         modifier = Modifier
             .padding(10.dp)

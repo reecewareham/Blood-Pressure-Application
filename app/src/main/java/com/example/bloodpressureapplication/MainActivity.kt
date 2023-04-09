@@ -17,7 +17,7 @@ import com.example.bloodpressureapplication.presentation.authentication.LoginScr
 import com.example.bloodpressureapplication.presentation.authentication.SignUpScreen
 import com.example.bloodpressureapplication.presentation.home.HomeScreen
 import com.example.bloodpressureapplication.presentation.SplashScreen
-import com.example.bloodpressureapplication.presentation.info.InfoScreen
+import com.example.bloodpressureapplication.presentation.info.*
 import com.example.bloodpressureapplication.presentation.reminders.MeasureBloodPressureScreen
 import com.example.bloodpressureapplication.presentation.reminders.MeasureHeartRateScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileEditScreen
@@ -88,6 +88,30 @@ fun BloodPressureAppScreen(navController: NavHostController, authenticationViewM
         }
         composable(route = Screens.EditHeartRateScreen.route) {
             EditHeartRateScreen(navController = navController, heartRateReadingId = heartReadingEdit, bpm = bpmEdit, status = statusEdit)
+        }
+        composable(route = Screens.WhatIsBPScreen.route) {
+            WhatIsBPScreen(navController = navController)
+        }
+        composable(route = Screens.BPNumbersScreen.route) {
+            BPNumbersScreen(navController = navController)
+        }
+        composable(route = Screens.ControlBPScreen.route) {
+            ControlBPScreen(navController = navController)
+        }
+        composable(route = Screens.BPMythsScreen.route) {
+            BPMythsScreen(navController = navController)
+        }
+        composable(route = Screens.WhatIsHyperScreen.route) {
+            WhatIsHyperScreen(navController = navController)
+        }
+        composable(route = Screens.WhatIsHypoScreen.route) {
+            WhatIsHypoScreen(navController = navController)
+        }
+        composable(route = Screens.PreventHyperScreen.route) {
+            PreventHyperScreen(navController = navController)
+        }
+        composable(route = Screens.PreventHypoScreen.route) {
+            PreventHypoScreen(navController = navController)
         }
     }
 }

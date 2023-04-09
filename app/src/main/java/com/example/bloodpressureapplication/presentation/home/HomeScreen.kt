@@ -1,6 +1,7 @@
 package com.example.bloodpressureapplication.presentation.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -351,7 +352,7 @@ fun HomeCheckBlood() {
             text = text,
             fontWeight = FontWeight.Bold,
             lineHeight = 20.sp,
-            fontSize = 20.sp,
+            fontSize = 18.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(10.dp)
         )
@@ -375,7 +376,7 @@ fun HomeCheckHeart() {
             text = textHeart,
             fontWeight = FontWeight.Bold,
             lineHeight = 20.sp,
-            fontSize = 20.sp,
+            fontSize = 18.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(10.dp)
         )

@@ -35,7 +35,7 @@ fun checkReading(systolic: Int, diastolic: Int): Color {
     } else if ((systolic in 90..119) && (diastolic in 60..79)) {
         //Normal
         colour = Color.Green
-    } else if ((systolic in 120..129) && diastolic < 80) {
+    } else if ((systolic in 120..129) && (diastolic in 60..79)) {
         //Elevated
         colour = Color.Yellow
     } else if ((systolic in 130..139) || (diastolic in 80..89)) {
@@ -59,7 +59,7 @@ fun checkReadingText(systolic: Int, diastolic: Int): String {
     } else if ((systolic in 90..119) && (diastolic in 60..79)) {
         //Normal
         text = "Your last blood pressure reading is normal and at a healthy state. Keep it up!"
-    } else if ((systolic in 120..129) && diastolic < 80) {
+    } else if ((systolic in 120..129) && (diastolic in 60..79)) {
         //Elevated
         text = "Your last blood pressure reading is partially too high and shows an elevated blood pressure. Consult the info page on ways to lower it."
     } else if ((systolic in 130..139) || (diastolic in 80..89)) {
