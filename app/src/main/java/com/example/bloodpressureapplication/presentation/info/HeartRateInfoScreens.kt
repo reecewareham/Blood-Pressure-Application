@@ -52,7 +52,7 @@ fun WhatIsHRScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = it.calculateTopPadding())
+                    .padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding() + 10.dp, start = 10.dp, end = 10.dp)
                     .verticalScroll(rememberScrollState())
             ) {
 
@@ -105,6 +105,40 @@ fun WhatIsHRScreen(navController: NavController) {
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
                         modifier = Modifier.padding(10.dp)
+                    )
+
+                    Text(
+                        text = "A normal resting adult heart rate is between 60 and 100 BPM. This can change every minute and what's normal for you "+
+                        "may not be normal for someone else as it depends on age, health, lifestyle and exercise.  ",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(10.dp)
+                    )
+
+                    Text(
+                        text = "A dangerous heart rate is when the heart beats too slowly, quickly or irregularly. This is known as an arrhythmia. "+
+                        "These can be dangerous because blood isn't pumped around the body properly which can cause symptoms such as dizziness and fainting. "+
+                        "It can also increase the risk of a stroke. There are two main categories of arrhythmia: tachycardia which is a faster than normal "+
+                        "heart rate and bradycardia which is a slower than normal heart rate.",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                    Text(
+                        text = "\u2022" + " Tachycardia - A faster than normal heart rate",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(5.dp)
+                    )
+                    Text(
+                        text = "\u2022" + " Bradycardia - A slower than normal heart rate",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(5.dp)
                     )
                 }
             }
@@ -181,7 +215,7 @@ fun HRNumbersScreen(navController: NavController) {
                                 .padding(1.dp)
                         )
                         Text(
-                            text = "What is Heart Rate?",
+                            text = "How do I Measure My Heart Rate?",
                             fontWeight = FontWeight.Bold,
                             lineHeight = 20.sp,
                             fontSize = 24.sp,
@@ -191,8 +225,88 @@ fun HRNumbersScreen(navController: NavController) {
                     }
 
                     Text(
-                        text = "Your heart rate is the number of times your heart beats per minute. Everyone's heart rate is different and can " +
-                                "change based on the circumstance.",
+                        text = "You can measure your heart rate yourself by checking your pulse, however for a more accurate "+
+                        "and easier result, you can use a heart rate monitor that checks it for you. Both methods are useful for monitoring "+
+                        "your health, however they cannot diagnose conditions so consult a doctor if you notice anything unusual.",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = it.calculateBottomPadding() + 10.dp)
+                        .align(Alignment.Start),
+                    shape = RoundedCornerShape(15.dp),
+                    elevation = CardDefaults.cardElevation(5.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(5.dp)
+                    ) {
+                        Spacer(
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
+                        Canvas(
+                            modifier = Modifier
+                                .size(width = 10.dp, height = 35.dp)
+                        ) {
+                            drawRoundRect(
+                                color = Color.Red,
+                                size = Size(width = 10.dp.toPx(), height = 35.dp.toPx()),
+                                cornerRadius = CornerRadius(x = 20.dp.toPx(), y = 20.dp.toPx())
+                            )
+                        }
+                        Spacer(
+                            modifier = Modifier
+                                .padding(1.dp)
+                        )
+                        Text(
+                            text = "Heart Rate Numbers",
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = 20.sp,
+                            fontSize = 24.sp,
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
+
+                    Text(
+                        text = "Heart rate is measured in beats per minute (BPM). The healthy range for you heart rate changes based on many factors"+
+                        ", but mostly is influenced by activity. The normal resting heart rate should reside between 60 and 100 BPM. "+
+                        "Your target heart rate can change based on the activity you are doing. If you are performing a moderate intensity activity, "+
+                        "then your heart rate should reside between 50-70% of your maximum heart rate.",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(10.dp)
+                    )
+
+                    Text(
+                        text = "If you are performing a moderate intensity activity, "+
+                                "then your heart rate should reside between 50-70% of your maximum heart rate.",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                    Text(
+                        text = "If you are performing a vigorous intensity activity, "+
+                                "then your heart rate should reside between 70-85% of your maximum heart rate.",
+                        lineHeight = 20.sp,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                    Text(
+                        text = "Your maximum heart rate can be calculated by taking your age from 220. For example, if you are 20 "+
+                        "years old, you would take 20 from 220 which gives you a maximum heart rate of 200 BPM.",
                         lineHeight = 20.sp,
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
