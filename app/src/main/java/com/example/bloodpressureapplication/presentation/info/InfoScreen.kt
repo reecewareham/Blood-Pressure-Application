@@ -312,11 +312,14 @@ fun HeartRateInfoGrid(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.WhatIsHRScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "What is Blood Pressure?",
-                    title = "test"
+                    contentDescription = "What is Heart Rate?",
+                    title = "What is Heart Rate?"
                 )
             }
 
@@ -324,11 +327,14 @@ fun HeartRateInfoGrid(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.HRNumbersScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "Understanding Blood Pressure Numbers",
-                    title = "Understanding Blood Pressure Numbers"
+                    contentDescription = "Understanding Heart Rate Numbers",
+                    title = "Understanding Heart Rate Numbers"
                 )
             }
 
@@ -344,11 +350,14 @@ fun HeartRateInfoGrid(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.HRFactorsScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "How to Measure Blood Pressure?",
-                    title = "How to Measure Blood Pressure?"
+                    contentDescription = "Factors Affecting Heart Rate",
+                    title = "Factors Affecting Heart Rate"
                 )
             }
 
@@ -356,75 +365,14 @@ fun HeartRateInfoGrid(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(Screens.HRComplicationsScreen.route)
+                    }
             ) {
                 InfoCard(
                     painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "Blood Pressure Myths and Mistakes",
-                    title = "Blood Pressure Myths and Mistakes"
-                )
-            }
-
-        }
-
-        Row(
-            modifier = Modifier
-            ,
-            horizontalArrangement = Arrangement.SpaceEvenly
-
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .padding(5.dp)
-            ) {
-                InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "What is Hypertension?",
-                    title = "What is Hypertension?"
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp)
-            ) {
-                InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "What is Hypotension?",
-                    title = "What is Hypotension?"
-                )
-            }
-
-        }
-
-        Row(
-            modifier = Modifier
-            ,
-            horizontalArrangement = Arrangement.SpaceEvenly
-
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .padding(5.dp)
-            ) {
-                InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "How to Prevent Hypertension?",
-                    title = "How to Prevent Hypertension?"
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp)
-            ) {
-                InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
-                    contentDescription = "How to Prevent Hypotension?",
-                    title = "How to Prevent Hypotension?"
+                    contentDescription = "Heart Rate Complications",
+                    title = "Heart Rate Complications"
                 )
             }
 

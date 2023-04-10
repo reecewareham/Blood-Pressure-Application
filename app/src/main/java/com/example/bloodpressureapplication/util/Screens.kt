@@ -23,5 +23,9 @@ sealed class Screens(val route: String) {
     object WhatIsHypoScreen : Screens("what_is_hypo_screen")
     object PreventHyperScreen : Screens("prevent_hyper_screen")
     object PreventHypoScreen : Screens("prevent_hypo_screen")
+    object WhatIsHRScreen :Screens("what_is_hr_screen")
+    object HRNumbersScreen :Screens("hr_numbers_screen")
+    object HRFactorsScreen :Screens("hr_factors_screen")
+    object HRComplicationsScreen :Screens("hr_complications_screen")
 
 }

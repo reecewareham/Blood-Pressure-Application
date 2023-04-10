@@ -113,5 +113,17 @@ fun BloodPressureAppScreen(navController: NavHostController, authenticationViewM
         composable(route = Screens.PreventHypoScreen.route) {
             PreventHypoScreen(navController = navController)
         }
+        composable(route = Screens.WhatIsHRScreen.route) {
+            WhatIsHRScreen(navController = navController)
+        }
+        composable(route = Screens.HRNumbersScreen.route) {
+            HRNumbersScreen(navController = navController)
+        }
+        composable(route = Screens.HRFactorsScreen.route) {
+            HRFactorsScreen(navController = navController)
+        }
+        composable(route = Screens.HRComplicationsScreen.route) {
+            HRComplicationsScreen(navController = navController)
+        }
     }
 }
