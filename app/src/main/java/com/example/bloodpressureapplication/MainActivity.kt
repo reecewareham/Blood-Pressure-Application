@@ -18,8 +18,6 @@ import com.example.bloodpressureapplication.presentation.authentication.SignUpSc
 import com.example.bloodpressureapplication.presentation.home.HomeScreen
 import com.example.bloodpressureapplication.presentation.SplashScreen
 import com.example.bloodpressureapplication.presentation.info.*
-import com.example.bloodpressureapplication.presentation.reminders.MeasureBloodPressureScreen
-import com.example.bloodpressureapplication.presentation.reminders.MeasureHeartRateScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileEditScreen
 import com.example.bloodpressureapplication.presentation.profile.ProfileScreen
 import com.example.bloodpressureapplication.presentation.reminders.RemindersScreen

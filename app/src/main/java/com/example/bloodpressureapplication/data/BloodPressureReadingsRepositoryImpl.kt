@@ -1,9 +1,7 @@
 package com.example.bloodpressureapplication.data
 
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
-import com.example.bloodpressureapplication.domain.model.User
 import com.example.bloodpressureapplication.domain.repository.BloodPressureReadingsRepository
-import com.example.bloodpressureapplication.util.Constants
 import com.example.bloodpressureapplication.util.Constants.COLLECTION_NAME_BLOOD_PRESSURE_READINGS
 import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp

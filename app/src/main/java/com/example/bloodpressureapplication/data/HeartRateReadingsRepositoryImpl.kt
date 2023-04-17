@@ -1,6 +1,5 @@
 package com.example.bloodpressureapplication.data
 
-import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.domain.repository.HeartRateReadingsRepository
 import com.example.bloodpressureapplication.util.Constants

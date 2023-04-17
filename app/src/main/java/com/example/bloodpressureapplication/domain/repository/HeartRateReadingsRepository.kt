@@ -1,6 +1,5 @@
 package com.example.bloodpressureapplication.domain.repository
 
-import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp
