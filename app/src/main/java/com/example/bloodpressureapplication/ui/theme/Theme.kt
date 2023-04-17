@@ -30,11 +30,6 @@ fun BloodPressureApplicationTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
-    /*val colors = if (useDarkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }*/
     val colors = LightColorPalette
 
     MaterialTheme(
