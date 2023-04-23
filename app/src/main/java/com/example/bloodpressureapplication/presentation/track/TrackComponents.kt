@@ -462,7 +462,17 @@ fun heartTrackContent(heartRateReadings: List<HeartRateReadings>) {
     dateHeartValues.clear()
 
     for(item in heartRateReadings) {
-        heartListContent(item)
+        val bpm = item.bpm.toFloat()
+        val status = item.readingStatus
+
+        bpmValues.add(0,bpm)
+        statusValues.add(0,status)
+
+        val test = Calendar.getInstance()
+        test.time = item.timestamp?.toDate()!!
+        val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
+
+        dateHeartValues.add(0,date)
     }
 
     bpmTemp = ArrayList(bpmValues.reversed())
@@ -471,21 +481,6 @@ fun heartTrackContent(heartRateReadings: List<HeartRateReadings>) {
 
     fun getBpm() = List(bpmTemp.size) { FloatEntry(it.toFloat(), bpmTemp.elementAt(it)) }
     heartChartEntryModel = ChartEntryModelProducer(getBpm())
-}
-
-fun heartListContent(it: HeartRateReadings) {
-    val bpm = it.bpm.toFloat()
-    val status = it.readingStatus
-
-    bpmValues.add(0,bpm)
-    statusValues.add(0,status)
-
-    val test = Calendar.getInstance()
-    test.time = it.timestamp?.toDate()!!
-    val date = (test.get(Calendar.DAY_OF_MONTH).toString()) + "/" + ((test.get(Calendar.MONTH) + 1).toString())
-
-    dateHeartValues.add(0,date)
-
 }
 
 @Composable

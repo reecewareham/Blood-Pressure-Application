@@ -1,11 +1,13 @@
 package com.example.bloodpressureapplication.data
 
+import android.util.Log
 import com.example.bloodpressureapplication.domain.model.User
 import com.example.bloodpressureapplication.domain.repository.AuthenticationRepository
 import com.example.bloodpressureapplication.util.Constants
 import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -38,10 +40,15 @@ class AuthenticationRepositoryImpl @Inject constructor(
         operationSuccessful = false
         try {
             emit(Response.Loading)
+            val isSuccessfulDeferred = CompletableDeferred<Boolean>()
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-                operationSuccessful = true
-            }.await()
-            emit(Response.Success(operationSuccessful))
+                isSuccessfulDeferred.complete(true)
+
+            }.addOnFailureListener {
+                isSuccessfulDeferred.complete(false)
+            }
+            val isSuccessful = isSuccessfulDeferred.await()
+            emit(Response.Success(isSuccessful))
         } catch (e:Exception) {
             emit(Response.Error(e.localizedMessage?:"An unexpected error"))
         }
@@ -68,10 +75,15 @@ class AuthenticationRepositoryImpl @Inject constructor(
         operationSuccessful = false
         try {
             emit(Response.Loading)
+            val isAuthSuccessfulDeferred = CompletableDeferred<Boolean>()
             auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-                operationSuccessful = true
-            }.await()
-            if (operationSuccessful) {
+                isAuthSuccessfulDeferred.complete(true)
+            }.addOnFailureListener {
+                isAuthSuccessfulDeferred.complete(false)
+            }
+            val isAuthSuccessful = isAuthSuccessfulDeferred.await()
+
+            if (isAuthSuccessful) {
                 val userid = auth.currentUser?.uid!!
                 val obj = User(
                     userId = userid,
@@ -82,12 +94,17 @@ class AuthenticationRepositoryImpl @Inject constructor(
                     age = age,
                     imageUrl = imageUrl
                 )
+                val isFirestoreSuccessfulDeferred = CompletableDeferred<Boolean>()
                 firestore.collection(Constants.COLLECTION_NAME_USERS).document(userid).set(obj).addOnSuccessListener {
+                    isFirestoreSuccessfulDeferred.complete(true)
+                }.addOnFailureListener {
+                    isFirestoreSuccessfulDeferred.complete(false)
+                }
+                val isFirestoreSuccessful = isFirestoreSuccessfulDeferred.await()
 
-                }.await()
-                emit(Response.Success(operationSuccessful))
+                emit(Response.Success(isFirestoreSuccessful))
             } else {
-                Response.Success(operationSuccessful)
+                Response.Success(false)
             }
         } catch (e:Exception) {
             emit(Response.Error(e.localizedMessage?:"An unexpected error"))

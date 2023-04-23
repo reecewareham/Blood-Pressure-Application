@@ -364,14 +364,14 @@ fun WhatIsBPScreen(
                         modifier = Modifier.padding(10.dp)
                     )
                     Text(
-                        text = "\u2022" + " Have a family history of high blood pressure, diabetes or cardiovascular disease.",
+                        text = "\u2022" + " Have a family history of high blood pressure, diabetes or cardiovascular disease",
                         lineHeight = 20.sp,
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,
                         modifier = Modifier.padding(5.dp)
                     )
                     Text(
-                        text = "\u2022" + " Are black",
+                        text = "\u2022" + " Are of black descent",
                         lineHeight = 20.sp,
                         fontSize = 20.sp,
                         textAlign = TextAlign.Left,

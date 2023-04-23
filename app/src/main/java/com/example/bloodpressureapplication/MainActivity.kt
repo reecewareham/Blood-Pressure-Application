@@ -1,5 +1,6 @@
 package com.example.bloodpressureapplication
 
+import android.content.pm.ActivityInfo
 import com.example.bloodpressureapplication.ui.theme.BloodPressureApplicationTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
