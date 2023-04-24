@@ -1,6 +1,7 @@
 package com.example.bloodpressureapplication.presentation.profile
 
 import android.annotation.SuppressLint
+import android.os.Environment
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -28,14 +29,12 @@ import com.example.bloodpressureapplication.presentation.profile.components.Roun
 import com.example.bloodpressureapplication.presentation.track.*
 import com.example.bloodpressureapplication.ui.theme.redScaffold
 import com.example.bloodpressureapplication.util.Screens
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import java.io.FileOutputStream
-import java.io.OutputStream
+import java.io.*
 
 var bloodPressureReadingsCSV = listOf<BloodPressureReadings>()
 var heartRateReadingsCSV = listOf<HeartRateReadings>()
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(
@@ -168,6 +167,7 @@ fun ProfileScreen(
                                             text = AnnotatedString("Export as CSV"),
                                             textAlign = TextAlign.Center,
                                             fontWeight = FontWeight.Bold,
+                                            fontSize = 20.sp
                                         )
                                         Spacer(modifier = Modifier.height(5.dp))
                                         ProfileExportFile()
@@ -190,7 +190,8 @@ fun ProfileScreen(
     )
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
+
+
 @Composable
 fun ProfileExportFile() {
     val bloodPressureViewModel: BloodPressureReadingsViewModel = hiltViewModel()
@@ -260,4 +261,17 @@ fun OutputStream.exportToCSV(bloodPressureReadings: List<BloodPressureReadings>,
         writer.newLine()
     }
     writer.flush()
+}
+
+fun writeToCsv(data: List<List<String>>, fileName: String) {
+    val file = File(Environment.getExternalStorageDirectory(), fileName)
+    val writer = FileWriter(file)
+
+    for (line in data) {
+        writer.write(line.joinToString(","))
+        writer.write("\n")
+    }
+
+    writer.flush()
+    writer.close()
 }

@@ -397,7 +397,7 @@ fun BloodListOfReadingsBar(it: BloodPressureReadings, navController: NavControll
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.4f),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     Text(
                         text = "Sys: " + it.systolicPressure.toString(),
@@ -408,7 +408,7 @@ fun BloodListOfReadingsBar(it: BloodPressureReadings, navController: NavControll
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.8f),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     Text(
                         text = "Dia: " + it.diastolicPressure.toString(),
@@ -554,8 +554,8 @@ fun HeartListOfReadingsBar(it: HeartRateReadings, navController: NavController) 
 
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.4f),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth(0.35f),
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     Text(
                         text = "BPM: " + it.bpm.toString(),
@@ -565,8 +565,8 @@ fun HeartListOfReadingsBar(it: HeartRateReadings, navController: NavController) 
                 }
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth(0.85f),
+                    contentAlignment = Alignment.CenterStart
                 ) {
                     Text(
                         text = "Status: " + it.readingStatus,
@@ -576,7 +576,7 @@ fun HeartListOfReadingsBar(it: HeartRateReadings, navController: NavController) 
                 }
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f),
+                        .fillMaxWidth(0.75f),
                     contentAlignment = Alignment.Center
                 ) {
                     IconButton(onClick = {
