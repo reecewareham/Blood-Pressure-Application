@@ -38,7 +38,6 @@ fun EditHeartRateScreen(
 ) {
 
     val heartRateViewModel: HeartRateReadingsViewModel = hiltViewModel()
-    heartRateViewModel.getHeartReading(heartRateReadingId)
 
     Scaffold(
         topBar = {

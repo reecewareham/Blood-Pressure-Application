@@ -173,7 +173,7 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
             if (operationSuccessful) {
                 emit(Response.Success(operationSuccessful))
             } else {
-                emit(Response.Error("Editing was not successful"))
+                emit(Response.Error("Delete was not successful"))
             }
         } catch (e:Exception) {
             Response.Error(e.localizedMessage?: "An unexpected error has occurred")
