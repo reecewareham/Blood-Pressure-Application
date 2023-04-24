@@ -86,7 +86,7 @@ private fun bloodRememberLegend() =
                 "Diastolic Pressure"
             }
             verticalLegendItem(
-                icon = shapeComponent(Shapes.pillShape, chartColor),
+                icon = shapeComponent(Shapes.rectShape, chartColor),
                 label = textComponent(
                     color = currentChartStyle.axis.axisLabelColor,
                     textSize = legendItemLabelTextSize,
@@ -108,7 +108,7 @@ private fun heartRememberLegend() =
     verticalLegend(
         items = heartChartColors.mapIndexed { index, chartColor ->
             verticalLegendItem(
-                icon = shapeComponent(Shapes.pillShape, chartColor),
+                icon = shapeComponent(Shapes.rectShape, chartColor),
                 label = textComponent(
                     color = currentChartStyle.axis.axisLabelColor,
                     textSize = legendItemLabelTextSize,
@@ -133,7 +133,7 @@ internal fun HeartRateGraph(chartEntryModelProducer: ChartEntryModelProducer, mo
                 chart = columnChart(
                     columns = remember(defaultColumns) {
                         defaultColumns.map { defaultColumn ->
-                            LineComponent(defaultColumn.color, COLUMN_WIDTH_DP, defaultColumn.shape)
+                            LineComponent(defaultColumn.color, COLUMN_WIDTH_DP)
                         }
                     },
                 ),
