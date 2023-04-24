@@ -37,7 +37,6 @@ class AuthenticationRepositoryImpl @Inject constructor(
     }
 
     override fun firebaseSignIn(email: String, password: String): Flow<Response<Boolean>> = flow{
-        operationSuccessful = false
         try {
             emit(Response.Loading)
             val isSuccessfulDeferred = CompletableDeferred<Boolean>()
@@ -72,7 +71,6 @@ class AuthenticationRepositoryImpl @Inject constructor(
         age: String,
         imageUrl: String
     ): Flow<Response<Boolean>> = flow{
-        operationSuccessful = false
         try {
             emit(Response.Loading)
             val isAuthSuccessfulDeferred = CompletableDeferred<Boolean>()

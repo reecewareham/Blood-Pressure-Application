@@ -35,42 +35,194 @@ fun MyProfile(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 20.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(5.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = "First Name: ",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = firstName,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
+
             Spacer(
                 modifier = Modifier
                     .height(10.dp)
             )
-            Text(text = "First Name: " + firstName, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(5.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = "Last Name: ",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = lastName,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
+
             Spacer(
                 modifier = Modifier
                     .height(10.dp)
             )
-            Text(text = "Last Name: " + lastName, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(5.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = "Age: ",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = age,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
+
             Spacer(
                 modifier = Modifier
                     .height(10.dp)
             )
-            Text(text = "Age: " + age, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(5.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = "Email: ",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = email,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
+
             Spacer(
                 modifier = Modifier
                     .height(10.dp)
             )
-            Text(text = "Email: " + email, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
-            Spacer(
-                modifier = Modifier
-                    .height(10.dp)
-            )
+
             var hiddenPassword = ""
             for(letter in password) {
                 hiddenPassword += "*"
             }
-            Text(text = "Password: " + hiddenPassword, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(5.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = "Password: ",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+
+                ) {
+                    Text(
+                        text = hiddenPassword,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                }
+            }
+
             Spacer(
                 modifier = Modifier
                     .height(20.dp)
             )
+
             Button(
                 modifier = Modifier
                     .fillMaxWidth(0.5f),
