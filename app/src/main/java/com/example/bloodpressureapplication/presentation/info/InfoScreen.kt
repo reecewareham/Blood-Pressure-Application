@@ -137,7 +137,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.whatisbloodpressure),
                     contentDescription = "What is Blood Pressure?",
                     title = "What is Blood Pressure?"
                 )
@@ -316,7 +316,7 @@ fun HeartRateInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.whatisheartrate),
                     contentDescription = "What is Heart Rate?",
                     title = "What is Heart Rate?"
                 )
@@ -331,7 +331,7 @@ fun HeartRateInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.hrnumbers),
                     contentDescription = "Understanding Heart Rate Numbers",
                     title = "Understanding Heart Rate Numbers"
                 )
@@ -354,7 +354,7 @@ fun HeartRateInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.hrfactors),
                     contentDescription = "Factors Affecting Heart Rate",
                     title = "Factors Affecting Heart Rate"
                 )
@@ -369,7 +369,7 @@ fun HeartRateInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.hrcomplications),
                     contentDescription = "Heart Rate Complications",
                     title = "Heart Rate Complications"
                 )
