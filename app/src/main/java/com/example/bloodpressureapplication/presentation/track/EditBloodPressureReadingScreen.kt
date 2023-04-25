@@ -197,8 +197,6 @@ fun EditBloodPressureScreen(
                                                             }
                                                         }
                                                     }
-                                                } else {
-                                                    Toast(message = "Edit failed")
                                                 }
                                             }
                                             is Response.Error -> {
@@ -242,8 +240,6 @@ fun EditBloodPressureScreen(
                                                                 }
                                                             }
                                                         }
-                                                    } else {
-                                                        Toast(message = "Delete failed")
                                                     }
                                                 }
                                                 is Response.Error -> {

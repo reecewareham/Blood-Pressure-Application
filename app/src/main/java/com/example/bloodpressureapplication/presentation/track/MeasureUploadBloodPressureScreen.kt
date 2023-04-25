@@ -192,8 +192,6 @@ fun MeasureBloodPressureScreen(
                                                 }
                                             }
                                         }
-                                    } else {
-                                        Toast(message = "Upload Failed")
                                     }
                                 }
                                 is Response.Error -> {

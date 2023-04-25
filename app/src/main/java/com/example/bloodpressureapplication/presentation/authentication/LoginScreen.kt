@@ -150,8 +150,6 @@ fun LoginScreen(navController: NavHostController, viewModel : AuthenticationView
                                             }
                                         }
                                     }
-                                } else {
-                                    Toast(message = "Sign in failed")
                                 }
                             }
                             is Response.Error -> {

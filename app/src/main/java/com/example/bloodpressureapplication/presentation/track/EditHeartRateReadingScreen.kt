@@ -201,8 +201,6 @@ fun EditHeartRateScreen(
                                                             }
                                                         }
                                                     }
-                                                } else {
-                                                    Toast(message = "Edit failed")
                                                 }
                                             }
                                             is Response.Error -> {
@@ -245,8 +243,6 @@ fun EditHeartRateScreen(
                                                             }
                                                         }
                                                     }
-                                                } else {
-                                                    Toast(message = "Delete failed")
                                                 }
                                             }
                                             is Response.Error -> {

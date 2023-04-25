@@ -8,6 +8,7 @@ import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -120,11 +121,16 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
                 readingStatus = readingStatus,
                 timestamp = timestamp
             )
+            val isSuccessfulDeferred = CompletableDeferred<Boolean>()
             firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS).document(heartRateReadingId).set(heartRateReading).addOnSuccessListener {
-                operationSuccessful = true
-            }.await()
-            if (operationSuccessful) {
-                emit(Response.Success(operationSuccessful))
+                isSuccessfulDeferred.complete(true)
+
+            }.addOnFailureListener {
+                isSuccessfulDeferred.complete(false)
+            }
+            val isSuccessful = isSuccessfulDeferred.await()
+            if (isSuccessful) {
+                emit(Response.Success(isSuccessful))
             } else {
                 emit(Response.Error("Upload unsuccessful"))
             }
@@ -146,13 +152,17 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
             readingObj["bpm"] = bpm
             readingObj["readingStatus"] = readingStatus
 
-
+            val isSuccessfulDeferred = CompletableDeferred<Boolean>()
             firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS).document(heartRateReadingId).update(readingObj as Map<String,Any>)
                 .addOnSuccessListener {
-                    operationSuccessful = true
-                }.await()
-            if (operationSuccessful) {
-                emit(Response.Success(operationSuccessful))
+                    isSuccessfulDeferred.complete(true)
+
+                }.addOnFailureListener {
+                    isSuccessfulDeferred.complete(false)
+                }
+            val isSuccessful = isSuccessfulDeferred.await()
+            if (isSuccessful) {
+                emit(Response.Success(isSuccessful))
             } else {
                 emit(Response.Error("Editing was not successful"))
             }
@@ -166,12 +176,17 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
         operationSuccessful = false
 
         try {
+            val isSuccessfulDeferred = CompletableDeferred<Boolean>()
             firebaseFirestore.collection(COLLECTION_NAME_HEART_RATE_READINGS).document(heartRateReadingId).delete()
                 .addOnSuccessListener {
-                    operationSuccessful = true
-                }.await()
-            if (operationSuccessful) {
-                emit(Response.Success(operationSuccessful))
+                    isSuccessfulDeferred.complete(true)
+
+                }.addOnFailureListener {
+                    isSuccessfulDeferred.complete(false)
+                }
+            val isSuccessful = isSuccessfulDeferred.await()
+            if (isSuccessful) {
+                emit(Response.Success(isSuccessful))
             } else {
                 emit(Response.Error("Delete was not successful"))
             }

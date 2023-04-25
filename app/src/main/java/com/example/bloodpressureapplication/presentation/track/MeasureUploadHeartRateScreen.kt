@@ -194,8 +194,6 @@ fun MeasureHeartRateScreen(
                                                 }
                                             }
                                         }
-                                    } else {
-                                        Toast(message = "Upload Failed")
                                     }
                                 }
                                 is Response.Error -> {

@@ -204,8 +204,6 @@ fun SignUpScreen(navController: NavHostController, viewModel: AuthenticationView
                                         }
                                     }
                                 }
-                            } else {
-                                Toast(message = "Sign up failed")
                             }
                         }
                         is Response.Error -> {

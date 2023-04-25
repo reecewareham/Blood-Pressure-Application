@@ -233,8 +233,6 @@ fun ProfileEditScreen(
                                                             }
                                                         }
                                                     }
-                                                } else {
-                                                    Toast(message = "Edit failed")
                                                 }
                                             }
                                             is Response.Error -> {
