@@ -1,7 +1,9 @@
 package com.example.bloodpressureapplication.presentation.profile
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Environment
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -22,12 +24,12 @@ import coil.request.ImageRequest
 import com.example.bloodpressureapplication.domain.model.BloodPressureReadings
 import com.example.bloodpressureapplication.domain.model.HeartRateReadings
 import com.example.bloodpressureapplication.presentation.*
-import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.presentation.authentication.AuthenticationViewModel
 import com.example.bloodpressureapplication.presentation.profile.components.MyProfile
 import com.example.bloodpressureapplication.presentation.profile.components.RoundedImage
 import com.example.bloodpressureapplication.presentation.track.*
 import com.example.bloodpressureapplication.ui.theme.redScaffold
+import com.example.bloodpressureapplication.util.Response
 import com.example.bloodpressureapplication.util.Screens
 import java.io.*
 
@@ -93,7 +95,6 @@ fun ProfileScreen(
             )
         },
         content = {
-
             when (val response = userViewModel.getUserData.value) {
                 is Response.Loading -> {
                     CircularProgressIndicator()
@@ -198,6 +199,8 @@ fun ProfileExportFile() {
     bloodPressureViewModel.getAllReadings()
     val heartRateViewModel: HeartRateReadingsViewModel = hiltViewModel()
     heartRateViewModel.getAllHeartReadings()
+    var context = LocalContext.current
+    val openDialog = remember { mutableStateOf(false) }
 
     when (val response = bloodPressureViewModel.bloodPressureReadingsData.value) {
         is Response.Loading -> {
@@ -213,6 +216,48 @@ fun ProfileExportFile() {
                 is Response.Success -> {
                     val obj = response.data
                     heartRateReadingsCSV = obj
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(0.7f),
+                        shape = RoundedCornerShape(15.dp),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 5.dp,
+                            pressedElevation = 7.dp,
+                            disabledElevation = 0.dp
+                        ),
+                        onClick = {
+                            writeToCSV(context)
+                            openDialog.value = true
+                        }
+
+                    ) {
+                        Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center, fontSize = 20.sp)
+
+                        if (openDialog.value) {
+                            AlertDialog(
+                                onDismissRequest = {
+                                    openDialog.value = false
+                                },
+                                dismissButton = {
+                                    TextButton(
+                                        onClick = {
+                                            openDialog.value = false
+                                        }
+                                    ) {
+                                        Text("Dismiss")
+                                    }
+                                },
+                                confirmButton = {
+                                    TextButton(onClick = {
+                                        openDialog.value = false
+                                    })
+                                    { Text(text = "OK") }
+                                },
+                                title = { Text(text = "Export") },
+                                text = { Text(text = "Your readings have been exported successfully.") }
+                            )
+                        }
+                    }
                 }
                 is Response.Error -> {
                     Toast(message = response.message)
@@ -223,55 +268,21 @@ fun ProfileExportFile() {
             Toast(message = response.message)
         }
     }
-
-    Button(
-        modifier = Modifier
-            .fillMaxWidth(0.7f),
-        shape = RoundedCornerShape(15.dp),
-        elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 5.dp,
-            pressedElevation = 7.dp,
-            disabledElevation = 0.dp
-        ),
-        onClick = {
-
-                FileOutputStream("BloodPressure&HeartRateReadings.csv").apply {
-                    exportToCSV(
-                        bloodPressureReadingsCSV, heartRateReadingsCSV
-                    )
-                }
-        }
-
-    ) {
-        Text(text = AnnotatedString("Export"), textAlign = TextAlign.Center, fontSize = 20.sp)
-    }
 }
 
-fun OutputStream.exportToCSV(bloodPressureReadings: List<BloodPressureReadings>, heartRateReadings: List<HeartRateReadings>) {
-    val writer = bufferedWriter()
-    writer.write(""""Systolic Pressure", "Diastolic Pressure", "Timestamp"""")
-    writer.newLine()
-    bloodPressureReadings.forEach {
-        writer.write("${it.systolicPressure}, ${it.diastolicPressure}, \"${it.timestamp}\"")
-        writer.newLine()
-    }
-    writer.write(""""BPM", "Reading Status", "Timestamp"""")
-    heartRateReadings.forEach {
-        writer.write("${it.bpm}, ${it.readingStatus}, \"${it.timestamp}\"")
-        writer.newLine()
-    }
-    writer.flush()
-}
+fun writeToCSV(context: Context) {
+    val filename = "MyReadings.csv"
+    var bpReadings = java.lang.StringBuilder()
+    bloodPressureReadingsCSV.forEach {bpReadings.append("${it.systolicPressure}, ${it.diastolicPressure}, ${it.timestamp?.toDate()}" + "\n")}
 
-fun writeToCsv(data: List<List<String>>, fileName: String) {
-    val file = File(Environment.getExternalStorageDirectory(), fileName)
-    val writer = FileWriter(file)
+    var hrReadings = java.lang.StringBuilder()
+    heartRateReadingsCSV.forEach {hrReadings.append("${it.bpm}, ${it.readingStatus}, ${it.timestamp?.toDate()}" + "\n")}
 
-    for (line in data) {
-        writer.write(line.joinToString(","))
-        writer.write("\n")
+    var fileContents =
+        "Systolic Pressure, Diastolic Pressure, Timestamp\n\n$bpReadings\nBPM, Reading Status, Timestamp\n\n$hrReadings"
+
+
+    context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+        it.write(fileContents.toByteArray())
     }
-
-    writer.flush()
-    writer.close()
 }
