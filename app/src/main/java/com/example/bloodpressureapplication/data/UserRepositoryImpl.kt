@@ -1,10 +1,16 @@
 package com.example.bloodpressureapplication.data
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.bloodpressureapplication.domain.model.User
 import com.example.bloodpressureapplication.domain.repository.UserRepository
 import com.example.bloodpressureapplication.util.Constants.COLLECTION_NAME_USERS
 import com.example.bloodpressureapplication.util.Response
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -13,6 +19,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
+    private val auth : FirebaseAuth,
     private val firebaseFirestore : FirebaseFirestore
 ) : UserRepository {
 
@@ -36,7 +43,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String) : Flow<Response<Boolean>> = flow  {
+    override fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String, oldEmail: String, oldPassword: String) : Flow<Response<Boolean>> = flow  {
 
         operationSuccessful = false
 
@@ -52,6 +59,31 @@ class UserRepositoryImpl @Inject constructor(
             firebaseFirestore.collection(COLLECTION_NAME_USERS).document(userid).update(userObj as Map<String,Any>)
                 .addOnSuccessListener {
                     operationSuccessful = true
+
+                    val user = Firebase.auth.currentUser
+                    val credential = EmailAuthProvider
+                        .getCredential(oldEmail, oldPassword)
+                    user!!.reauthenticate(credential)
+                        .addOnCompleteListener {
+                            Log.d(TAG, "User re-authenticated.")
+                            user!!.updatePassword(password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d(TAG, "User password updated.")
+                                        user!!.updateEmail(email)
+                                            .addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    Log.d(TAG, "User email address updated.")
+
+                                                }
+                                            }
+                                    }
+                                }
+                        }
+
+
+
+
                 }.await()
             if (operationSuccessful) {
                 emit(Response.Success(operationSuccessful))

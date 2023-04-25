@@ -35,7 +35,7 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun setUserInfo(firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String) {
+    fun setUserInfo(firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String, oldEmail: String, oldPassword: String) {
         if(userid != null) {
             viewModelScope.launch {
                 userUseCases.setUserDetails(
@@ -45,7 +45,9 @@ class UserViewModel @Inject constructor(
                     age = age,
                     imageUrl = imageUrl,
                     email = email,
-                    password = password
+                    password = password,
+                    oldEmail = oldEmail,
+                    oldPassword = oldPassword
                 ).collect {
                     _setUserData.value = it
                 }

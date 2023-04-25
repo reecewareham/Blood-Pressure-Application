@@ -109,6 +109,9 @@ fun ProfileEditScreen(
                                     val imageURLState = remember {
                                         mutableStateOf(obj.imageUrl)
                                     }
+                                    val oldEmail = obj.email
+                                    val oldPassword = obj.password
+
 
 
                                     OutlinedTextField(
@@ -198,7 +201,9 @@ fun ProfileEditScreen(
                                                 firstName = firstNameState.value,
                                                 lastName = lastNameState.value,
                                                 age = ageState.value,
-                                                imageUrl = imageURLState.value
+                                                imageUrl = imageURLState.value,
+                                                oldEmail = oldEmail,
+                                                oldPassword = oldPassword
                                             )
                                         },
                                         modifier = Modifier

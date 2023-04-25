@@ -64,8 +64,8 @@ object BloodPressureAppModule {
 
     @Singleton
     @Provides
-    fun provideUserRepository(firebaseFirestore: FirebaseFirestore) : UserRepository {
-        return UserRepositoryImpl(firebaseFirestore = firebaseFirestore)
+    fun provideUserRepository(firebaseFirestore: FirebaseFirestore, firebaseAuth: FirebaseAuth) : UserRepository {
+        return UserRepositoryImpl(firebaseFirestore = firebaseFirestore, auth = firebaseAuth)
     }
 
     @Singleton
