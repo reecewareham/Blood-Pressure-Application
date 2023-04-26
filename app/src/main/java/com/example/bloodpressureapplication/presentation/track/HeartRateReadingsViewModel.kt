@@ -13,11 +13,26 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+////////////////////////////////////////////////////////////////////
+/*
+Heart Rate Reading View Model. Used as the middle ground between the
+backend Firestore database system and the user interface.
+*/
+////////////////////////////////////////////////////////////////////
+
 @HiltViewModel
 class HeartRateReadingsViewModel @Inject constructor(
     private val heartRateReadingsUseCases: HeartRateReadingsUseCases,
     private val auth: FirebaseAuth
 ) : ViewModel() {
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    States. Used to notify the user interface that a backend function has
+    completed. If a function is successful, it will set the corresponding
+    state to true which will notify the user interface to make a change.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     private val userid = auth.currentUser?.uid
     private val _heartRateReadingsData = mutableStateOf<Response<List<HeartRateReadings>>> (Response.Loading)
@@ -41,6 +56,15 @@ class HeartRateReadingsViewModel @Inject constructor(
     private val _deleteHeartRateReadingData = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val deleteHeartRateReadingData : State<Response<Boolean>> = _deleteHeartRateReadingData
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getAllHeartReadings. Interacts with the getAllHeartReadings use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets heartRateReadingsData to the result which is a
+    list of readings. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     fun getAllHeartReadings() {
         if(userid != null) {
             viewModelScope.launch {
@@ -50,6 +74,15 @@ class HeartRateReadingsViewModel @Inject constructor(
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getLastHeartReading. Interacts with the getLastHeartReading use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets heartRateLastReadingData to the result which is a
+    list of the last reading. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     fun getLastHeartReading() {
         if(userid != null) {
@@ -61,6 +94,15 @@ class HeartRateReadingsViewModel @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getLast5HeartReadings. Interacts with the getLast5HeartReadings use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets heartRate5ReadingData to the result which is a
+    list of the last readings. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     fun getLast5HeartReadings() {
         if(userid != null) {
             viewModelScope.launch {
@@ -71,6 +113,15 @@ class HeartRateReadingsViewModel @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getHeartReading. Interacts with the getHeartReading use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets heartRateReadingData to the result which is a
+    single reading. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     fun getHeartReading(heartRateReadingId: String) {
         if(userid != null) {
             viewModelScope.launch {
@@ -80,6 +131,15 @@ class HeartRateReadingsViewModel @Inject constructor(
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    uploadHeartReading. Interacts with the uploadHeartReading use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets uploadHeartRateReadingData to the result which is
+    either true or false. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     fun uploadHeartReading(bpm: Int, readingStatus: String, timestamp: Timestamp) {
         if (userid != null) {
@@ -96,6 +156,15 @@ class HeartRateReadingsViewModel @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    updateHeartReading. Interacts with the updateHeartReading use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets updateHeartRateReadingData to the result which is
+    either true or false. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     fun updateHeartReading(heartRateReadingId : String, bpm: Int, readingStatus: String) {
         if(userid != null) {
             viewModelScope.launch {
@@ -109,6 +178,15 @@ class HeartRateReadingsViewModel @Inject constructor(
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    deleteHeartReading. Interacts with the deleteHeartReading use case which runs the
+    corresponding implementation function. Collects the result of the
+    function and sets deleteHeartRateReadingData to the result which is
+    either true or false. The result is used in the user interface.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     fun deleteHeartReading(heartRateReadingId: String) {
         if(userid != null) {
