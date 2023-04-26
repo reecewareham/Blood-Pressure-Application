@@ -152,7 +152,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.understandingbpnumbers),
                     contentDescription = "Understanding Blood Pressure Numbers",
                     title = "Understanding Blood Pressure Numbers"
                 )
@@ -175,7 +175,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.bpcontrol),
                     contentDescription = "How to Control Blood Pressure?",
                     title = "How to Control Blood Pressure?"
                 )
@@ -190,7 +190,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.bpmythsmistakes),
                     contentDescription = "Blood Pressure Myths and Mistakes",
                     title = "Blood Pressure Myths and Mistakes"
                 )
@@ -213,7 +213,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.bpwhatishyper),
                     contentDescription = "What is Hypertension?",
                     title = "What is Hypertension?"
                 )
@@ -228,7 +228,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.bpwhatishypo),
                     contentDescription = "What is Hypotension?",
                     title = "What is Hypotension?"
                 )
@@ -251,7 +251,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.bppreventhyper),
                     contentDescription = "How to Prevent Hypertension?",
                     title = "How to Prevent Hypertension?"
                 )
@@ -266,7 +266,7 @@ fun BloodPressureInfoGrid(navController: NavController) {
                     }
             ) {
                 InfoCard(
-                    painter = painterResource(id = R.drawable.placeholder_image),
+                    painter = painterResource(id = R.drawable.bppreventhypo),
                     contentDescription = "How to Prevent Hypotension?",
                     title = "How to Prevent Hypotension?"
                 )
