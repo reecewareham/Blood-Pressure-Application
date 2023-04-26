@@ -16,11 +16,26 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+////////////////////////////////////////////////////////////////////
+/*
+Blood Pressure Readings Repository Implementation. Implements the functions
+used to access the blood pressure readings Firestore.
+*/
+////////////////////////////////////////////////////////////////////
+
 class HeartRateReadingsRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ) : HeartRateReadingsRepository {
 
     private var operationSuccessful = false
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getAllHeartReadings. Takes in the current user id. Queries the heart
+    rate readings Firestore using the user id and orders the readings
+    by timestamp. Returns a list of all readings if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun getAllHeartReadings(userid: String): Flow<Response<List<HeartRateReadings>>> = callbackFlow {
 
@@ -42,6 +57,14 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getLastHeartReading. Takes in the current user id. Queries the heart
+    rate readings Firestore using the user id and orders the readings
+    by timestamp. Returns the last reading that was entered.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun getLastHeartReading(userid: String): Flow<Response<List<HeartRateReadings>>> = callbackFlow{
 
         Response.Loading
@@ -62,6 +85,14 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
             snapshotListener.remove()
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getLast5HeartReadings. Takes in the current user id. Queries the heart
+    rate readings Firestore using the user id and orders the readings
+    by timestamp. Returns the last 5 readings in a list.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun getLast5HeartReadings(userid: String): Flow<Response<List<HeartRateReadings>>> = callbackFlow{
 
@@ -85,6 +116,14 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
 
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getHeartReading. Takes in a heart rate reading id. Queries the heart
+    rate readings Firestore using the id and finds the correct document.
+    Returns the specified reading if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun getHeartReading(heartRateReadingId: String): Flow<Response<HeartRateReadings>> = callbackFlow {
 
         Response.Loading
@@ -103,6 +142,15 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
             snapshotListener.remove()
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    uploadHeartReading. Takes in a user id, bpm reading, reading status
+    and timestamp. Creates a new unique document in the Firestore. Adds
+    the rest of the details to the document once it is created. Returns
+    true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun uploadHeartReading(
         userId: String,
@@ -139,6 +187,15 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    updateHeartReading. Takes in the heart rate reading id, bpm reading
+    and reading status. Queries the Firestore using the id and finds the
+    specified document. Updates the bpm reading and reading status
+    with the new values. Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun updateHeartReading(
         heartRateReadingId: String,
         bpm: Int,
@@ -170,6 +227,14 @@ class HeartRateReadingsRepositoryImpl @Inject constructor(
             Response.Error(e.localizedMessage?: "An unexpected error has occurred")
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    deleteHeartReading. Takes in the heart rate reading id. Queries the
+    Firestore and finds the specific document. Deletes it once found.
+    Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun deleteHeartReading(heartRateReadingId: String) : Flow<Response<Boolean>> = flow {
 

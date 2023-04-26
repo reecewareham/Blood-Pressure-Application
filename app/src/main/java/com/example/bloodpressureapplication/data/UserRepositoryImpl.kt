@@ -25,6 +25,15 @@ class UserRepositoryImpl @Inject constructor(
 
     private var operationSuccessful = false
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getUserDetails. Takes in the user id. Queries the User Firestore and
+    finds the specific document. Takes all the information from the
+    document and creates a User object. Returns the User object if
+    successful.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun getUserDetails(userid: String): Flow<Response<User>> = callbackFlow{
         Response.Loading
         val snapShotListener = firebaseFirestore.collection(COLLECTION_NAME_USERS)
@@ -42,6 +51,16 @@ class UserRepositoryImpl @Inject constructor(
             snapShotListener.remove()
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    setUserDetails. Takes in all the details of the user. Queries the
+    User Firestore and finds the specific document. Updates all the
+    information in the document with the details passed in. Notifies
+    the authentication service of a password update and email update.
+    Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun setUserDetails(userid: String, firstName: String, lastName: String, age: String, imageUrl: String, email: String, password: String, oldEmail: String, oldPassword: String) : Flow<Response<Boolean>> = flow  {
 

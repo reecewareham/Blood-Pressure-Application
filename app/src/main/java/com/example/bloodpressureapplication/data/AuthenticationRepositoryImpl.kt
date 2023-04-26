@@ -15,6 +15,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+////////////////////////////////////////////////////////////////////
+/*
+Authentication Repository Implementation. Implements the functions
+used to access the authentication services of Firebase.
+*/
+////////////////////////////////////////////////////////////////////
+
 class AuthenticationRepositoryImpl @Inject constructor(
     private val auth : FirebaseAuth,
     private val firestore : FirebaseFirestore
@@ -22,9 +29,23 @@ class AuthenticationRepositoryImpl @Inject constructor(
 
     var operationSuccessful : Boolean = false
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    isUserAuthenticatedInFirebase. Checks to see if the current user is
+    authenticated and returns a true boolean if they are.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun isUserAuthenticatedInFirebase(): Boolean {
         return auth.currentUser != null
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getFirebaseAuthState. Checks the current status of the user's
+    auth state. Returns a true boolean if they are.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun getFirebaseAuthState(): Flow<Boolean> = callbackFlow {
         val authStateListener = FirebaseAuth.AuthStateListener {
@@ -35,6 +56,15 @@ class AuthenticationRepositoryImpl @Inject constructor(
             auth.removeAuthStateListener(authStateListener)
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    firebaseSignIn. Signs into the Firebase Authentication service using
+    a user's sign in details. Function takes an email and password. Uses
+    the details to sign in and if successful, authenticate the user and
+    return a true boolean.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun firebaseSignIn(email: String, password: String): Flow<Response<Boolean>> = flow{
         try {
@@ -53,6 +83,13 @@ class AuthenticationRepositoryImpl @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    firebaseSignOut. Signs out of the authentication service. Removes the
+    authentication of the current user. Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun firebaseSignOut(): Flow<Response<Boolean>> = flow{
         try {
             emit(Response.Loading)
@@ -62,6 +99,16 @@ class AuthenticationRepositoryImpl @Inject constructor(
             emit(Response.Error(e.localizedMessage?:"An unexpected error"))
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    firebaseSignUp. Creates a new account in the authentication service
+    and in the User Firestore. Takes an email, password, first name, last
+    name, age and image url. Tries to create an auth account, if successful
+    tries to create a document in User Firestore. If successful, return
+    true.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun firebaseSignUp(
         email: String,

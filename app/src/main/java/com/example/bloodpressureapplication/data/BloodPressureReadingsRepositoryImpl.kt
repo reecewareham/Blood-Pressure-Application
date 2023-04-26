@@ -15,11 +15,26 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
+////////////////////////////////////////////////////////////////////
+/*
+Blood Pressure Readings Repository Implementation. Implements the functions
+used to access the blood pressure readings Firestore.
+*/
+////////////////////////////////////////////////////////////////////
+
 class BloodPressureReadingsRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ) : BloodPressureReadingsRepository {
 
     private var operationSuccessful = false
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getAllReadings. Takes in the current user id. Queries the blood
+    pressure readings Firestore using the user id and orders the readings
+    by timestamp. Returns a list of all readings if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun getAllReadings(userid: String): Flow<Response<List<BloodPressureReadings>>> = callbackFlow{
 
@@ -42,6 +57,14 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
 
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getLastReading. Takes in the current user id. Queries the blood
+    pressure readings Firestore using the user id and orders the readings
+    by timestamp. Returns the last reading that was entered.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun getLastReading(userid: String): Flow<Response<List<BloodPressureReadings>>> = callbackFlow {
 
         Response.Loading
@@ -62,6 +85,14 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
             snapshotListener.remove()
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getLast5Readings. Takes in the current user id. Queries the blood
+    pressure readings Firestore using the user id and orders the readings
+    by timestamp. Returns the last 5 readings in a list.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun getLast5Readings(userid: String): Flow<Response<List<BloodPressureReadings>>> = callbackFlow{
 
@@ -85,6 +116,14 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
 
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    getReading. Takes in a blood pressure reading id. Queries the blood
+    pressure readings Firestore using the id and finds the correct document.
+    Returns the specified reading if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun getReading(bloodPressureReadingId: String): Flow<Response<BloodPressureReadings>> = callbackFlow{
 
         Response.Loading
@@ -103,6 +142,15 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
             snapshotListener.remove()
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    uploadReading. Takes in a user id, systolic pressure reading, diastolic
+    pressure reading and timestamp. Creates a new unique document in the
+    Firestore. Adds the rest of the details to the document once it is
+    created. Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun uploadReading(
         userId: String,
@@ -138,6 +186,15 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+    /*
+    updateReading. Takes in the blood pressure reading id, systolic pressure
+    and diastolic pressure. Queries the Firestore using the id and finds the
+    specified document. Updates the systolic pressure and diastolic pressure
+    with the new values. Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
+
     override fun updateReading(
         bloodPressureReadingId: String,
         systolicPressure: Int,
@@ -169,6 +226,14 @@ class BloodPressureReadingsRepositoryImpl @Inject constructor(
             Response.Error(e.localizedMessage?: "An unexpected error has occurred")
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+    /*
+    deleteReading. Takes in the blood pressure reading id. Queries the
+    Firestore and finds the specific document. Deletes it once found.
+    Returns true if successful.
+    */
+    ////////////////////////////////////////////////////////////////////
 
     override fun deleteReading(bloodPressureReadingId: String) : Flow<Response<Boolean>> = flow {
 

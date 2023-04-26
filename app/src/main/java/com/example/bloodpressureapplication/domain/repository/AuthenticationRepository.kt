@@ -3,6 +3,13 @@ package com.example.bloodpressureapplication.domain.repository
 import kotlinx.coroutines.flow.Flow
 import com.example.bloodpressureapplication.util.Response
 
+////////////////////////////////////////////////////////////////////
+/*
+Authentication Repository. An interface that creates the functions
+needed for interacting with the Firebase authentication system.
+*/
+////////////////////////////////////////////////////////////////////
+
 interface AuthenticationRepository {
 
     fun isUserAuthenticatedInFirebase() : Boolean

@@ -1,5 +1,11 @@
 package com.example.bloodpressureapplication.domain.model
 
+////////////////////////////////////////////////////////////////////
+/*
+User Model. Specifies the model used for users.
+*/
+////////////////////////////////////////////////////////////////////
+
 data class User(
     var userId: String = "",
     var firstName: String = "",

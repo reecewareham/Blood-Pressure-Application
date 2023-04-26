@@ -5,6 +5,14 @@ import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.flow.Flow
 
+////////////////////////////////////////////////////////////////////
+/*
+Blood Pressure Readings Repository. An interface that creates the
+functions needed for interacting with the blood pressure reading
+Firestore.
+*/
+////////////////////////////////////////////////////////////////////
+
 interface BloodPressureReadingsRepository {
 
     fun getAllReadings(userid: String) : Flow<Response<List<BloodPressureReadings>>>

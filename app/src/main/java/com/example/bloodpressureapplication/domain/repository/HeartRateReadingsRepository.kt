@@ -5,6 +5,14 @@ import com.example.bloodpressureapplication.util.Response
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.flow.Flow
 
+////////////////////////////////////////////////////////////////////
+/*
+Heart Rate Readings Repository. An interface that creates the
+functions needed for interacting with the heart rate reading
+Firestore.
+*/
+////////////////////////////////////////////////////////////////////
+
 interface HeartRateReadingsRepository {
 
     fun getAllHeartReadings(userid: String) : Flow<Response<List<HeartRateReadings>>>
